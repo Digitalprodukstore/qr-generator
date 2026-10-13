@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced QR Code Generator — Studio Pembuat Kode QR Kustom Profesional</title>
-    <meta name="description" content="Platform generator kode QR premium dengan kustomisasi gradasi warna dots, logo di tengah, dan frame elegan. Download resolusi tinggi PNG seketika.">
+    <title>Premium QR Code Generator - Alat Pembuat QR Kustom Gratis</title>
     
-    <!-- Google tag (gtag.js) - Dipertahankan 100% -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6LJHMEM73Y"></script>
+    <!-- Google tag (gtag.js) - Tetap Terjaga Aktif -->
+    <script async src="https://googletagmanager.com"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -15,1338 +14,138 @@
       gtag('config', 'G-6LJHMEM73Y');
     </script>
     
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              brand: {
-                50: '#eef2ff',
-                100: '#e0e7ff',
-                200: '#c7d2fe',
-                500: '#6366f1',
-                600: '#4f46e5',
-                700: '#4338ca',
-                800: '#3730a3',
-                900: '#312e81',
-              }
-            },
-            fontFamily: {
-              sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
-            },
-            boxShadow: {
-              'subtle': '0 2px 10px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.05)',
-              'premium': '0 20px 40px -15px rgba(79, 70, 229, 0.08), 0 0 1px 1px rgba(15, 23, 42, 0.05)',
-              'glow': '0 0 25px -5px rgba(99, 102, 241, 0.35)',
-            }
-          }
-        }
-      }
-    </script>
-    
-    <!-- QRCode.js Library Asli yang Andal -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    
-    <!-- Google Fonts: Plus Jakarta Sans untuk Tipografi Modern High-Trust -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-    <style>
-      body {
-        font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-      }
-      .font-mono-code {
-        font-family: 'JetBrains Mono', monospace;
-      }
-      @keyframes floatPulse {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-4px); }
-      }
-      .animate-float-gentle {
-        animation: floatPulse 4s ease-in-out infinite;
-      }
-      input[type="color"]::-webkit-color-swatch-wrapper {
-        padding: 0;
-      }
-      input[type="color"]::-webkit-color-swatch {
-        border: none;
-        border-radius: 8px;
-      }
-      input[type="range"] {
-        accent-color: #4f46e5;
-      }
-    </style>
+    <!-- Pustaka CSS & JS Utama -->
+    <script src="https://jsdelivr.net"></script>
+    <script src="https://cloudflare.com"></script>
 </head>
-<body class="bg-slate-50/70 text-slate-800 antialiased selection:bg-indigo-500 selection:text-white min-h-screen flex flex-col justify-between">
+<body class="bg-slate-900 font-sans text-slate-100 flex flex-col min-h-screen antialiased">
 
-    <!-- Top Ambient Glow & Gradient Background -->
-    <div class="fixed top-0 inset-x-0 h-96 bg-gradient-to-b from-indigo-100/50 via-slate-50/20 to-transparent pointer-events-none -z-10"></div>
-    <div class="fixed top-[-100px] left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-gradient-to-tr from-indigo-300/25 via-violet-300/25 to-blue-200/20 blur-3xl pointer-events-none -z-10"></div>
+    <!-- Konten Utama (Layout Premium Bersebelahan) -->
+    <div class="flex-grow max-w-5xl w-full mx-auto p-4 md:p-8 flex flex-col lg:flex-row gap-8 mt-6">
+        
+        <!-- SISI KIRI: Form Input & Kontrol (Card Mewah) -->
+        <div class="flex-1 bg-slate-800 p-6 md:p-8 rounded-2xl shadow-xl border border-slate-700/50 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="bg-indigo-500/10 text-indigo-400 text-xs px-2.5 py-1 rounded-full font-semibold border border-indigo-550/20">v2.0 Premium</span>
+                </div>
+                <h1 class="text-3xl font-extrabold tracking-tight text-white mb-2 bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">Advanced QR Code Generator</h1>
+                <p class="text-sm text-slate-405 mb-8">Ubah tautan bisnis, WhatsApp, atau media sosial Anda menjadi QR Code kustom premium secara instan.</p>
+                
+                <div class="space-y-6">
+                    <!-- Input Tautan -->
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Masukkan Tautan / URL Utama:</label>
+                        <input type="text" id="qr-text" placeholder="Contoh: https://wa.me atau https://facebook.com" class="w-full p-3.5 bg-slate-900 border border-slate-700 rounded-xl focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 text-sm text-white transition duration-200 placeholder-slate-500">
+                    </div>
+                    
+                    <!-- Kustomisasi Warna -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-700/40">
+                            <label class="block text-xs font-medium text-slate-400 mb-1.5">Warna QR Code</label>
+                            <div class="flex items-center gap-2">
+                                <input type="color" id="qr-color" value="#000000" class="w-8 h-8 rounded-lg border-0 bg-transparent cursor-pointer">
+                                <span class="text-xs font-mono text-slate-300">Utama</span>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-700/40">
+                            <label class="block text-xs font-medium text-slate-400 mb-1.5">Warna Latar</label>
+                            <div class="flex items-center gap-2">
+                                <input type="color" id="bg-color" value="#ffffff" class="w-8 h-8 rounded-lg border-0 bg-transparent cursor-pointer">
+                                <span class="text-xs font-mono text-slate-300">Latar</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="generateQR()" class="w-full bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white font-bold p-4 rounded-xl shadow-lg shadow-indigo-500/20 transition duration-300 cursor-pointer text-sm mt-8 tracking-wide">
+                Buat QR Code Sekarang
+            </button>
+        </div>
 
-    <!-- Header Navigasi Minimalis High-Trust -->
-    <header class="w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md sticky top-0 z-40 transition-all">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 ring-1 ring-white/30">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                        <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
-                        <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
-                        <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
-                        <path d="M14 14h3v3h-3zM17 17h4v4h-4zM14 20h3v1h-3z"></path>
-                    </svg>
+        <!-- SISI KANAN: Live Preview Card Mewah & Tempat AdSense -->
+        <div class="w-full lg:w-[360px] flex flex-col gap-6">
+            <!-- Card Preview QR -->
+            <div class="bg-slate-800 border border-slate-700/50 rounded-2xl p-6 shadow-xl flex flex-col items-center justify-center min-h-[320px] relative overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-b from-indigo-500/5 to-transparent pointer-events-none"></div>
+                
+                <!-- Hasil QR Code -->
+                <div id="qrcode" class="p-4 bg-white rounded-2xl shadow-inner transition-transform duration-300"></div>
+                
+                <!-- Placeholder Sebelum QR dibuat -->
+                <div id="qr-placeholder" class="text-center p-6 space-y-3">
+                    <div class="w-16 h-16 mx-auto bg-slate-700/40 rounded-full flex items-center justify-center border border-slate-600/30">
+                        <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"></path></svg>
+                    </div>
+                    <p class="text-xs text-slate-400 max-w-[200px] mx-auto">Tautan Anda akan muncul sebagai QR Code siap unduh di area ini.</p>
+                </div>
+                
+                <!-- Tombol Unduh yang Sudah Diperbaiki Kodenya -->
+                <button id="download-btn" onclick="downloadQR()" class="hidden mt-6 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition duration-200 cursor-pointer text-sm items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    Unduh Gambar (PNG)
+                </button>
+            </div>
+
+            <!-- SLOT IKLAN ADSENSE (Menyatu Alami dengan Tema Gelap) -->
+            <div class="bg-slate-800/40 text-slate-500 border border-slate-700/30 h-[250px] rounded-2xl flex items-center justify-center font-medium text-xs text-center p-4 shadow-inner">
+                [ Slot Pendapatan AdSense ]
+            </div>
+        </div>
+    </div>
+
+    <!-- SEKSI BAWAH: Edukasi Konten & Mitra/Sponsor (Meningkatkan Kepercayaan) -->
+    <div class="max-w-5xl w-full mx-auto px-4 md:px-8 mt-6 space-y-8">
+        <div class="bg-slate-800/80 border border-slate-700/50 p-6 md:p-8 rounded-2xl shadow-md space-y-6">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span class="w-1.5 h-4 bg-indigo-500 rounded-full"></span>💡 Panduan Integrasi Bisnis
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-350 leading-relaxed">
+                <div>
+                    <h3 class="font-semibold text-slate-200 mb-1">Bagaimana cara kerjanya?</h3>
+                    <p>Cukup masukkan URL aktif media sosial atau nomor chat Anda. Sistem otomatis memetakan data enkripsi ke dalam matriks visual beresolusi tinggi tanpa batasan pemindaian.</p>
                 </div>
                 <div>
-                    <span class="font-extrabold text-slate-900 tracking-tight text-lg flex items-center gap-1.5">
-                        QR Studio <span class="text-xs px-2 py-0.5 font-bold uppercase rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200/60">PRO</span>
-                    </span>
-                    <span class="text-[11px] text-slate-500 block leading-none font-medium">Enterprise QR Code Engine</span>
+                    <h3 class="font-semibold text-slate-200 mb-1">Kegunaan untuk Pemasaran</h3>
+                    <p>Sangat ideal digunakan pada cetakan brosur promosi, papan meja kafe/restoran, kartu nama digital, maupun kaos *merchandise* agar memicu konversi pelanggan secara instan.</p>
                 </div>
             </div>
 
-            <div class="hidden sm:flex items-center gap-6 text-sm font-medium text-slate-600">
-                <span class="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/70">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    100% Bebas Kadaluarsa & Gratis
-                </span>
-                <div class="h-4 w-px bg-slate-200"></div>
-                <div class="flex items-center gap-1 text-xs text-slate-500">
-                    <svg class="w-4 h-4 text-indigo-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                    </svg>
-                    ISO/IEC 18004 Standard
+            <!-- TAMPILAN GRID SPONSOR PREMIUM -->
+            <div class="pt-6 border-t border-slate-700/50">
+                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Official Partners / Verified Content:</h3>
+                <div class="grid grid-cols-3 gap-4 items-center justify-items-center bg-slate-900/60 p-4 rounded-xl border border-slate-700/30">
+                    <div class="text-xs font-bold text-slate-600 italic tracking-wider hover:text-slate-400 transition cursor-default">[ Partner Slot 1 ]</div>
+                    <div class="text-xs font-bold text-slate-600 italic tracking-wider hover:text-slate-400 transition cursor-default">[ Partner Slot 2 ]</div>
+                    <div class="text-xs font-bold text-slate-600 italic tracking-wider hover:text-slate-400 transition cursor-default">[ Partner Slot 3 ]</div>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
 
-    <!-- Main Container -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-        
-        <!-- Hero Tagline -->
-        <div class="text-center max-w-3xl mx-auto mb-10 md:mb-12">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200/80 text-indigo-700 text-xs font-semibold mb-4 shadow-sm">
-                <svg class="w-3.5 h-3.5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-                Generasi Instan Beresolusi Tinggi (PNG)
-            </div>
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-                Advanced QR Code Generator
-            </h1>
-            <p class="mt-3.5 text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto font-normal">
-                Ubah tautan URL, nomor WhatsApp, atau teks biasa menjadi kode QR estetis dengan kontrol warna presisi, gradasi warna titik, logo kustom di tengah, bingkai eksklusif, dan hasil unduh kualitas cetak.
-            </p>
-        </div>
-
-        <!-- 3-Column Layout: Left AdSense, Main Studio App, Right AdSense -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            <!-- LEFT SPONSORED / ADSENSE SLOT -->
-            <aside class="hidden lg:block lg:col-span-2">
-                <div class="sticky top-24 bg-white/80 backdrop-blur border border-slate-200/80 rounded-2xl p-4 shadow-subtle text-center group transition hover:border-slate-300">
-                    <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
-                        <span class="text-[10px] font-bold tracking-wider uppercase text-slate-400">Sponsor</span>
-                        <span class="text-[9px] text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">Ad</span>
-                    </div>
-                    <div class="min-h-[500px] w-full flex flex-col items-center justify-center rounded-xl bg-slate-50/70 border border-dashed border-slate-200 p-3 text-slate-400">
-                        <svg class="w-8 h-8 text-slate-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <rect x="2" y="3" width="20" height="14" rx="2" stroke-width="1.5"></rect>
-                            <line x1="8" y1="21" x2="16" y2="21" stroke-width="1.5"></line>
-                            <line x1="12" y1="17" x2="12" y2="21" stroke-width="1.5"></line>
-                        </svg>
-                        <span class="text-xs font-semibold text-slate-500">Iklan Responsif</span>
-                        <span class="text-[10px] text-slate-400 mt-1">160x600 Skyscraper Slot</span>
-                        <div class="mt-6 p-2 rounded bg-white/80 border border-slate-100 text-[10px] text-slate-500 leading-tight">
-                            Ruang terverifikasi siap integrasi AdSense code
-                        </div>
-                    </div>
-                </div>
-            </aside>
-
-            <!-- CENTER: THE MAIN STUDIO GENERATOR CARD -->
-            <div class="lg:col-span-8 bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 md:p-10 shadow-premium">
-                
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-                    
-                    <!-- SISI KIRI CONTROLLER: Input & Konfigurasi Estetis -->
-                    <div class="md:col-span-7 space-y-6">
-                        
-                        <div class="border-b border-slate-100 pb-4">
-                            <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                                <span class="w-6 h-6 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-extrabold">1</span>
-                                Konfigurasi Konten & Desain
-                            </h2>
-                            <p class="text-xs text-slate-500 mt-1">Masukkan data tujuan, sesuaikan warna & gradasi, sematkan logo, dan pasang bingkai eksklusif.</p>
-                        </div>
-
-                        <!-- Presets Tipe Tautan Cepat -->
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Tipe Konten Cepat</label>
-                            <div class="grid grid-cols-3 gap-2">
-                                <button type="button" onclick="setPreset('url')" id="btn-preset-url" class="py-2 px-3 rounded-xl border border-indigo-200 bg-indigo-50/70 text-indigo-700 text-xs font-bold flex items-center justify-center gap-1.5 transition">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
-                                    Website URL
-                                </button>
-                                <button type="button" onclick="setPreset('wa')" id="btn-preset-wa" class="py-2 px-3 rounded-xl border border-slate-200 hover:border-slate-300 text-slate-600 text-xs font-semibold flex items-center justify-center gap-1.5 transition">
-                                    <svg class="w-3.5 h-3.5 text-emerald-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.149.929 3.182 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.768-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.199.534 1.286.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.182-.077.357.101.174.453.748.971 1.21.668.594 1.232.779 1.406.866.173.087.275.072.376-.043.101-.116.433-.506.549-.679.116-.173.231-.145.39-.087.159.058 1.012.477 1.185.564.173.087.289.13.332.202.043.072.043.42-.101.825z"/></svg>
-                                    WhatsApp
-                                </button>
-                                <button type="button" onclick="setPreset('text')" id="btn-preset-text" class="py-2 px-3 rounded-xl border border-slate-200 hover:border-slate-300 text-slate-600 text-xs font-semibold flex items-center justify-center gap-1.5 transition">
-                                    <svg class="w-3.5 h-3.5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
-                                    Teks Bebas
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Input Field URL / Text -->
-                        <div>
-                            <div class="flex items-center justify-between mb-2">
-                                <label for="qr-text" class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1">
-                                    Tautan URL / Isi Pesan
-                                    <span class="text-rose-500">*</span>
-                                </label>
-                                <span class="text-[11px] text-slate-400" id="char-counter">0 karakter</span>
-                            </div>
-                            <div class="relative rounded-2xl shadow-sm">
-                                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                                    <svg id="input-icon" class="w-5 h-5 text-indigo-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                                    </svg>
-                                </div>
-                                <input 
-                                    type="text" 
-                                    id="qr-text" 
-                                    value="https://wa.me/6281234567890" 
-                                    placeholder="Contoh: https://domainanda.com atau https://wa.me" 
-                                    class="w-full pl-11 pr-10 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-800 placeholder-slate-400 transition-all duration-200 focus:bg-white focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
-                                    oninput="updateCharCount()"
-                                    onkeydown="if(event.key==='Enter') generateQR()"
-                                >
-                                <button type="button" onclick="clearInput()" title="Bersihkan input" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 transition">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                                </button>
-                            </div>
-                            <p class="text-[11px] text-slate-400 mt-1.5 flex items-center gap-1">
-                                <svg class="w-3.5 h-3.5 text-indigo-400 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                Rekomendasi: Gunakan awalan protokol lengkap seperti <span class="font-mono-code text-indigo-600">https://</span>
-                            </p>
-                        </div>
-
-                        <!-- Palet & Pemilihan Warna Elegan DENGAN PILIHAN GRADASI (GRADIENT DOTS) -->
-                        <div class="bg-slate-50/80 border border-slate-200/70 rounded-2xl p-4 space-y-4">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold uppercase tracking-wider text-slate-700 block">Kustomisasi Warna Presisi</span>
-                                <!-- Mode Selector: Solid vs Gradasi -->
-                                <div class="flex items-center p-0.5 bg-slate-200/80 rounded-xl text-[11px] font-semibold">
-                                    <button type="button" id="tab-color-solid" onclick="setColorMode('solid')" class="px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs font-bold transition">
-                                        Warna Solid
-                                    </button>
-                                    <button type="button" id="tab-color-gradient" onclick="setColorMode('gradient')" class="px-2.5 py-1 rounded-lg text-slate-600 hover:text-indigo-600 font-semibold transition flex items-center gap-1">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
-                                        Gradasi (Gradient)
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <!-- MODE SOLID VIEW -->
-                            <div id="panel-color-solid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div class="flex items-center justify-between p-2.5 bg-white border border-slate-200 rounded-xl shadow-xs">
-                                    <div>
-                                        <div class="text-xs font-bold text-slate-800">Warna QR (Dots)</div>
-                                        <div id="hex-dark-label" class="text-[11px] font-mono-code text-slate-500">#0f172a</div>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input 
-                                            type="color" 
-                                            id="color-dark" 
-                                            value="#0f172a" 
-                                            onchange="syncColorLabel('dark')"
-                                            class="w-9 h-9 rounded-lg border border-slate-200 cursor-pointer shadow-sm p-0 bg-transparent"
-                                        >
-                                    </div>
-                                </div>
-
-                                <div class="flex items-center justify-between p-2.5 bg-white border border-slate-200 rounded-xl shadow-xs">
-                                    <div>
-                                        <div class="text-xs font-bold text-slate-800">Warna Latar (BG)</div>
-                                        <div id="hex-light-label" class="text-[11px] font-mono-code text-slate-500">#ffffff</div>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <input 
-                                            type="color" 
-                                            id="color-light" 
-                                            value="#ffffff" 
-                                            onchange="syncColorLabel('light')"
-                                            class="w-9 h-9 rounded-lg border border-slate-200 cursor-pointer shadow-sm p-0 bg-transparent"
-                                        >
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- MODE GRADIENT VIEW (KONTROL GRADASI WARNA) -->
-                            <div id="panel-color-gradient" class="hidden space-y-3">
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                    <!-- Start Color -->
-                                    <div class="flex items-center justify-between p-2.5 bg-white border border-slate-200 rounded-xl shadow-xs">
-                                        <div>
-                                            <div class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                                                <span class="w-2 h-2 rounded-full bg-indigo-500"></span> Warna Gradasi Awal
-                                            </div>
-                                            <div id="hex-grad-start-label" class="text-[11px] font-mono-code text-slate-500">#4f46e5</div>
-                                        </div>
-                                        <input 
-                                            type="color" 
-                                            id="color-grad-start" 
-                                            value="#4f46e5" 
-                                            onchange="syncGradColor('start')"
-                                            class="w-9 h-9 rounded-lg border border-slate-200 cursor-pointer shadow-sm p-0 bg-transparent"
-                                        >
-                                    </div>
-
-                                    <!-- End Color -->
-                                    <div class="flex items-center justify-between p-2.5 bg-white border border-slate-200 rounded-xl shadow-xs">
-                                        <div>
-                                            <div class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                                                <span class="w-2 h-2 rounded-full bg-pink-500"></span> Warna Gradasi Akhir
-                                            </div>
-                                            <div id="hex-grad-end-label" class="text-[11px] font-mono-code text-slate-500">#ec4899</div>
-                                        </div>
-                                        <input 
-                                            type="color" 
-                                            id="color-grad-end" 
-                                            value="#ec4899" 
-                                            onchange="syncGradColor('end')"
-                                            class="w-9 h-9 rounded-lg border border-slate-200 cursor-pointer shadow-sm p-0 bg-transparent"
-                                        >
-                                    </div>
-                                </div>
-
-                                <!-- Arah Gradasi (Direction) & Presets -->
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                                    <div>
-                                        <label class="block text-[11px] font-bold text-slate-700 mb-1">Arah Gradasi (Direction):</label>
-                                        <select id="grad-direction" onchange="generateQR()" class="w-full py-1.5 px-2 bg-white border border-slate-200 rounded-xl text-xs font-medium text-slate-700 focus:outline-none focus:border-indigo-500">
-                                            <option value="diagonal">Diagonal 45° (Modern)</option>
-                                            <option value="vertical">Vertikal (Top ➔ Down)</option>
-                                            <option value="horizontal">Horizontal (Left ➔ Right)</option>
-                                            <option value="radial">Radial (Pusat Melingkar)</option>
-                                        </select>
-                                    </div>
-
-                                    <div>
-                                        <label class="block text-[11px] font-bold text-slate-700 mb-1">Preset Gradasi Estetis:</label>
-                                        <div class="flex items-center gap-1.5 pt-0.5">
-                                            <button type="button" onclick="applyGradPreset('#4f46e5', '#ec4899')" title="Sunset Violet" class="w-6 h-6 rounded-lg bg-gradient-to-tr from-indigo-600 to-pink-500 border border-white shadow-xs ring-1 ring-slate-300"></button>
-                                            <button type="button" onclick="applyGradPreset('#0284c7', '#2563eb')" title="Ocean Blue" class="w-6 h-6 rounded-lg bg-gradient-to-tr from-sky-600 to-blue-600 border border-white shadow-xs ring-1 ring-slate-300"></button>
-                                            <button type="button" onclick="applyGradPreset('#059669', '#10b981')" title="Emerald Forest" class="w-6 h-6 rounded-lg bg-gradient-to-tr from-emerald-600 to-teal-400 border border-white shadow-xs ring-1 ring-slate-300"></button>
-                                            <button type="button" onclick="applyGradPreset('#7c3aed', '#06b6d4')" title="Cyberpunk Neon" class="w-6 h-6 rounded-lg bg-gradient-to-tr from-violet-600 to-cyan-500 border border-white shadow-xs ring-1 ring-slate-300"></button>
-                                            <button type="button" onclick="applyGradPreset('#f97316', '#e11d48')" title="Solar Flare" class="w-6 h-6 rounded-lg bg-gradient-to-tr from-orange-500 to-rose-600 border border-white shadow-xs ring-1 ring-slate-300"></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center gap-2 pt-1 border-t border-slate-200/60">
-                                <span class="text-[11px] text-slate-400 font-medium">Tema Cepat:</span>
-                                <div class="flex items-center gap-1.5">
-                                    <button type="button" onclick="applyColorTheme('#0f172a', '#ffffff')" title="Slate Dark (Klasik)" class="w-5 h-5 rounded-full bg-slate-900 border border-white shadow-xs ring-1 ring-slate-300"></button>
-                                    <button type="button" onclick="applyColorTheme('#4338ca', '#ffffff')" title="Indigo Premium" class="w-5 h-5 rounded-full bg-indigo-700 border border-white shadow-xs ring-1 ring-slate-300"></button>
-                                    <button type="button" onclick="applyColorTheme('#047857', '#ffffff')" title="Emerald Trust" class="w-5 h-5 rounded-full bg-emerald-700 border border-white shadow-xs ring-1 ring-slate-300"></button>
-                                    <button type="button" onclick="applyColorTheme('#1e293b', '#f8fafc')" title="Contrast Slate" class="w-5 h-5 rounded-full bg-slate-800 border border-white shadow-xs ring-1 ring-slate-300"></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- LOGO / IKON BRAND DI TENGAH (CUSTOM LOGO CENTER) -->
-                        <div class="bg-indigo-50/40 border border-indigo-100 rounded-2xl p-4 space-y-4">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-800">Logo / Ikon Brand di Tengah</h3>
-                                        <p class="text-[11px] text-slate-500">Sematkan logo di tengah QR dengan proteksi margin putih</p>
-                                    </div>
-                                </div>
-                                <span class="text-[10px] font-bold text-indigo-700 bg-indigo-100/80 px-2.5 py-0.5 rounded-full border border-indigo-200">
-                                    Level H Protection
-                                </span>
-                            </div>
-
-                            <!-- Upload Box / Drag & Drop -->
-                            <div class="relative border-2 border-dashed border-indigo-200 hover:border-indigo-400 bg-white/70 rounded-2xl p-4 text-center transition cursor-pointer group" onclick="document.getElementById('logo-file-input').click()">
-                                <input type="file" id="logo-file-input" accept="image/png, image/jpeg, image/svg+xml, image/webp" class="hidden" onchange="handleLogoUpload(event)">
-                                
-                                <div id="logo-upload-prompt" class="flex flex-col items-center">
-                                    <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-                                    </div>
-                                    <span class="text-xs font-bold text-indigo-600">Klik untuk pilih gambar <span class="text-slate-600 font-normal">atau seret file ke sini</span></span>
-                                    <span class="text-[10px] text-slate-400 mt-0.5">Mendukung format PNG transparan, JPG, SVG, WebP (Maks. 5MB)</span>
-                                </div>
-
-                                <!-- Logo Preview Box saat terpasang -->
-                                <div id="logo-preview-active" class="hidden flex items-center justify-between p-1">
-                                    <div class="flex items-center gap-3">
-                                        <img id="logo-preview-thumb" src="" alt="Thumbnail" class="w-11 h-11 object-contain p-1 rounded-xl bg-white border border-slate-200 shadow-xs">
-                                        <div class="text-left">
-                                            <div id="logo-filename" class="text-xs font-bold text-slate-800 truncate max-w-[170px]">logo.png</div>
-                                            <div class="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
-                                                <span>✓</span> Siap ditempatkan di tengah QR
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button type="button" onclick="event.stopPropagation(); removeCustomLogo();" class="text-xs font-semibold text-rose-500 hover:text-rose-700 p-2 rounded-lg hover:bg-rose-50 transition">
-                                        Hapus
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Preset Ikon Cepat jika belum ada file -->
-                            <div class="flex items-center justify-between pt-1">
-                                <span class="text-[11px] text-slate-500 font-medium">Pilih Preset Ikon Cepat:</span>
-                                <div class="flex items-center gap-1.5">
-                                    <button type="button" onclick="applyPresetIcon('wa')" title="WhatsApp Logo" class="px-2 py-1 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 text-[10px] font-bold border border-emerald-200 transition flex items-center gap-1">
-                                        <span>💬</span> WA
-                                    </button>
-                                    <button type="button" onclick="applyPresetIcon('ig')" title="Instagram Logo" class="px-2 py-1 rounded-lg bg-pink-50 text-pink-700 hover:bg-pink-100 text-[10px] font-bold border border-pink-200 transition flex items-center gap-1">
-                                        <span>📷</span> IG
-                                    </button>
-                                    <button type="button" onclick="applyPresetIcon('web')" title="Website Globe" class="px-2 py-1 rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-100 text-[10px] font-bold border border-indigo-200 transition flex items-center gap-1">
-                                        <span>🌐</span> Web
-                                    </button>
-                                    <button type="button" onclick="applyPresetIcon('link')" title="Tautan Chain" class="px-2 py-1 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 text-[10px] font-bold border border-slate-200 transition flex items-center gap-1">
-                                        <span>🔗</span> Tautan
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Pengaturan Ukuran & Bentuk Padding Logo -->
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-indigo-100/70">
-                                <div>
-                                    <label class="block text-[11px] font-bold text-slate-700 mb-1">Bentuk Padding Logo:</label>
-                                    <div class="grid grid-cols-2 gap-2">
-                                        <button type="button" id="btn-shape-circle" onclick="setLogoShape('circle')" class="py-1.5 px-2 rounded-xl text-xs font-bold border border-indigo-300 bg-white text-indigo-700 shadow-xs transition flex items-center justify-center gap-1">
-                                            <span class="w-3 h-3 rounded-full border border-indigo-500"></span> Lingkaran
-                                        </button>
-                                        <button type="button" id="btn-shape-square" onclick="setLogoShape('square')" class="py-1.5 px-2 rounded-xl text-xs font-semibold border border-slate-200 bg-slate-50 text-slate-600 transition flex items-center justify-center gap-1">
-                                            <span class="w-3 h-3 rounded-sm border border-slate-400"></span> Persegi
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <div class="flex items-center justify-between mb-1">
-                                        <label class="text-[11px] font-bold text-slate-700">Ukuran Logo:</label>
-                                        <span id="logo-size-label" class="text-[10px] font-mono-code text-indigo-600 font-bold">22%</span>
-                                    </div>
-                                    <input type="range" id="logo-size-slider" min="15" max="28" value="22" oninput="updateLogoSize(this.value)" class="w-full h-1.5 bg-indigo-100 rounded-lg cursor-pointer">
-                                    <div class="flex justify-between text-[9px] text-slate-400 mt-0.5">
-                                        <span>15% (Kecil)</span>
-                                        <span class="text-indigo-600 font-bold">Standar Aman Scan</span>
-                                        <span>28% (Maksimal)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- BORDER / FRAME KHUSUS DI SEKELILING QR CODE -->
-                        <div class="bg-violet-50/40 border border-violet-100 rounded-2xl p-4 space-y-4">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-7 h-7 rounded-lg bg-violet-600 text-white flex items-center justify-center text-xs">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM8 4v16m8-16v16M4 8h16M4 16h16"/></svg>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-800">Border & Frame Sekeliling QR</h3>
-                                        <p class="text-[11px] text-slate-500">Beri bingkai kontras & badge CTA estetik pada hasil render</p>
-                                    </div>
-                                </div>
-                                <span class="text-[10px] font-bold text-violet-700 bg-violet-100/80 px-2.5 py-0.5 rounded-full border border-violet-200">
-                                    Custom Frame
-                                </span>
-                            </div>
-
-                            <!-- Pilihan Gaya Frame -->
-                            <div>
-                                <label class="block text-[11px] font-bold text-slate-700 mb-1.5">Gaya Bingkai (Frame Style):</label>
-                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                                    <button type="button" id="frame-opt-none" onclick="setFrameStyle('none')" class="py-2 px-2.5 rounded-xl border border-violet-300 bg-white text-violet-700 text-xs font-bold shadow-xs transition flex flex-col items-center">
-                                        <span>🚫</span>
-                                        <span class="mt-0.5">Polos</span>
-                                    </button>
-                                    <button type="button" id="frame-opt-border" onclick="setFrameStyle('border')" class="py-2 px-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white text-slate-600 text-xs font-semibold transition flex flex-col items-center">
-                                        <span>🔲</span>
-                                        <span class="mt-0.5">Line Border</span>
-                                    </button>
-                                    <button type="button" id="frame-opt-card" onclick="setFrameStyle('card')" class="py-2 px-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white text-slate-600 text-xs font-semibold transition flex flex-col items-center">
-                                        <span>🖼️</span>
-                                        <span class="mt-0.5">Card Solid</span>
-                                    </button>
-                                    <button type="button" id="frame-opt-badge" onclick="setFrameStyle('badge')" class="py-2 px-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white text-slate-600 text-xs font-semibold transition flex flex-col items-center">
-                                        <span>🏷️</span>
-                                        <span class="mt-0.5">SCAN ME</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Panel Opsi Detail Frame -->
-                            <div id="frame-custom-panel" class="hidden space-y-3 pt-3 border-t border-violet-100">
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                    <!-- Warna Frame -->
-                                    <div class="flex items-center justify-between p-2.5 bg-white border border-slate-200 rounded-xl shadow-xs">
-                                        <div>
-                                            <div class="text-xs font-bold text-slate-800">Warna Frame</div>
-                                            <div id="hex-frame-label" class="text-[11px] font-mono-code text-slate-500">#4f46e5</div>
-                                        </div>
-                                        <input 
-                                            type="color" 
-                                            id="color-frame" 
-                                            value="#4f46e5" 
-                                            onchange="syncFrameColor()"
-                                            class="w-9 h-9 rounded-lg border border-slate-200 cursor-pointer shadow-sm p-0 bg-transparent"
-                                        >
-                                    </div>
-
-                                    <!-- Teks Badge CTA -->
-                                    <div id="frame-badge-text-box" class="p-2.5 bg-white border border-slate-200 rounded-xl shadow-xs">
-                                        <label class="block text-xs font-bold text-slate-800 mb-1">Teks Badge CTA</label>
-                                        <input 
-                                            type="text" 
-                                            id="frame-badge-text" 
-                                            value="SCAN ME" 
-                                            maxlength="16"
-                                            class="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold uppercase text-slate-800 tracking-wider"
-                                            oninput="syncFramePreview()"
-                                        >
-                                    </div>
-                                </div>
-
-                                <!-- Slider Ketebalan Frame Border -->
-                                <div>
-                                    <div class="flex items-center justify-between mb-1">
-                                        <label class="text-[11px] font-bold text-slate-700">Ketebalan Bingkai (Frame Width):</label>
-                                        <span id="frame-width-label" class="text-[10px] font-mono-code text-violet-600 font-bold">12px</span>
-                                    </div>
-                                    <input type="range" id="frame-width-slider" min="6" max="24" value="12" oninput="updateFrameWidth(this.value)" class="w-full h-1.5 bg-violet-100 rounded-lg cursor-pointer">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Tombol Eksekusi "Perbarui Kode QR" -->
-                        <div>
-                            <button 
-                                id="btn-generate"
-                                onclick="generateQR()" 
-                                class="w-full relative group overflow-hidden bg-gradient-to-r from-indigo-600 via-indigo-700 to-indigo-800 hover:from-indigo-700 hover:to-indigo-900 text-white font-bold py-4 px-6 rounded-2xl text-sm shadow-md shadow-indigo-500/25 transition-all duration-200 active:scale-[0.99] flex items-center justify-center gap-2"
-                            >
-                                <svg id="btn-spinner" class="hidden animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                                
-                                <span id="btn-text" class="flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-indigo-200 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                                    </svg>
-                                    Perbarui Kode QR
-                                </span>
-                            </button>
-                        </div>
-
-                    </div>
-
-                    <!-- SISI KANAN PREVIEW CARD: Live Card Studio -->
-                    <div class="md:col-span-5 flex flex-col items-center">
-                        
-                        <div class="w-full bg-slate-900 border border-slate-800 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden flex flex-col items-center">
-                            
-                            <div class="absolute top-0 right-0 -mr-16 -mt-16 w-40 h-40 bg-indigo-500/20 rounded-full blur-2xl pointer-events-none"></div>
-                            
-                            <div class="w-full flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
-                                <div class="flex items-center gap-2">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                    <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Live Preview</span>
-                                </div>
-                                <span class="text-[10px] font-mono-code text-slate-400 bg-slate-800 px-2 py-0.5 rounded-full">PNG Studio</span>
-                            </div>
-
-                            <!-- PREVIEW CANVAS STAGE -->
-                            <div class="relative w-full max-w-[280px] min-h-[280px] bg-white rounded-2xl p-4 shadow-2xl flex flex-col items-center justify-center transition-all duration-300 ring-4 ring-slate-800/80">
-                                
-                                <div id="qr-placeholder" class="flex flex-col items-center justify-center text-center p-4">
-                                    <div class="w-16 h-16 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-500 mb-3 animate-float-gentle">
-                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
-                                            <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
-                                            <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
-                                            <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
-                                            <path d="M14 14h3v3h-3zM17 17h4v4h-4zM14 20h3v1h-3z"></path>
-                                        </svg>
-                                    </div>
-                                    <p class="text-xs font-bold text-slate-700">Preview Kode QR Anda</p>
-                                    <p class="text-[11px] text-slate-400 mt-1 max-w-[170px] leading-relaxed">
-                                        Klik tombol "Perbarui Kode QR" untuk merender visual
-                                    </p>
-                                </div>
-
-                                <div id="qr-loading-shimmer" class="hidden absolute inset-0 bg-white/95 rounded-2xl flex flex-col items-center justify-center z-10 backdrop-blur-xs">
-                                    <div class="w-12 h-12 rounded-full border-3 border-indigo-100 border-t-indigo-600 animate-spin"></div>
-                                    <span class="text-xs font-bold text-indigo-700 mt-3">Mengonstruksi Matriks & Gradasi...</span>
-                                    <span class="text-[10px] text-slate-400 mt-0.5 font-mono-code">Reed-Solomon Level H</span>
-                                </div>
-
-                                <!-- Wrapper Render Akhir: Menggabungkan QR Code, Gradasi Dots, Logo Tengah, dan Frame -->
-                                <div id="qr-render-stage" class="hidden flex flex-col items-center justify-center transition-opacity duration-300">
-                                    <canvas id="qr-composite-canvas" class="rounded-xl max-w-full h-auto shadow-sm block"></canvas>
-                                </div>
-
-                                <!-- Hidden Div Asli QRCode.js untuk kalkulasi matriks -->
-                                <div id="qrcode-raw" class="hidden"></div>
-
-                            </div>
-
-                            <div class="w-full mt-4 pt-3 border-t border-slate-800 text-center">
-                                <div class="text-[11px] text-slate-400 flex items-center justify-center gap-2">
-                                    <span>Format: <strong class="text-slate-200">PNG Resolusi Tinggi</strong></span>
-                                    <span class="text-slate-600">•</span>
-                                    <span>Koreksi: <strong class="text-slate-200">Level H (High 30%)</strong></span>
-                                </div>
-                            </div>
-
-                            <div class="w-full mt-4">
-                                <button 
-                                    id="download-btn" 
-                                    onclick="downloadQR()" 
-                                    class="hidden w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-3.5 px-4 rounded-xl text-xs tracking-wide shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all duration-200 flex items-center justify-center gap-2 active:scale-95"
-                                >
-                                    <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                    </svg>
-                                    Unduh Gambar (PNG Kualitas HD)
-                                </button>
-                                
-                                <div id="auto-tip" class="hidden text-center mt-2">
-                                    <span class="text-[10px] text-emerald-400">✓ Siap dipindai kamera HP & mesin barcode</span>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Card Keamanan & Privasi -->
-                        <div class="mt-4 p-3 rounded-xl bg-slate-100/80 border border-slate-200/80 text-[11px] text-slate-500 flex items-start gap-2.5">
-                            <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                            </svg>
-                            <span>Data diproses secara lokal di browser Anda (*Client-side*). Tidak ada data pribadi atau tautan yang disimpan di server luar.</span>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- RIGHT SPONSORED / ADSENSE SLOT -->
-            <aside class="hidden lg:block lg:col-span-2">
-                <div class="sticky top-24 bg-white/80 backdrop-blur border border-slate-200/80 rounded-2xl p-4 shadow-subtle text-center group transition hover:border-slate-300">
-                    <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
-                        <span class="text-[10px] font-bold tracking-wider uppercase text-slate-400">Sponsor</span>
-                        <span class="text-[9px] text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">Ad</span>
-                    </div>
-                    <div class="min-h-[500px] w-full flex flex-col items-center justify-center rounded-xl bg-slate-50/70 border border-dashed border-slate-200 p-3 text-slate-400">
-                        <svg class="w-8 h-8 text-slate-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <rect x="2" y="3" width="20" height="14" rx="2" stroke-width="1.5"></rect>
-                            <line x1="8" y1="21" x2="16" y2="21" stroke-width="1.5"></line>
-                            <line x1="12" y1="17" x2="12" y2="21" stroke-width="1.5"></line>
-                        </svg>
-                        <span class="text-xs font-semibold text-slate-500">Iklan Responsif</span>
-                        <span class="text-[10px] text-slate-400 mt-1">160x600 Skyscraper Slot</span>
-                        <div class="mt-6 p-2 rounded bg-white/80 border border-slate-100 text-[10px] text-slate-500 leading-tight">
-                            Penempatan optimal tanpa mengganggu interaksi form
-                        </div>
-                    </div>
-                </div>
-            </aside>
-
-        </div>
-
-        <!-- FITUR KEUNGGULAN -->
-        <section class="mt-16 pt-12 border-t border-slate-200/70">
-            <div class="text-center max-w-xl mx-auto mb-8">
-                <h3 class="text-sm font-bold uppercase tracking-wider text-indigo-600">Standar Industri</h3>
-                <h4 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">Mengapa Memilih Advanced QR Generator?</h4>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-subtle hover:shadow-md transition">
-                    <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold mb-4">
-                        ⚡
-                    </div>
-                    <h5 class="font-bold text-slate-900 text-base mb-1.5">Bebas Masa Berlaku</h5>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        Kode QR statis yang dihasilkan tidak memiliki batas kedaluwarsa. Tautan langsung mengarah ke tujuan tanpa perantara pihak ketiga.
-                    </p>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-subtle hover:shadow-md transition">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold mb-4">
-                        🎯
-                    </div>
-                    <h5 class="font-bold text-slate-900 text-base mb-1.5">Kustomisasi Gradasi & Logo</h5>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        Sematkan logo brand di tengah QR dan warnai dots dengan gradasi modern kontras tinggi, tetap mudah dipindai oleh semua smartphone.
-                    </p>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-subtle hover:shadow-md transition">
-                    <div class="w-10 h-10 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center font-bold mb-4">
-                        🛡️
-                    </div>
-                    <h5 class="font-bold text-slate-900 text-base mb-1.5">Privasi Tanpa Log</h5>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        Seluruh pemrosesan grafis berlangsung 100% di browser komputer/smartphone Anda. Kami tidak merekam data, teks, maupun nomor kontak Anda.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- OFFICIAL PARTNERS & SPONSORS GRID -->
-        <section class="mt-16 pt-12 border-t border-slate-200/80">
-            <div class="text-center mb-8">
-                <p class="text-xs font-bold uppercase tracking-widest text-slate-400">Dipercaya untuk Integrasi Standar Terbuka</p>
-                <p class="text-sm font-semibold text-slate-600 mt-1">Official Partners & Kompatibilitas Ekosistem</p>
-            </div>
-
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 items-center justify-center max-w-5xl mx-auto">
-                <div class="p-4 rounded-xl bg-white border border-slate-200/60 shadow-xs flex items-center justify-center group transition-all duration-300 hover:border-indigo-300 hover:shadow-md">
-                    <span class="font-black text-slate-400 group-hover:text-amber-600 text-sm tracking-tighter filter grayscale group-hover:grayscale-0 transition flex items-center gap-1.5">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 11.2c-.3-2.1-2.1-3.7-4.3-3.7-.8 0-1.6.2-2.3.7-.8-1.5-2.4-2.6-4.3-2.6-2.6 0-4.7 2-4.9 4.6-1.8.4-3.1 2-3.1 3.9 0 2.2 1.8 4 4 4h14.7c1.8 0 3.3-1.5 3.3-3.3 0-1.6-1.2-3-2.8-3.3l-.3-.3z"/></svg>
-                        Cloudflare
-                    </span>
-                </div>
-
-                <div class="p-4 rounded-xl bg-white border border-slate-200/60 shadow-xs flex items-center justify-center group transition-all duration-300 hover:border-indigo-300 hover:shadow-md">
-                    <span class="font-extrabold text-slate-400 group-hover:text-rose-500 text-sm tracking-tight filter grayscale group-hover:grayscale-0 transition flex items-center gap-1.5">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-                        JSDelivr
-                    </span>
-                </div>
-
-                <div class="p-4 rounded-xl bg-white border border-slate-200/60 shadow-xs flex items-center justify-center group transition-all duration-300 hover:border-indigo-300 hover:shadow-md">
-                    <span class="font-bold text-slate-400 group-hover:text-emerald-600 text-sm tracking-tight filter grayscale group-hover:grayscale-0 transition flex items-center gap-1.5">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.08-1.33A9.95 9.95 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
-                        WhatsApp
-                    </span>
-                </div>
-
-                <div class="p-4 rounded-xl bg-white border border-slate-200/60 shadow-xs flex items-center justify-center group transition-all duration-300 hover:border-indigo-300 hover:shadow-md">
-                    <span class="font-extrabold text-slate-400 group-hover:text-blue-600 text-sm tracking-tight filter grayscale group-hover:grayscale-0 transition flex items-center gap-1">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 14.5h-2v-2h2v2zm0-4h-2V7h2v5.5z"/></svg>
-                        Analytics
-                    </span>
-                </div>
-
-                <div class="p-4 rounded-xl bg-white border border-slate-200/60 shadow-xs flex items-center justify-center group transition-all duration-300 hover:border-indigo-300 hover:shadow-md">
-                    <span class="font-bold text-slate-400 group-hover:text-slate-900 text-sm tracking-tight filter grayscale group-hover:grayscale-0 transition flex items-center gap-1.5">
-                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L24 22H0L12 1z"/></svg>
-                        Vercel Edge
-                    </span>
-                </div>
-
-                <div class="p-4 rounded-xl bg-white border border-slate-200/60 shadow-xs flex items-center justify-center group transition-all duration-300 hover:border-indigo-300 hover:shadow-md">
-                    <span class="font-bold text-slate-400 group-hover:text-indigo-600 text-xs tracking-wider uppercase filter grayscale group-hover:grayscale-0 transition flex items-center gap-1">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        ISO-18004
-                    </span>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- FOOTER RESMI & HAK CIPTA -->
-    <footer class="mt-16 border-t border-slate-200 bg-white/90 backdrop-blur py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-            <div class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
-                <span>&copy; <span id="current-year">2026</span> Advanced QR Code Generator Studio. Hak Cipta Dilindungi.</span>
-            </div>
-            <div class="flex items-center gap-6">
-                <a href="#privacy" onclick="alert('Privasi Terjamin: Layanan kami memproses pembuatan QR Code sepenuhnya pada memori peramban (client-side) tanpa menyimpan rekaman data tautan Anda.')" class="hover:text-indigo-600 transition">Kebijakan Privasi</a>
-                <a href="#terms" onclick="alert('Ketentuan Layanan: Kode QR yang dihasilkan bebas digunakan untuk keperluan komersial, materi cetak, maupun promosi digital secara cuma-cuma.')" class="hover:text-indigo-600 transition">Ketentuan Penggunaan</a>
-                <a href="#support" onclick="alert('Bantuan: Jika Anda mengalami kendala pemindaian, pastikan warna titik QR memiliki kontras yang jauh lebih gelap dibanding warna latar belakang.')" class="hover:text-indigo-600 transition">Bantuan & FAQ</a>
-            </div>
-        </div>
+    <!-- Footer Premium -->
+    <footer class="bg-slate-950 border-t border-slate-800/80 mt-16 py-6 text-center text-xs text-slate-500 w-full">
+        <p>&copy; 2026 Advanced QR Code Generator. All Rights Reserved.</p>
+        <p class="mt-1 text-slate-600">Dikembangkan di ekosistem cloud terdistribusi untuk jaminan akses global 24/7.</p>
     </footer>
 
-    <!-- JAVASCRIPT LOGIKA UTAMA LENGKAP -->
+    <!-- LOGIKA SISTEM JAVASCRIPT YANG SUDAH DI-PERBAIKI TOTAL -->
     <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+        let qrcodeInstance = null;
 
-        // State Global Aplikasi
-        let currentColorMode = 'solid'; // 'solid' | 'gradient'
-        let currentLogoImage = null;
-        let currentLogoShape = 'circle'; // 'circle' | 'square'
-        let currentLogoSizePercent = 22; // 15% - 28%
-        let currentFrameStyle = 'none'; // 'none' | 'border' | 'card' | 'badge'
-        let currentFrameWidth = 12;
-        let qrCodeInstance = null;
-
-        function updateCharCount() {
-            const input = document.getElementById("qr-text");
-            const counter = document.getElementById("char-counter");
-            counter.textContent = input.value.length + " karakter";
-        }
-        updateCharCount();
-
-        function clearInput() {
-            const input = document.getElementById("qr-text");
-            input.value = "";
-            input.focus();
-            updateCharCount();
-        }
-
-        // ==========================================
-        // HANDLER WARNA & GRADASI
-        // ==========================================
-        function setColorMode(mode) {
-            currentColorMode = mode;
-            const btnSolid = document.getElementById('tab-color-solid');
-            const btnGrad = document.getElementById('tab-color-gradient');
-            const panelSolid = document.getElementById('panel-color-solid');
-            const panelGrad = document.getElementById('panel-color-gradient');
-
-            if (mode === 'solid') {
-                btnSolid.className = "px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs font-bold transition";
-                btnGrad.className = "px-2.5 py-1 rounded-lg text-slate-600 hover:text-indigo-600 font-semibold transition flex items-center gap-1";
-                panelSolid.classList.remove('hidden');
-                panelGrad.classList.add('hidden');
-            } else {
-                btnGrad.className = "px-2.5 py-1 rounded-lg bg-white text-indigo-700 shadow-xs font-bold transition flex items-center gap-1";
-                btnSolid.className = "px-2.5 py-1 rounded-lg text-slate-600 hover:text-indigo-600 font-semibold transition";
-                panelGrad.classList.remove('hidden');
-                panelSolid.classList.add('hidden');
-            }
-            generateQR();
-        }
-
-        function syncColorLabel(type) {
-            if (type === 'dark') {
-                const val = document.getElementById("color-dark").value;
-                document.getElementById("hex-dark-label").textContent = val;
-            } else {
-                const val = document.getElementById("color-light").value;
-                document.getElementById("hex-light-label").textContent = val;
-            }
-            generateQR();
-        }
-
-        function syncGradColor(type) {
-            if (type === 'start') {
-                const val = document.getElementById("color-grad-start").value;
-                document.getElementById("hex-grad-start-label").textContent = val;
-            } else {
-                const val = document.getElementById("color-grad-end").value;
-                document.getElementById("hex-grad-end-label").textContent = val;
-            }
-            generateQR();
-        }
-
-        function applyGradPreset(start, end) {
-            setColorMode('gradient');
-            document.getElementById("color-grad-start").value = start;
-            document.getElementById("color-grad-end").value = end;
-            syncGradColor('start');
-            syncGradColor('end');
-        }
-
-        function applyColorTheme(darkColor, lightColor) {
-            setColorMode('solid');
-            document.getElementById("color-dark").value = darkColor;
-            document.getElementById("color-light").value = lightColor;
-            syncColorLabel('dark');
-            syncColorLabel('light');
-        }
-
-        function setPreset(type) {
-            const input = document.getElementById("qr-text");
-            const buttons = ['btn-preset-url', 'btn-preset-wa', 'btn-preset-text'];
-            
-            buttons.forEach(id => {
-                const btn = document.getElementById(id);
-                btn.className = "py-2 px-3 rounded-xl border border-slate-200 hover:border-slate-300 text-slate-600 text-xs font-semibold flex items-center justify-center gap-1.5 transition";
-            });
-
-            const activeBtn = document.getElementById('btn-preset-' + type);
-            activeBtn.className = "py-2 px-3 rounded-xl border border-indigo-200 bg-indigo-50/70 text-indigo-700 text-xs font-bold flex items-center justify-center gap-1.5 transition";
-
-            if (type === 'url') {
-                input.value = "https://domainanda.com";
-            } else if (type === 'wa') {
-                input.value = "https://wa.me/6281234567890?text=Halo%20Admin";
-            } else if (type === 'text') {
-                input.value = "Halo! Ini adalah pesan teks rahasia.";
-            }
-            input.focus();
-            updateCharCount();
-        }
-
-        // ==========================================
-        // HANDLER LOGO DI TENGAH
-        // ==========================================
-        function handleLogoUpload(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            if (file.size > 5 * 1024 * 1024) {
-                alert("Ukuran file logo terlalu besar! Maksimal 5MB.");
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const img = new Image();
-                img.onload = function() {
-                    currentLogoImage = img;
-                    document.getElementById('logo-preview-thumb').src = event.target.result;
-                    document.getElementById('logo-filename').textContent = file.name;
-                    document.getElementById('logo-upload-prompt').classList.add('hidden');
-                    document.getElementById('logo-preview-active').classList.remove('hidden');
-                    generateQR();
-                };
-                img.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function removeCustomLogo() {
-            currentLogoImage = null;
-            document.getElementById('logo-file-input').value = '';
-            document.getElementById('logo-upload-prompt').classList.remove('hidden');
-            document.getElementById('logo-preview-active').classList.add('hidden');
-            generateQR();
-        }
-
-        function setLogoShape(shape) {
-            currentLogoShape = shape;
-            const btnCircle = document.getElementById('btn-shape-circle');
-            const btnSquare = document.getElementById('btn-shape-square');
-
-            if (shape === 'circle') {
-                btnCircle.className = "py-1.5 px-2 rounded-xl text-xs font-bold border border-indigo-300 bg-white text-indigo-700 shadow-xs transition flex items-center justify-center gap-1";
-                btnSquare.className = "py-1.5 px-2 rounded-xl text-xs font-semibold border border-slate-200 bg-slate-50 text-slate-600 transition flex items-center justify-center gap-1";
-            } else {
-                btnSquare.className = "py-1.5 px-2 rounded-xl text-xs font-bold border border-indigo-300 bg-white text-indigo-700 shadow-xs transition flex items-center justify-center gap-1";
-                btnCircle.className = "py-1.5 px-2 rounded-xl text-xs font-semibold border border-slate-200 bg-slate-50 text-slate-600 transition flex items-center justify-center gap-1";
-            }
-            if (currentLogoImage) generateQR();
-        }
-
-        function updateLogoSize(val) {
-            currentLogoSizePercent = parseInt(val, 10);
-            document.getElementById('logo-size-label').textContent = val + '%';
-            if (currentLogoImage) generateQR();
-        }
-
-        function applyPresetIcon(type) {
-            let svgMarkup = '';
-            if (type === 'wa') {
-                svgMarkup = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#25D366"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.149.929 3.182 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.768-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.199.534 1.286.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.087-.179.182-.077.357.101.174.453.748.971 1.21.668.594 1.232.779 1.406.866.173.087.275.072.376-.043.101-.116.433-.506.549-.679.116-.173.231-.145.39-.087.159.058 1.012.477 1.185.564.173.087.289.13.332.202.043.072.043.42-.101.825z"/></svg>`;
-            } else if (type === 'ig') {
-                svgMarkup = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#E1306C"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>`;
-            } else if (type === 'web') {
-                svgMarkup = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4F46E5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-10 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`;
-            } else {
-                svgMarkup = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0F172A"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>`;
-            }
-
-            const blob = new Blob([svgMarkup], { type: 'image/svg+xml' });
-            const url = URL.createObjectURL(blob);
-            const img = new Image();
-            img.onload = function() {
-                currentLogoImage = img;
-                document.getElementById('logo-preview-thumb').src = url;
-                document.getElementById('logo-filename').textContent = `Preset_${type.toUpperCase()}.svg`;
-                document.getElementById('logo-upload-prompt').classList.add('hidden');
-                document.getElementById('logo-preview-active').classList.remove('hidden');
-                generateQR();
-            };
-            img.src = url;
-        }
-
-        // ==========================================
-        // HANDLER BORDER & FRAME KHUSUS
-        // ==========================================
-        function setFrameStyle(style) {
-            currentFrameStyle = style;
-            const styles = ['none', 'border', 'card', 'badge'];
-            
-            styles.forEach(s => {
-                const btn = document.getElementById('frame-opt-' + s);
-                if (s === style) {
-                    btn.className = "py-2 px-2.5 rounded-xl border border-violet-300 bg-white text-violet-700 text-xs font-bold shadow-xs transition flex flex-col items-center";
-                } else {
-                    btn.className = "py-2 px-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white text-slate-600 text-xs font-semibold transition flex flex-col items-center";
-                }
-            });
-
-            const panel = document.getElementById('frame-custom-panel');
-            const badgeBox = document.getElementById('frame-badge-text-box');
-
-            if (style === 'none') {
-                panel.classList.add('hidden');
-            } else {
-                panel.classList.remove('hidden');
-                if (style === 'badge') {
-                    badgeBox.classList.remove('hidden');
-                } else {
-                    badgeBox.classList.add('hidden');
-                }
-            }
-
-            generateQR();
-        }
-
-        function syncFrameColor() {
-            const val = document.getElementById('color-frame').value;
-            document.getElementById('hex-frame-label').textContent = val;
-            generateQR();
-        }
-
-        function syncFramePreview() {
-            generateQR();
-        }
-
-        function updateFrameWidth(val) {
-            currentFrameWidth = parseInt(val, 10);
-            document.getElementById('frame-width-label').textContent = val + 'px';
-            generateQR();
-        }
-
-        // ==========================================
-        // GENERASI & COMPOSITING CANVAS UTAMA
-        // ==========================================
         function generateQR() {
-            const textInput = document.getElementById("qr-text").value;
-            if (!textInput || !textInput.trim()) {
-                alert("Silakan masukkan teks atau tautan URL terlebih dahulu!");
-                document.getElementById("qr-text").focus();
-                return;
-            }
-
-            const rawQrContainer = document.getElementById("qrcode-raw");
-            const renderStage = document.getElementById("qr-render-stage");
+            const text = document.getElementById("qr-text").value;
+            const qrColor = document.getElementById("qr-color").value;
+            const bgColor = document.getElementById("bg-color").value;
+            const qrContainer = document.getElementById("qrcode");
             const placeholder = document.getElementById("qr-placeholder");
-            const loadingShimmer = document.getElementById("qr-loading-shimmer");
             const downloadBtn = document.getElementById("download-btn");
-            const autoTip = document.getElementById("auto-tip");
-            const btnSpinner = document.getElementById("btn-spinner");
-            const btnText = document.getElementById("btn-text");
 
-            const colorDark = document.getElementById("color-dark").value || "#0f172a";
-            const colorLight = document.getElementById("color-light").value || "#ffffff";
-
-            // Tampilkan status loading ringkas
-            btnSpinner.classList.remove("hidden");
-            btnText.innerHTML = "Mengomputasi Matriks...";
-            loadingShimmer.classList.remove("hidden");
-            placeholder.classList.add("hidden");
-
-            setTimeout(() => {
-                rawQrContainer.innerHTML = "";
-
-                try {
-                    const qrSize = 320;
-                    // Inisialisasi QRCode.js mentah dengan warna hitam/transparan agar siap di-masking gradasi
-                    qrCodeInstance = new QRCode(rawQrContainer, {
-                        text: textInput.trim(),
-                        width: qrSize,
-                        height: qrSize,
-                        colorDark: "#000000",
-                        colorLight: "#ffffff",
-                        correctLevel: QRCode.CorrectLevel.H // Level H untuk toleransi logo dan scanner
-                    });
-
-                    setTimeout(() => {
-                        const rawCanvas = rawQrContainer.querySelector("canvas");
-                        const rawImg = rawQrContainer.querySelector("img");
-
-                        if (rawCanvas) {
-                            compositeFinalQR(rawCanvas, qrSize, colorLight, colorDark);
-                        } else if (rawImg && rawImg.src) {
-                            const tempImg = new Image();
-                            tempImg.onload = function() {
-                                compositeFinalQR(tempImg, qrSize, colorLight, colorDark);
-                            };
-                            tempImg.src = rawImg.src;
-                        }
-
-                        loadingShimmer.classList.add("hidden");
-                        renderStage.classList.remove("hidden");
-                        downloadBtn.classList.remove("hidden");
-                        autoTip.classList.remove("hidden");
-
-                        btnSpinner.classList.add("hidden");
-                        btnText.innerHTML = `
-                            <svg class="w-4 h-4 text-indigo-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                            </svg>
-                            Perbarui Kode QR
-                        `;
-                    }, 120);
-
-                } catch (err) {
-                    console.error("Gagal merender QR Code:", err);
-                    loadingShimmer.classList.add("hidden");
-                    placeholder.classList.remove("hidden");
-                    btnSpinner.classList.add("hidden");
-                    alert("Terjadi kendala saat merender kode QR.");
-                }
-            }, 250);
-        }
-
-        // ==========================================
-        // COMPOSITING CANVAS: QR + GRADIENT DOTS + LOGO + FRAME
-        // ==========================================
-        function compositeFinalQR(qrSource, qrSize, colorLight, colorDark) {
-            const finalCanvas = document.getElementById("qr-composite-canvas");
-            const ctx = finalCanvas.getContext("2d");
-
-            const frameColor = document.getElementById("color-frame").value || "#4f46e5";
-            const badgeText = (document.getElementById("frame-badge-text").value || "SCAN ME").trim();
-            const frameW = currentFrameWidth;
-
-            let extraTop = 0;
-            let extraBottom = 0;
-            let extraSides = 0;
-            let qrOffsetTop = 0;
-            let qrOffsetLeft = 0;
-
-            if (currentFrameStyle === 'border') {
-                extraSides = frameW * 1.5;
-                extraTop = frameW * 1.5;
-                extraBottom = frameW * 1.5;
-            } else if (currentFrameStyle === 'card') {
-                extraSides = frameW * 2;
-                extraTop = frameW * 2;
-                extraBottom = frameW * 2;
-            } else if (currentFrameStyle === 'badge') {
-                extraSides = frameW * 1.8;
-                extraTop = frameW * 1.5;
-                extraBottom = 48 + frameW;
-            }
-
-            const canvasW = qrSize + (extraSides * 2);
-            const canvasH = qrSize + extraTop + extraBottom;
-
-            finalCanvas.width = canvasW;
-            finalCanvas.height = canvasH;
-
-            // 1. Gambar Background Keseluruhan
-            if (currentFrameStyle === 'card') {
-                ctx.fillStyle = frameColor;
-                ctx.beginPath();
-                ctx.roundRect(0, 0, canvasW, canvasH, 20);
-                ctx.fill();
-
-                ctx.fillStyle = colorLight;
-                ctx.beginPath();
-                ctx.roundRect(extraSides - 6, extraTop - 6, qrSize + 12, qrSize + 12, 12);
-                ctx.fill();
-            } else if (currentFrameStyle === 'badge') {
-                ctx.fillStyle = "#ffffff";
-                ctx.beginPath();
-                ctx.roundRect(0, 0, canvasW, canvasH, 22);
-                ctx.fill();
-
-                ctx.strokeStyle = frameColor;
-                ctx.lineWidth = Math.max(3, frameW / 2);
-                ctx.stroke();
-
-                const badgeH = 34;
-                const badgeY = canvasH - badgeH - (frameW * 0.8);
-                const badgeX = extraSides;
-                const badgeW = qrSize;
-
-                ctx.fillStyle = frameColor;
-                ctx.beginPath();
-                ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 10);
-                ctx.fill();
-
-                ctx.fillStyle = "#ffffff";
-                ctx.font = "bold 14px 'Plus Jakarta Sans', sans-serif";
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.letterSpacing = "2px";
-                ctx.fillText(badgeText, canvasW / 2, badgeY + (badgeH / 2));
-            } else {
-                ctx.fillStyle = colorLight;
-                ctx.fillRect(0, 0, canvasW, canvasH);
-            }
-
-            // 2. Jika gaya 'border', gambar garis bingkai tepi luar
-            if (currentFrameStyle === 'border') {
-                ctx.strokeStyle = frameColor;
-                ctx.lineWidth = frameW;
-                ctx.strokeRect(frameW / 2, frameW / 2, canvasW - frameW, canvasH - frameW);
-            }
-
-            // 3. Render Gambar QR Code Utama dengan Pilihan GRADASI DOTS
-            qrOffsetLeft = extraSides;
-            qrOffsetTop = extraTop;
-
-            // Buat kanvas intermediate khusus untuk dots QR agar bisa diwarnai secara presisi
-            const qrCanvasTemp = document.createElement("canvas");
-            qrCanvasTemp.width = qrSize;
-            qrCanvasTemp.height = qrSize;
-            const tCtx = qrCanvasTemp.getContext("2d");
-
-            // Gambar QR Code mentah
-            tCtx.drawImage(qrSource, 0, 0, qrSize, qrSize);
-
-            // Baca data piksel dan terapkan warna / gradasi pada piksel hitam (dots)
-            const imgData = tCtx.getImageData(0, 0, qrSize, qrSize);
-            const pixels = imgData.data;
-
-            // Buat masker kanvas di mana hanya dots hitam yang terisi
-            const maskCanvas = document.createElement("canvas");
-            maskCanvas.width = qrSize;
-            maskCanvas.height = qrSize;
-            const mCtx = maskCanvas.getContext("2d");
-            const maskData = mCtx.createImageData(qrSize, qrSize);
-            const mPix = maskData.data;
-
-            for (let i = 0; i < pixels.length; i += 4) {
-                const r = pixels[i];
-                const g = pixels[i + 1];
-                const b = pixels[i + 2];
-                // Jika piksel gelap (titik matriks QR)
-                if (r < 120 && g < 120 && b < 120) {
-                    mPix[i] = 0;
-                    mPix[i + 1] = 0;
-                    mPix[i + 2] = 0;
-                    mPix[i + 3] = 255; // Solid
-                } else {
-                    mPix[i + 3] = 0; // Transparan
-                }
-            }
-            mCtx.putImageData(maskData, 0, 0);
-
-            // Bersihkan kanvas temp untuk diisi background QR pilihan
-            tCtx.clearRect(0, 0, qrSize, qrSize);
-            tCtx.fillStyle = colorLight;
-            tCtx.fillRect(0, 0, qrSize, qrSize);
-
-            // Sekarang gambar dots dengan mode Solid atau Gradasi
-            const dotCanvas = document.createElement("canvas");
-            dotCanvas.width = qrSize;
-            dotCanvas.height = qrSize;
-            const dCtx = dotCanvas.getContext("2d");
-
-            if (currentColorMode === 'gradient') {
-                const gradStart = document.getElementById("color-grad-start").value || "#4f46e5";
-                const gradEnd = document.getElementById("color-grad-end").value || "#ec4899";
-                const gradDir = document.getElementById("grad-direction").value || "diagonal";
-
-                let gradient;
-                if (gradDir === 'vertical') {
-                    gradient = dCtx.createLinearGradient(0, 0, 0, qrSize);
-                } else if (gradDir === 'horizontal') {
-                    gradient = dCtx.createLinearGradient(0, 0, qrSize, 0);
-                } else if (gradDir === 'radial') {
-                    gradient = dCtx.createRadialGradient(qrSize / 2, qrSize / 2, 20, qrSize / 2, qrSize / 2, qrSize * 0.7);
-                } else {
-                    // Diagonal 45 deg default
-                    gradient = dCtx.createLinearGradient(0, 0, qrSize, qrSize);
-                }
-                gradient.addColorStop(0, gradStart);
-                gradient.addColorStop(1, gradEnd);
-
-                dCtx.fillStyle = gradient;
-            } else {
-                dCtx.fillStyle = colorDark;
-            }
-
-            dCtx.fillRect(0, 0, qrSize, qrSize);
-
-            // Masking dengan masker dots (hanya area titik yang tersisa)
-            dCtx.globalCompositeOperation = "destination-in";
-            dCtx.drawImage(maskCanvas, 0, 0);
-
-            // Gabungkan dots kembali ke tCtx di atas background QR
-            tCtx.drawImage(dotCanvas, 0, 0);
-
-            // Gambar QR Code yang sudah diwarnai ke kanvas final
-            ctx.drawImage(qrCanvasTemp, qrOffsetLeft, qrOffsetTop, qrSize, qrSize);
-
-            // 4. Render Logo di Tengah jika diunggah / dipilih
-            if (currentLogoImage) {
-                const logoSize = (qrSize * (currentLogoSizePercent / 100));
-                const logoPadding = 8;
-                const logoCenterBoxSize = logoSize + (logoPadding * 2);
-
-                const logoX = qrOffsetLeft + (qrSize / 2) - (logoSize / 2);
-                const logoY = qrOffsetTop + (qrSize / 2) - (logoSize / 2);
-
-                const boxX = qrOffsetLeft + (qrSize / 2) - (logoCenterBoxSize / 2);
-                const boxY = qrOffsetTop + (qrSize / 2) - (logoCenterBoxSize / 2);
-
-                // Margin Putih Pelindung Kontras
-                ctx.save();
-                ctx.fillStyle = colorLight;
-                ctx.shadowColor = "rgba(0,0,0,0.18)";
-                ctx.shadowBlur = 10;
-                ctx.shadowOffsetY = 2;
-
-                ctx.beginPath();
-                if (currentLogoShape === 'circle') {
-                    ctx.arc(qrOffsetLeft + (qrSize / 2), qrOffsetTop + (qrSize / 2), (logoCenterBoxSize / 2), 0, Math.PI * 2);
-                } else {
-                    ctx.roundRect(boxX, boxY, logoCenterBoxSize, logoCenterBoxSize, 8);
-                }
-                ctx.fill();
-                ctx.restore();
-
-                // Border halus pelindung
-                ctx.strokeStyle = "rgba(0,0,0,0.06)";
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
-
-                // Gambar Logo
-                ctx.save();
-                ctx.drawImage(currentLogoImage, logoX, logoY, logoSize, logoSize);
-                ctx.restore();
-            }
-        }
-
-        // ==========================================
-        // HANDLER UNDUH GAMBAR PNG
-        // ==========================================
-        function downloadQR() {
-            const finalCanvas = document.getElementById("qr-composite-canvas");
-            if (!finalCanvas || finalCanvas.width === 0) {
-                alert("Gambar QR Code belum siap untuk diunduh!");
+            if (!text.trim()) {
+                alert("Silakan masukkan teks atau link terlebih dahulu!");
                 return;
             }
 
-            const targetUrl = finalCanvas.toDataURL("image/png");
-            const timestamp = new Date().toISOString().slice(0, 10);
-            const downloadLink = document.createElement("a");
-            downloadLink.href = targetUrl;
-            downloadLink.download = `QRCode_Studio_${timestamp}.png`;
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
-        }
-
-        // Render otomatis pertama kali saat DOM siap
-        window.addEventListener("DOMContentLoaded", () => {
-            generateQR();
-        });
-    </script>
-</body>
-</html>
+            // Reset dan sembunyikan placeholder
+            qrContainer.innerHTML = ""; 
