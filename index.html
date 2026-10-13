@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced QR Code Generator - Pembuat Kode QR Kustom Gratis</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800 flex flex-col min-h-screen">
+
+    <div class="flex-grow max-w-4xl w-full mx-auto p-4 flex flex-col md:flex-row gap-6 mt-6">
+        <div class="flex-1 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h1 class="text-2xl font-bold text-center mb-2 text-indigo-600">Advanced QR Code Generator</h1>
+            <p class="text-sm text-gray-500 text-center mb-6">Buat QR Code berwarna untuk WhatsApp, Instagram, atau Menu Restoran secara instan & gratis.</p>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1 text-gray-700">Masukkan Tautan / Teks:</label>
+                    <input type="text" id="qr-text" placeholder="Contoh: https://facebook.com atau https://wa.me" class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+                </div>
+                
+                <div class="flex gap-4">
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium mb-1 text-gray-700">Warna QR:</label>
+                        <input type="color" id="qr-color" value="#000000" class="w-full h-10 border rounded-xl p-1 bg-white cursor-pointer">
+                    </div>
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium mb-1 text-gray-700">Warna Latar:</label>
+                        <input type="color" id="bg-color" value="#ffffff" class="w-full h-10 border rounded-xl p-1 bg-white cursor-pointer">
+                    </div>
+                </div>
+                
+                <button onclick="generateQR()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold p-3 rounded-xl transition duration-200 cursor-pointer text-sm">Buat QR Code</button>
+            </div>
+
+            <div class="mt-6 flex flex-col items-center justify-center min-h-[220px] border-2 border-dashed border-gray-200 rounded-2xl p-4 bg-gray-50">
+                <div id="qrcode" class="p-2 bg-white rounded-lg shadow-sm"></div>
+                <button id="download-btn" onclick="downloadQR()" class="hidden mt-4 bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 py-2 rounded-xl transition duration-200 cursor-pointer text-sm">Unduh Gambar (PNG)</button>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-gray-100 space-y-4">
+                <h2 class="font-semibold text-gray-700">💡 Cara Menggunakan Pembuat QR Code:</h2>
+                <ol class="list-decimal list-inside text-sm text-gray-650 space-y-1">
+                    <li>Tempelkan <span class="font-medium">Link Tautan</span> pada kolom input di atas.</li>
+                    <li>Sesuaikan warna kode dan latar belakang sesuai dengan tema <span class="font-medium">Branding Anda</span>.</li>
+                    <li>Klik tombol <span class="font-medium">"Buat QR Code"</span> untuk memproses secara instan.</li>
+                    <li>Klik <span class="font-medium">"Unduh Gambar"</span> untuk menyimpan hasil cetak secara gratis.</li>
+                </ol>
+
+                <h2 class="font-semibold text-gray-700 pt-2">🎯 Apa Kegunaan QR Code Ini?</h2>
+                <p class="text-sm text-gray-650 leading-relaxed">
+                    Saat pelanggan memindai (scan) QR Code ini menggunakan kamera HP mereka, sistem akan otomatis mengarahkan mereka untuk membuka website, profil media sosial, menu digital, atau chat WhatsApp Anda secara langsung.
+                </p>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-gray-100">
+                <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Official Partners / Sponsors:</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 items-center justify-items-center bg-gray-50 p-4 rounded-xl border border-gray-100">
+                    <div class="text-sm font-bold text-gray-300 italic p-2">[ Slot Brand 1 ]</div>
+                    <div class="text-sm font-bold text-gray-300 italic p-2">[ Slot Brand 2 ]</div>
+                    <div class="text-sm font-bold text-gray-300 italic p-2">[ Slot Brand 3 ]</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full md:w-[300px] flex flex-col gap-4">
+            <div class="bg-gray-100 text-gray-400 border border-gray-200 h-[250px] rounded-2xl flex items-center justify-center font-medium text-xs text-center p-4">
+                [ Slot Iklan AdSense Samping 1 ]
+            </div>
+            <div class="bg-gray-100 text-gray-400 border border-gray-200 h-[250px] rounded-2xl flex items-center justify-center font-medium text-xs text-center p-4">
+                [ Slot Iklan AdSense Samping 2 ]
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white border-t border-gray-200 mt-12 py-6 text-center text-xs text-gray-400 w-full">
+        <p>&copy; 2026 Advanced QR Code Generator. All Rights Reserved.</p>
+        <p class="mt-1 text-gray-300">Dibuat gratis untuk mendukung kemudahan digitalisasi bisnis dan UMKM global.</p>
+    </footer>
+
+    <script>
+        let qrcodeInstance = null;
+
+        function generateQR() {
+            const text = document.getElementById("qr-text").value;
+            const qrColor = document.getElementById("qr-color").value;
+            const bgColor = document.getElementById("bg-color").value;
+            const qrContainer = document.getElementById("qrcode");
+            const downloadBtn = document.getElementById("download-btn");
+
+            if (!text.trim()) {
+                alert("Silakan masukkan teks atau link terlebih dahulu!");
+                return;
+            }
+
+            qrContainer.innerHTML = ""; 
+
+            qrcodeInstance = new QRCode(qrContainer, {
+                text: text,
+                width: 200,
+                height: 200,
+                colorDark: qrColor,
+                colorLight: bgColor,
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            setTimeout(() => {
+                const qrImg = document.querySelector("#qrcode img");
+                if (qrImg) {
+                    downloadBtn.classList.remove("hidden");
+                }
+            }, 100);
+        }
+
+        function downloadQR() {
+            const qrImg = document.querySelector("#qrcode img");
+            const qrCanvas = document.querySelector("#qrcode canvas");
+            
+            let targetSrc = "";
+            if (qrImg && qrImg.src) {
+                targetSrc = qrImg.src;
+            } else if (qrCanvas) {
+                targetSrc = qrCanvas.toDataURL("image/png");
+            }
+
+            if (!targetSrc) {
+                alert("Gagal mengunduh, silakan buat ulang QR Code!");
+                return;
+            }
+
+            const link = document.createElement("a");
+            link.href = targetSrc;
+            link.download = "qrcode-kustom.png";
+            link.click();
+        }
+    </script>
+</body>
+</html>
