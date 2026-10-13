@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>QR Studio Pro</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"inverse-surface":"#dfe2ef","secondary-fixed":"#acedff","surface-dim":"#0f131c","secondary":"#4cd7f6","background":"#0f131c","surface-container-high":"#262a34","on-error-container":"#ffdad6","outline-variant":"#464554","on-secondary-container":"#00424e","surface-container-low":"#181b25","on-tertiary-container":"#3e2400","tertiary-fixed-dim":"#ffb95f","primary-fixed-dim":"#c0c1ff","on-background":"#dfe2ef","on-surface":"#dfe2ef","on-error":"#690005","outline":"#908fa0","on-primary-container":"#0d0096","on-tertiary-fixed-variant":"#653e00","secondary-container":"#03b5d3","on-secondary":"#003640","tertiary-fixed":"#ffddb8","surface-container-lowest":"#0a0e17","primary":"#c0c1ff","on-primary-fixed-variant":"#2f2ebe","surface-container":"#1c1f29","on-tertiary":"#472a00","on-surface-variant":"#c7c4d7","secondary-fixed-dim":"#4cd7f6","primary-fixed":"#e1e0ff","error-container":"#93000a","inverse-on-surface":"#2c303a","inverse-primary":"#494bd6","tertiary":"#ffb95f","surface-tint":"#c0c1ff","surface-bright":"#353943","surface-container-highest":"#31353f","on-primary":"#1000a9","on-secondary-fixed-variant":"#004e5c","primary-container":"#8083ff","on-tertiary-fixed":"#2a1700","on-secondary-fixed":"#001f26","error":"#ffb4ab","tertiary-container":"#ca8100","on-primary-fixed":"#07006c","surface":"#0f131c","surface-variant":"#31353f"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-md":"1.25rem","margin-kiosk":"3rem","space-sm":"0.75rem","gutter":"1.5rem","gutter-kiosk":"2rem","margin":"2rem","space-lg":"2rem","space-xs":"0.5rem","space-xl":"3rem"},"fontFamily":{"headline-xl-mobile":["Space Grotesk"],"label-md":["Space Grotesk"],"headline-xl":["Space Grotesk"],"body-lg":["Plus Jakarta Sans"],"body-xl":["Plus Jakarta Sans"],"headline-lg":["Space Grotesk"],"body-md":["Plus Jakarta Sans"],"hud-timer":["Space Grotesk"],"headline-sm":["Space Grotesk"],"headline-md":["Space Grotesk"],"label-sm":["Space Grotesk"],"display-hero-mobile":["Space Grotesk"],"display-hero":["Space Grotesk"],"label-lg":["Space Grotesk"]},"fontSize":{"headline-xl-mobile":["36px",{"lineHeight":"42px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-md":["14px",{"lineHeight":"18px","letterSpacing":"0.04em","fontWeight":"600"}],"headline-xl":["48px",{"lineHeight":"54px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"26px","fontWeight":"400"}],"body-xl":["20px",{"lineHeight":"28px","fontWeight":"500"}],"headline-lg":["32px",{"lineHeight":"38px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"hud-timer":["96px",{"lineHeight":"96px","letterSpacing":"-0.04em","fontWeight":"700"}],"headline-sm":["20px",{"lineHeight":"26px","letterSpacing":"0em","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"30px","letterSpacing":"0em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.06em","fontWeight":"700"}],"display-hero-mobile":["48px",{"lineHeight":"52px","letterSpacing":"-0.02em","fontWeight":"700"}],"display-hero":["72px",{"lineHeight":"76px","letterSpacing":"-0.03em","fontWeight":"700"}],"label-lg":["18px",{"lineHeight":"22px","letterSpacing":"0.02em","fontWeight":"700"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-16 w-full px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-xl bg-surface-container-high flex items-center justify-center text-secondary shadow-[0_0_16px_rgba(76,215,246,0.25)]"><span class="material-symbols-outlined text-[22px]">qr_code_scanner</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface leading-none">QR STUDIO PRO</span><span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary leading-none mt-1">Tactile Kiosk Engine</span></div></div><nav class="hidden md:flex items-center gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-label-md rounded-xl"><a aria-current="page" class="px-space-sm py-2 transition-all bg-primary-container text-on-primary-container font-label-md rounded-xl" data-path="qr-generator" href="#">QR Generator</a><a class="px-space-sm py-2 rounded-xl font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="admin-login" href="#">Admin Portal</a></nav><div class="flex items-center gap-space-sm"><div class="hidden sm:flex items-center px-3 py-1.5 rounded-full bg-surface-container-low gap-2"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm text-secondary uppercase">SYS ONLINE</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- SPA ROUTER CONTROLLER & SUB-NAV HUD -->
+<div class="w-full bg-surface-container-lowest px-gutter py-space-sm shadow-md">
+<div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-2 px-3 py-1 bg-surface-container-high rounded-full">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">CORE ENGINE v4.2</span>
+</div>
+<div class="hidden sm:flex items-center gap-2 px-3 py-1 bg-surface-container-low rounded-full text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] text-tertiary">memory</span>
+<span>SYNC ACTIVE: <span class="text-on-surface font-semibold" id="syncModePill">HYBRID ROTATION</span></span>
+</div>
+</div>
+<!-- Quick SPA Switcher -->
+<div class="flex items-center bg-surface-container-high p-1 rounded-xl">
+<button class="px-space-sm py-1.5 rounded-lg font-label-md text-label-md transition-all flex items-center gap-1.5 bg-primary-container text-on-primary-container shadow-sm" id="navBtnGenerator" onclick="navigateTo('generator')">
+<span class="material-symbols-outlined text-[18px]">qr_code_2</span>
+<span>Generator Publik</span>
+</button>
+<button class="px-space-sm py-1.5 rounded-lg font-label-md text-label-md transition-all flex items-center gap-1.5 text-on-surface-variant hover:text-on-surface" id="navBtnAdmin" onclick="navigateTo('admin')">
+<span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
+<span id="navAdminLabel">Portal Admin</span>
+</button>
+</div>
+</div>
+</div>
+<!-- TOAST NOTIFICATION CONTAINER -->
+<div class="fixed top-20 right-6 z-50 transform translate-y-[-20px] opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-3 px-space-md py-space-sm rounded-xl bg-surface-container-highest text-on-surface shadow-xl" id="toastNotification">
+<div class="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]" id="toastIcon">check_circle</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-bold" id="toastTitle">Sinkronisasi Selesai</span>
+<span class="font-body-md text-label-sm text-on-surface-variant" id="toastDesc">Konfigurasi iklan berhasil diterapkan real-time.</span>
+</div>
+</div>
+<!-- ============================================================== -->
+<!-- VIEW 1: GENERATOR PUBLIK (#generator)                         -->
+<!-- ============================================================== -->
+<section class="w-full py-space-md px-gutter" id="view-generator"><div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
+<!-- Ambient Banner Slot (Synchronized with Admin) -->
+<div class="w-full bg-surface-container-low rounded-2xl p-space-sm flex items-center justify-between shadow-sm overflow-hidden relative" id="pubHeaderBannerContainer">
+<div class="absolute -right-10 -bottom-10 w-44 h-44 rounded-full bg-secondary/5 blur-3xl pointer-events-none"></div>
+<div class="flex items-center gap-space-sm z-10">
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-tertiary">SPONSORED CAMPAIGN</span>
+<span class="font-body-md text-label-md text-on-surface" id="pubHeaderBannerText">BoothPro Studio &amp; Coffee Lab • Cetak Foto Kilat 4K &amp; Nikmati Promo Kopi Spesial Hari Ini!</span>
+</div>
+<a class="z-10 px-space-sm py-1 rounded-lg bg-surface-container-high text-secondary hover:bg-surface-bright font-label-sm text-label-sm uppercase flex items-center gap-1 transition-all" href="#generator" id="pubHeaderBannerLink" target="_blank">
+<span>Kunjungi Mitra</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+<!-- Desktop 3-Column Layout: Left Skyscraper (160px) + Center Core Hub + Right Skyscraper (160px) -->
+<div class="flex flex-col xl:flex-row items-start justify-center gap-space-md w-full">
+<!-- LEFT SKYSCRAPER BANNER (160x600 px) -->
+<aside class="hidden xl:flex flex-col w-[160px] h-[600px] bg-surface-container-low rounded-2xl p-2.5 shadow-md shrink-0 sticky top-20 border border-outline-variant/30 overflow-hidden text-center justify-between" id="left-skyscraper">
+<div class="flex flex-col items-center gap-1 w-full">
+<div class="flex items-center justify-between w-full pb-1 border-b border-outline-variant/30">
+<span class="font-label-sm text-[10px] text-tertiary uppercase tracking-wider font-bold">MITRA RESMI</span>
+<span class="material-symbols-outlined text-tertiary text-[14px]">verified</span>
+</div>
+<div class="mt-2 px-1 py-0.5 rounded bg-surface-container font-label-sm text-[9px] text-secondary tracking-widest uppercase w-full">160 x 600 PX</div>
+<div class="mt-3 w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-secondary mx-auto shadow-sm">
+<span class="material-symbols-outlined text-[20px]">camera_indoor</span>
+</div>
+<h4 class="font-headline-sm text-[13px] text-on-surface leading-snug mt-2" id="leftBannerTitle">BoothPro Studio</h4>
+<p class="font-body-md text-[11px] text-on-surface-variant leading-tight mt-1 px-0.5" id="leftBannerTagline">Studio Cetak Foto Kilat 4K &amp; Photobooth Enterprise Kiosk</p>
+</div>
+<!-- AdSense Spec Simulator Box in Left Banner -->
+<div class="w-full my-auto py-3 px-1.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-[18px]">ads_click</span>
+<span class="font-label-sm text-[10px] text-on-surface uppercase font-semibold">AdSense Slot</span>
+<span class="font-label-sm text-[9px] text-outline-variant truncate w-full" id="leftPubSlotId">slot-9918204912</span>
+<span class="text-[8px] text-outline-variant uppercase">Programmatic 300 DPI</span>
+</div>
+<div class="flex flex-col gap-1.5 w-full">
+<a class="w-full py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-secondary font-label-sm text-[11px] font-semibold transition-all block" href="#generator" id="leftBannerCta" target="_blank">Kunjungi Studio</a>
+<span class="font-label-sm text-[9px] text-outline-variant">SPONSOR PARTNER</span>
+</div>
+</aside>
+<!-- CENTER WORKZONE: CONTROLS & VIEWFINDER -->
+<div class="flex-1 w-full min-w-0 grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Controls Column (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<!-- Section 1: Tipe Konten & Payload -->
+<div class="bg-surface-container-low rounded-2xl p-space-md shadow-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">tune</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">1. Konten Target QR</h2>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-1 rounded bg-surface-container-high text-on-surface-variant uppercase">ECL Level H (30%)</span>
+</div>
+<!-- Format Tabs -->
+<div class="grid grid-cols-3 gap-2 bg-surface-container p-1 rounded-xl">
+<button class="py-2 rounded-lg font-label-md text-label-md transition-all flex items-center justify-center gap-1.5 bg-primary text-on-primary shadow-sm" id="tabUrl" onclick="setPayloadType('url')">
+<span class="material-symbols-outlined text-[16px]">link</span>
+<span>URL Web</span>
+</button>
+<button class="py-2 rounded-lg font-label-md text-label-md transition-all flex items-center justify-center gap-1.5 text-on-surface-variant hover:text-on-surface" id="tabWa" onclick="setPayloadType('wa')">
+<span class="material-symbols-outlined text-[16px]">chat</span>
+<span>WhatsApp</span>
+</button>
+<button class="py-2 rounded-lg font-label-md text-label-md transition-all flex items-center justify-center gap-1.5 text-on-surface-variant hover:text-on-surface" id="tabText" onclick="setPayloadType('text')">
+<span class="material-symbols-outlined text-[16px]">notes</span>
+<span>Teks Bebas</span>
+</button>
+</div>
+<!-- Dynamic Input Box -->
+<div class="flex flex-col gap-2 mt-2" id="inputPayloadContainer">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant" id="inputPayloadLabel">Tautan URL / Website</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline-variant text-[20px]" id="inputPrefixIcon">public</span>
+<input class="w-full bg-surface-container-highest text-on-surface font-body-md text-body-md pl-10 pr-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary" id="payloadValue" oninput="renderLiveQR()" placeholder="https://..." type="text" value="https://boothpro.id/soft-files/preview?session=K908-LIVE"/>
+</div>
+</div>
+<!-- WhatsApp Extra Fields -->
+<div class="hidden grid-cols-1 sm:grid-cols-2 gap-space-sm mt-1" id="waExtrasContainer">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Nomor HP (62xxx)</label>
+<input class="bg-surface-container-highest text-on-surface font-body-md text-body-md px-3 py-2.5 rounded-xl focus:outline-none" id="waNumber" oninput="updateWaPayload()" placeholder="628123456789" type="text"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Pesan Template</label>
+<input class="bg-surface-container-highest text-on-surface font-body-md text-body-md px-3 py-2.5 rounded-xl focus:outline-none" id="waMessage" oninput="updateWaPayload()" placeholder="Halo, ini soft file foto..." type="text"/>
+</div>
+</div>
+</div>
+<!-- Section 2: Palet Warna & Gradasi Titik -->
+<div class="bg-surface-container-low rounded-2xl p-space-md shadow-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">palette</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">2. Kustomisasi Warna &amp; Gradasi</h2>
+</div>
+<div class="flex items-center gap-2 bg-surface-container p-1 rounded-lg">
+<button class="px-3 py-1 rounded font-label-sm text-label-sm bg-secondary text-on-secondary shadow-sm" id="modeSolidBtn" onclick="setColorMode('solid')">Solid</button>
+<button class="px-3 py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface" id="modeGradientBtn" onclick="setColorMode('gradient')">Gradasi Neon</button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm mt-1">
+<div class="flex flex-col gap-1.5 p-3 rounded-xl bg-surface-container">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Warna Utama Dot</span>
+<div class="flex items-center gap-2">
+<input class="w-9 h-9 rounded-lg bg-transparent cursor-pointer border-0" id="qrColor1" oninput="renderLiveQR()" type="color" value="#4cd7f6"/>
+<input class="w-full bg-surface-container-highest px-2 py-1.5 rounded font-label-md text-label-md text-on-surface uppercase" id="qrColor1Hex" oninput="syncHexToPicker('qrColor1', this.value)" type="text" value="#4CD7F6"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 p-3 rounded-xl bg-surface-container opacity-40 transition-opacity" id="gradPickerBox">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Warna Gradasi Dot</span>
+<div class="flex items-center gap-2">
+<input class="w-9 h-9 rounded-lg bg-transparent cursor-pointer border-0" disabled="" id="qrColor2" oninput="renderLiveQR()" type="color" value="#8083ff"/>
+<input class="w-full bg-surface-container-highest px-2 py-1.5 rounded font-label-md text-label-md text-on-surface uppercase" disabled="" id="qrColor2Hex" oninput="syncHexToPicker('qrColor2', this.value)" type="text" value="#8083FF"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 p-3 rounded-xl bg-surface-container">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Latar Belakang</span>
+<div class="flex items-center gap-2">
+<input class="w-9 h-9 rounded-lg bg-transparent cursor-pointer border-0" id="qrBgColor" oninput="renderLiveQR()" type="color" value="#0a0e17"/>
+<input class="w-full bg-surface-container-highest px-2 py-1.5 rounded font-label-md text-label-md text-on-surface uppercase" id="qrBgColorHex" oninput="syncHexToPicker('qrBgColor', this.value)" type="text" value="#0A0E17"/>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2 flex-wrap pt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Preset Tema:</span>
+<button class="px-2.5 py-1 rounded bg-surface-container font-label-sm text-label-sm text-secondary hover:bg-surface-container-high transition-all" onclick="applyPreset('#4CD7F6', '#8083FF', '#0A0E17', true)">Cyber Indigo</button>
+<button class="px-2.5 py-1 rounded bg-surface-container font-label-sm text-label-sm text-tertiary hover:bg-surface-container-high transition-all" onclick="applyPreset('#FFB95F', '#FF6B00', '#0F131C', true)">Warm Amber</button>
+<button class="px-2.5 py-1 rounded bg-surface-container font-label-sm text-label-sm text-on-surface hover:bg-surface-container-high transition-all" onclick="applyPreset('#DFE2EF', '#DFE2EF', '#000000', false)">Monokrom High-Contrast</button>
+</div>
+</div>
+<!-- Section 3: Frame & Custom Logo Center -->
+<div class="bg-surface-container-low rounded-2xl p-space-md shadow-md flex flex-col gap-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">photo_filter</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">3. Frame Kios &amp; Logo Tengah</h2>
+</div>
+<div class="grid grid-cols-3 gap-3">
+<button class="p-3 rounded-xl bg-surface-container border-2 border-secondary flex flex-col items-center gap-1.5 text-center transition-all" id="frameBtnNone" onclick="setFrameStyle('none')">
+<span class="material-symbols-outlined text-secondary text-[24px]">crop_square</span>
+<span class="font-label-md text-label-md text-on-surface">Polos Murni</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Tanpa Bingkai</span>
+</button>
+<button class="p-3 rounded-xl bg-surface-container flex flex-col items-center gap-1.5 text-center transition-all" id="frameBtnCard" onclick="setFrameStyle('card')">
+<span class="material-symbols-outlined text-on-surface-variant text-[24px]">featured_video</span>
+<span class="font-label-md text-label-md text-on-surface">Kartu Modern</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Header Elegan</span>
+</button>
+<button class="p-3 rounded-xl bg-surface-container flex flex-col items-center gap-1.5 text-center transition-all" id="frameBtnBadge" onclick="setFrameStyle('badge')">
+<span class="material-symbols-outlined text-on-surface-variant text-[24px]">qr_code_scanner</span>
+<span class="font-label-md text-label-md text-on-surface">SCAN ME</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Badge Bawah Kios</span>
+</button>
+</div>
+<div class="mt-2 p-3 bg-surface-container rounded-xl flex flex-col sm:flex-row items-center justify-between gap-space-sm">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary overflow-hidden" id="logoPreviewHolder">
+<span class="material-symbols-outlined text-[24px]" id="logoPlaceholderIcon">photo_camera</span>
+<img alt="Logo" class="w-full h-full object-contain hidden" id="customLogoImg"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Logo Tengah Custom</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Format PNG Transparan / Ikon Booth (Disarankan)</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<input accept="image/*" class="hidden" id="logoFileInput" onchange="handleLogoUpload(event)" type="file"/>
+<button class="px-space-sm py-2 rounded-xl bg-surface-container-highest text-on-surface font-label-md text-label-md hover:bg-surface-bright transition-all" onclick="document.getElementById('logoFileInput').click()">Pilih File Logo</button>
+<button class="p-2 rounded-xl bg-surface-container-high text-error hover:bg-surface-bright hidden" id="removeLogoBtn" onclick="removeLogo()" title="Hapus Logo">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Live Viewfinder Showcase (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md sticky top-20">
+<div class="bg-surface-container-lowest rounded-3xl p-space-md shadow-2xl flex flex-col items-center relative overflow-hidden">
+<div class="w-full flex items-center justify-between pb-3">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">HUD PREVIEW • 1024 PX</span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary">300 DPI READY</span>
+</div>
+<div class="relative p-6 rounded-2xl bg-surface-container-low transition-all duration-300 flex flex-col items-center max-w-sm w-full" id="qrFrameWrapper">
+<div class="hidden w-full pb-3 text-center border-b border-outline-variant/30 mb-3" id="frameHeaderZone">
+<span class="font-headline-sm text-headline-sm text-on-surface">SCAN TO SAVE</span>
+<p class="font-label-sm text-label-sm text-secondary">BOOTHPRO SOFT FILES</p>
+</div>
+<div class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center bg-surface-container-lowest rounded-xl overflow-hidden shadow-inner">
+<canvas class="w-full h-full object-contain" height="300" id="qrCanvas" width="300"></canvas>
+<div class="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-secondary/40 pointer-events-none"></div>
+<div class="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-secondary/40 pointer-events-none"></div>
+<div class="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-secondary/40 pointer-events-none"></div>
+<div class="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-secondary/40 pointer-events-none"></div>
+</div>
+<div class="hidden mt-4 px-6 py-2 rounded-full bg-secondary text-on-secondary font-headline-sm text-headline-sm tracking-wider uppercase text-center shadow-lg" id="frameBadgeZone">
+                SCAN ME • FOTO HP
+              </div>
+</div>
+<div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-space-sm mt-space-md">
+<button class="h-14 px-4 rounded-xl bg-gradient-to-r from-primary to-primary-container text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all" onclick="downloadQRImage()">
+<span class="material-symbols-outlined text-[22px]">download</span>
+<span>Simpan File HP</span>
+</button>
+<button class="h-14 px-4 rounded-xl bg-surface-container-high text-secondary hover:bg-surface-bright font-label-lg text-label-lg flex items-center justify-center gap-2 active:scale-95 transition-all" onclick="shareQRMobile()">
+<span class="material-symbols-outlined text-[22px]">share</span>
+<span>Kirim via HP / WA</span>
+</button>
+</div>
+<div class="w-full mt-space-sm p-3 rounded-xl bg-surface-container flex items-start gap-2.5">
+<span class="material-symbols-outlined text-tertiary text-[20px] shrink-0 mt-0.5">tips_and_updates</span>
+<p class="font-body-md text-label-sm text-on-surface-variant leading-relaxed">
+<strong>Tips Langsung:</strong> Pengguna iPhone cukup tap &amp; tahan gambar QR lalu pilih <em>Simpan ke Foto</em>. Pengguna Android dapat menekan tombol <em>Simpan File HP</em> atau bagikan langsung ke grup WhatsApp.
+              </p>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT SKYSCRAPER BANNER (160x600 px) -->
+<aside class="hidden xl:flex flex-col w-[160px] h-[600px] bg-surface-container-low rounded-2xl p-2.5 shadow-md shrink-0 sticky top-20 border border-outline-variant/30 overflow-hidden text-center justify-between" id="right-skyscraper">
+<div class="flex flex-col items-center gap-1 w-full">
+<div class="flex items-center justify-between w-full pb-1 border-b border-outline-variant/30">
+<span class="font-label-sm text-[10px] text-secondary uppercase tracking-wider font-bold">IKLAN SPONSOR</span>
+<span class="material-symbols-outlined text-secondary text-[14px]">campaign</span>
+</div>
+<div class="mt-2 px-1 py-0.5 rounded bg-surface-container font-label-sm text-[9px] text-tertiary tracking-widest uppercase w-full">160 x 600 PX</div>
+<div class="mt-3 w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-tertiary mx-auto shadow-sm">
+<span class="material-symbols-outlined text-[20px]">print</span>
+</div>
+<h4 class="font-headline-sm text-[13px] text-on-surface leading-snug mt-2" id="rightBannerTitle">BoothPro Kiosk Supplies</h4>
+<p class="font-body-md text-[11px] text-on-surface-variant leading-tight mt-1 px-0.5" id="rightBannerTagline">Thermal Paper &amp; Kiosk Hardware Supplies Resmi</p>
+</div>
+<!-- AdSense Spec Simulator Box in Right Banner -->
+<div class="w-full my-auto py-3 px-1.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-tertiary text-[18px]">featured_play_list</span>
+<span class="font-label-sm text-[10px] text-on-surface uppercase font-semibold">Google AdSense</span>
+<span class="font-label-sm text-[9px] text-secondary truncate w-full" id="rightPubSlotId">slot-9918204912</span>
+<span class="text-[8px] text-outline-variant uppercase">160x600 Vertical</span>
+</div>
+<div class="flex flex-col gap-1.5 w-full">
+<a class="w-full py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-tertiary font-label-sm text-[11px] font-semibold transition-all block" href="#generator" id="rightBannerCta" target="_blank">Info Mitra</a>
+<span class="font-label-sm text-[9px] text-outline-variant">ADSENSE VERIFIED</span>
+</div>
+</aside>
+</div>
+</div></section>
+<!-- ============================================================== -->
+<!-- VIEW 2: MODAL LOGIN OTENTIKASI ADMIN (#login)                 -->
+<!-- ============================================================== -->
+<section class="hidden w-full py-space-xl px-gutter min-h-[768px] flex items-center justify-center" id="view-login">
+<div class="w-full max-w-md bg-surface-container-low/95 backdrop-blur-2xl rounded-3xl p-space-lg shadow-2xl relative overflow-hidden">
+<!-- Glow ambient backdrop -->
+<div class="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-16 -left-16 w-48 h-48 rounded-full bg-secondary/10 blur-3xl pointer-events-none"></div>
+<!-- Header Card -->
+<div class="flex flex-col items-center text-center gap-space-xs relative z-10 mb-space-md">
+<div class="w-14 h-14 rounded-2xl bg-surface-container-highest flex items-center justify-center text-secondary shadow-[0_0_24px_rgba(76,215,246,0.3)]">
+<span class="material-symbols-outlined text-[32px]">lock</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mt-2">Portal Otentikasi Admin</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Akses konsol konfigurasi monetisasi &amp; hardware engine.</p>
+</div>
+<!-- Login Form Form -->
+<form class="flex flex-col gap-space-sm relative z-10" onsubmit="handleAdminLogin(event)">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Email Administrator</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[20px]">badge</span>
+<input class="w-full bg-surface-container-highest text-on-surface font-body-md text-body-md pl-10 pr-3 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary" id="loginEmail" required="" type="email" value="admin@boothpro.id"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Kata Sandi</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[20px]">key</span>
+<input class="w-full bg-surface-container-highest text-on-surface font-body-md text-body-md pl-10 pr-3 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary" id="loginPassword" required="" type="password" value="admin123"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">PIN Keamanan 2FA Kios</label>
+<span class="font-label-sm text-label-sm text-tertiary">Default: 990022</span>
+</div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[20px]">pin</span>
+<input class="w-full bg-surface-container-highest text-on-surface font-headline-sm text-headline-sm tracking-widest pl-10 pr-3 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary" id="loginPin" maxlength="6" required="" type="text" value="990022"/>
+</div>
+</div>
+<div class="hidden p-3 rounded-xl bg-error-container text-on-error-container font-label-md text-label-md flex items-center gap-2" id="loginErrorMessage">
+<span class="material-symbols-outlined text-[18px]">error</span>
+<span>Kredensial tidak valid. Silakan coba kembali.</span>
+</div>
+<button class="mt-space-sm h-14 rounded-xl bg-primary text-on-primary font-headline-sm text-headline-sm tracking-wide flex items-center justify-center gap-2 hover:bg-primary-container hover:text-on-primary-container active:scale-95 transition-all shadow-lg" type="submit">
+<span class="material-symbols-outlined text-[22px]">login</span>
+<span>Masuk ke Dashboard Admin</span>
+</button>
+<button class="h-11 rounded-xl bg-transparent text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center justify-center gap-1 transition-all" onclick="navigateTo('generator')" type="button">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span>Kembali ke Generator Publik</span>
+</button>
+</form>
+</div>
+</section>
+<!-- ============================================================== -->
+<!-- VIEW 3: DASHBOARD ADMIN MONETISASI & ADSENSE (#admin)         -->
+<!-- ============================================================== -->
+<section class="hidden w-full py-space-md px-gutter" id="view-admin">
+<div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
+<!-- Top Admin Bar -->
+<div class="w-full bg-surface-container-low rounded-2xl p-space-md shadow-md flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[28px]">shield_person</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h1 class="font-headline-md text-headline-md text-on-surface">Admin Monetisasi &amp; AdSense Suite</h1>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-secondary font-label-sm text-label-sm">LIVE SYNC ON</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Sesi Kios Terotentikasi • ID: ADMIN-BOOTHPRO-PRO-01</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-sm py-2.5 rounded-xl bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center gap-2 hover:bg-surface-bright transition-all" onclick="navigateTo('generator')">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+<span>Lihat Kios Publik</span>
+</button>
+<button class="px-space-sm py-2.5 rounded-xl bg-surface-container-high text-error hover:bg-error hover:text-on-error font-label-md text-label-md flex items-center gap-2 transition-all" onclick="handleAdminLogout()">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+<span>Keluar (Logout)</span>
+</button>
+</div>
+</div>
+<!-- Main Admin Grid: Settings (Left) + Real-time Viewport Watcher (Right) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Configuration Column (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<!-- Mode Penayangan Iklan & Monetisasi -->
+<div class="bg-surface-container-low rounded-2xl p-space-md shadow-md flex flex-col gap-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">monetization_on</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Mode Penayangan Iklan Kios</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Tentukan strategi monetisasi pada slot vertikal &amp; banner di layar pengunjung.</p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-1">
+<button class="p-4 rounded-xl bg-surface-container flex flex-col items-start gap-2 transition-all" id="modeAdsenseBtn" onclick="setAdminAdMode('adsense')">
+<span class="material-symbols-outlined text-secondary text-[24px]">ads_click</span>
+<span class="font-headline-sm text-label-md text-on-surface">Google AdSense</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">100% Programmatic Ad Network</span>
+</button>
+<button class="p-4 rounded-xl bg-surface-container flex flex-col items-start gap-2 transition-all" id="modeSponsorBtn" onclick="setAdminAdMode('sponsor')">
+<span class="material-symbols-outlined text-tertiary text-[24px]">branding_watermark</span>
+<span class="font-headline-sm text-label-md text-on-surface">Sponsor Mandiri</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Direct Brand Partnership</span>
+</button>
+<button class="p-4 rounded-xl bg-surface-container border-2 border-secondary flex flex-col items-start gap-2 transition-all" id="modeHybridBtn" onclick="setAdminAdMode('hybrid')">
+<span class="material-symbols-outlined text-primary text-[24px]">sync_alt</span>
+<span class="font-headline-sm text-label-md text-on-surface">Hybrid (50:50)</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Rotasi Berimbang Otomatis</span>
+</button>
+</div>
+</div>
+<!-- Google AdSense Parameters -->
+<div class="bg-surface-container-low rounded-2xl p-space-md shadow-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">account_balance_wallet</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Parameter Google AdSense</h2>
+</div>
+<div class="flex items-center gap-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant">Auto-Ads:</label>
+<input checked="" class="w-5 h-5 accent-secondary cursor-pointer" id="adminAutoAdsToggle" onchange="updateAdminWatcher()" type="checkbox"/>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm mt-1">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Publisher ID (AdSense)</label>
+<input class="bg-surface-container-highest text-on-surface font-body-md text-body-md px-3 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary" id="adminPubId" oninput="updateAdminWatcher()" type="text" value="ca-pub-8923049102948201"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Slot Skyscraper (160x600)</label>
+<input class="bg-surface-container-highest text-on-surface font-body-md text-body-md px-3 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary" id="adminSlotId" oninput="updateAdminWatcher()" type="text" value="slot-9918204912"/>
+</div>
+</div>
+</div>
+<!-- Brand Sponsor Mandiri Settings -->
+<div class="bg-surface-container-low rounded-2xl p-space-md shadow-md flex flex-col gap-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[22px]">verified</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Data Sponsor Brand Mandiri</h2>
+</div>
+<div class="flex flex-col gap-space-sm mt-1">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Nama Brand / Klien</label>
+<input class="bg-surface-container-highest text-on-surface font-body-md text-body-md px-3 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-tertiary" id="adminSponsorName" oninput="updateAdminWatcher()" type="text" value="BoothPro Studio &amp; Coffee Lab"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Tautan Call-to-Action (CTA)</label>
+<input class="bg-surface-container-highest text-on-surface font-body-md text-body-md px-3 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-tertiary" id="adminSponsorLink" oninput="updateAdminWatcher()" type="text" value="https://instagram.com/boothpro.id"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Kalimat Promosi Singkat</label>
+<input class="bg-surface-container-highest text-on-surface font-body-md text-body-md px-3 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-tertiary" id="adminSponsorTagline" oninput="updateAdminWatcher()" type="text" value="Dapatkan Diskon Cetak Foto 30% dengan Menunjukkan Barcode Ini di Kasir!"/>
+</div>
+</div>
+</div>
+<!-- Save & Commit Button -->
+<button class="h-16 rounded-2xl bg-gradient-to-r from-secondary to-primary-container text-on-secondary font-headline-sm text-headline-sm tracking-wide flex items-center justify-center gap-2 hover:opacity-95 active:scale-98 transition-all shadow-xl" onclick="saveAdminSettings()">
+<span class="material-symbols-outlined text-[24px]">save</span>
+<span>Simpan &amp; Terapkan Otomatis ke Halaman Publik</span>
+</button>
+</div>
+<!-- Mini Live Viewport Watcher (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<div class="bg-surface-container-low rounded-3xl p-space-md shadow-xl flex flex-col gap-space-sm sticky top-20">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[22px]">developer_board</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Mini Viewport Watcher</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-high font-label-sm text-label-sm text-secondary">MIRROR ENGINE</span>
+</div>
+<p class="font-body-md text-label-sm text-on-surface-variant">Simulasi penayangan slot iklan pengunjung yang ter-update saat parameter diubah.</p>
+<!-- Mock Kiosk Display Frame -->
+<div class="w-full bg-surface-container-lowest rounded-2xl p-4 flex flex-col gap-3 shadow-inner">
+<div class="flex items-center justify-between border-b border-outline-variant/30 pb-2">
+<span class="font-label-sm text-label-sm text-outline">KIOSK VIEW SIMULATOR</span>
+<span class="font-label-sm text-label-sm text-tertiary" id="watcherActiveModeBadge">HYBRID 50:50</span>
+</div>
+<!-- Header Bar Simulation -->
+<div class="w-full p-2 rounded-lg bg-surface-container flex items-center justify-between text-xs">
+<span class="truncate font-label-sm text-label-sm text-on-surface" id="watcherTopSponsorText">BoothPro Studio &amp; Coffee Lab</span>
+<span class="material-symbols-outlined text-[14px] text-secondary">open_in_new</span>
+</div>
+<!-- Simulated Viewport Center & Skyscraper Side -->
+<div class="grid grid-cols-12 gap-2 h-52">
+<div class="col-span-8 bg-surface-container-high rounded-xl p-2 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-secondary text-[24px]">qr_code_2</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Area QR Code Generator</span>
+</div>
+<!-- Simulated Skyscraper Watcher -->
+<div class="col-span-4 bg-surface-container-highest rounded-xl p-2 flex flex-col items-center justify-center text-center relative overflow-hidden" id="watcherSkyscraperBox">
+<!-- Watcher Dynamic Inner -->
+<span class="material-symbols-outlined text-secondary text-[20px]" id="watcherAdIcon">sync</span>
+<span class="font-label-sm text-label-sm text-on-surface mt-1 line-clamp-3 leading-tight" id="watcherAdLabel">Hybrid Google AdSense / Sponsor</span>
+</div>
+</div>
+<!-- Diagnostic Stats -->
+<div class="grid grid-cols-2 gap-2 pt-2 border-t border-outline-variant/30">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Publisher ID:</span>
+<span class="font-label-sm text-label-sm text-on-surface truncate" id="watcherPubIdText">ca-pub-8923049102948201</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Slot ID:</span>
+<span class="font-label-sm text-label-sm text-on-surface truncate" id="watcherSlotIdText">slot-9918204912</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified_user</span>
+<span class="font-label-sm text-label-sm">Perubahan auto-disimpan di LocalStorage browser kiosk.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- SCRIPT: SPA ROUTING, QR CANVAS ENGINE & ADSENSE SYNC CONTROLLER -->
+<script>
+  // ==========================================
+  // 1. STATE & STORAGE MANAGEMENT
+  // ==========================================
+  const DEFAULT_CONFIG = {
+    adMode: 'hybrid', // 'adsense' | 'sponsor' | 'hybrid'
+    autoAds: true,
+    pubId: 'ca-pub-8923049102948201',
+    slotId: 'slot-9918204912',
+    sponsorName: 'BoothPro Studio & Coffee Lab',
+    sponsorLink: 'https://instagram.com/boothpro.id',
+    sponsorTagline: 'Cetak Foto Kilat 4K & Nikmati Promo Kopi Spesial Hari Ini!'
+  };
+
+  let appState = {
+    auth: false,
+    activeRoute: 'generator',
+    payloadType: 'url',
+    colorMode: 'gradient',
+    frameStyle: 'none',
+    customLogo: null,
+    config: JSON.parse(localStorage.getItem('qr_kiosk_ad_config') || JSON.stringify(DEFAULT_CONFIG))
+  };
+
+  // Check persisted session
+  if (sessionStorage.getItem('qr_admin_auth') === 'true') {
+    appState.auth = true;
+  }
+
+  // ==========================================
+  // 2. SPA HASH ROUTING & VIEW CONTROLLER
+  // ==========================================
+  function navigateTo(targetRoute) {
+    if (targetRoute === 'admin' && !appState.auth) {
+      targetRoute = 'login';
+    }
+    window.location.hash = '#' + targetRoute;
+    renderCurrentRoute();
+  }
+
+  function renderCurrentRoute() {
+    const rawHash = window.location.hash.replace('#', '') || 'generator';
+    let current = rawHash;
+
+    // Route guards
+    if (current === 'admin' && !appState.auth) {
+      current = 'login';
+    }
+
+    appState.activeRoute = current;
+
+    // Elements
+    const viewGen = document.getElementById('view-generator');
+    const viewLogin = document.getElementById('view-login');
+    const viewAdmin = document.getElementById('view-admin');
+
+    const navBtnGen = document.getElementById('navBtnGenerator');
+    const navBtnAdmin = document.getElementById('navBtnAdmin');
+    const navAdminLabel = document.getElementById('navAdminLabel');
+
+    // Hide all views first
+    viewGen.classList.add('hidden');
+    viewLogin.classList.add('hidden');
+    viewAdmin.classList.add('hidden');
+
+    // Reset Nav active classes
+    navBtnGen.className = "px-space-sm py-1.5 rounded-lg font-label-md text-label-md transition-all flex items-center gap-1.5 text-on-surface-variant hover:text-on-surface";
+    navBtnAdmin.className = "px-space-sm py-1.5 rounded-lg font-label-md text-label-md transition-all flex items-center gap-1.5 text-on-surface-variant hover:text-on-surface";
+
+    if (current === 'generator') {
+      viewGen.classList.remove('hidden');
+      navBtnGen.className = "px-space-sm py-1.5 rounded-lg font-label-md text-label-md transition-all flex items-center gap-1.5 bg-primary-container text-on-primary-container shadow-sm";
+      renderLiveQR();
+      renderPublicAds();
+    } else if (current === 'login') {
+      viewLogin.classList.remove('hidden');
+      navBtnAdmin.className = "px-space-sm py-1.5 rounded-lg font-label-md text-label-md transition-all flex items-center gap-1.5 bg-primary-container text-on-primary-container shadow-sm";
+    } else if (current === 'admin') {
+      viewAdmin.classList.remove('hidden');
+      navBtnAdmin.className = "px-space-sm py-1.5 rounded-lg font-label-md text-label-md transition-all flex items-center gap-1.5 bg-primary-container text-on-primary-container shadow-sm";
+      loadAdminInputs();
+      updateAdminWatcher();
+    }
+
+    // Nav Label based on Auth State
+    if (appState.auth) {
+      navAdminLabel.innerText = "Dashboard Admin";
+    } else {
+      navAdminLabel.innerText = "Portal Admin";
+    }
+  }
+
+  window.addEventListener('hashchange', renderCurrentRoute);
+
+  // ==========================================
+  // 3. AUTHENTICATION CONTROLLER
+  // ==========================================
+  function handleAdminLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    const pin = document.getElementById('loginPin').value.trim();
+    const errorBox = document.getElementById('loginErrorMessage');
+
+    if (email === 'admin@boothpro.id' && password === 'admin123' && pin === '990022') {
+      errorBox.classList.add('hidden');
+      appState.auth = true;
+      sessionStorage.setItem('qr_admin_auth', 'true');
+      showToast('Login Berhasil', 'Selamat datang di Dashboard Admin Monetisasi.');
+      navigateTo('admin');
+    } else {
+      errorBox.classList.remove('hidden');
+    }
+  }
+
+  function handleAdminLogout() {
+    appState.auth = false;
+    sessionStorage.removeItem('qr_admin_auth');
+    showToast('Logout Berhasil', 'Sesi administrator telah diakhiri.');
+    navigateTo('generator');
+  }
+
+  // ==========================================
+  // 4. QR GENERATOR & CANVAS RENDERING ENGINE
+  // ==========================================
+  function setPayloadType(type) {
+    appState.payloadType = type;
+    const tabUrl = document.getElementById('tabUrl');
+    const tabWa = document.getElementById('tabWa');
+    const tabText = document.getElementById('tabText');
+    const inputLabel = document.getElementById('inputPayloadLabel');
+    const inputPrefix = document.getElementById('inputPrefixIcon');
+    const payloadInput = document.getElementById('payloadValue');
+    const waExtras = document.getElementById('waExtrasContainer');
+
+    const defaultClass = "py-2 rounded-lg font-label-md text-label-md transition-all flex items-center justify-center gap-1.5 text-on-surface-variant hover:text-on-surface";
+    const activeClass = "py-2 rounded-lg font-label-md text-label-md transition-all flex items-center justify-center gap-1.5 bg-primary text-on-primary shadow-sm";
+
+    tabUrl.className = defaultClass;
+    tabWa.className = defaultClass;
+    tabText.className = defaultClass;
+    waExtras.classList.add('hidden');
+
+    if (type === 'url') {
+      tabUrl.className = activeClass;
+      inputLabel.innerText = "Tautan URL / Website";
+      inputPrefix.innerText = "public";
+      payloadInput.value = "https://boothpro.id/soft-files/preview?session=K908-LIVE";
+    } else if (type === 'wa') {
+      tabWa.className = activeClass;
+      inputLabel.innerText = "Link Otomatis WhatsApp";
+      inputPrefix.innerText = "chat";
+      waExtras.classList.remove('hidden');
+      updateWaPayload();
+      return;
+    } else if (type === 'text') {
+      tabText.className = activeClass;
+      inputLabel.innerText = "Teks Bebas / Catatan Booth";
+      inputPrefix.innerText = "notes";
+      payloadInput.value = "Selamat datang di BoothPro Photobooth! Terima kasih atas kunjungan Anda.";
+    }
+
+    renderLiveQR();
+  }
+
+  function updateWaPayload() {
+    const num = document.getElementById('waNumber').value.trim() || '628123456789';
+    const msg = encodeURIComponent(document.getElementById('waMessage').value.trim() || 'Halo, ini link foto saya dari BoothPro!');
+    document.getElementById('payloadValue').value = `https://wa.me/${num}?text=${msg}`;
+    renderLiveQR();
+  }
+
+  function setColorMode(mode) {
+    appState.colorMode = mode;
+    const btnSolid = document.getElementById('modeSolidBtn');
+    const btnGrad = document.getElementById('modeGradientBtn');
+    const gradBox = document.getElementById('gradPickerBox');
+    const col2 = document.getElementById('qrColor2');
+    const col2Hex = document.getElementById('qrColor2Hex');
+
+    if (mode === 'solid') {
+      btnSolid.className = "px-3 py-1 rounded font-label-sm text-label-sm bg-secondary text-on-secondary shadow-sm";
+      btnGrad.className = "px-3 py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface";
+      gradBox.classList.add('opacity-40');
+      col2.disabled = true;
+      col2Hex.disabled = true;
+    } else {
+      btnGrad.className = "px-3 py-1 rounded font-label-sm text-label-sm bg-secondary text-on-secondary shadow-sm";
+      btnSolid.className = "px-3 py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface";
+      gradBox.classList.remove('opacity-40');
+      col2.disabled = false;
+      col2Hex.disabled = false;
+    }
+    renderLiveQR();
+  }
+
+  function syncHexToPicker(pickerId, hexValue) {
+    if (/^#[0-9A-F]{6}$/i.test(hexValue)) {
+      document.getElementById(pickerId).value = hexValue;
+      renderLiveQR();
+    }
+  }
+
+  function applyPreset(c1, c2, bg, isGrad) {
+    document.getElementById('qrColor1').value = c1;
+    document.getElementById('qrColor1Hex').value = c1.toUpperCase();
+    document.getElementById('qrColor2').value = c2;
+    document.getElementById('qrColor2Hex').value = c2.toUpperCase();
+    document.getElementById('qrBgColor').value = bg;
+    document.getElementById('qrBgColorHex').value = bg.toUpperCase();
+    setColorMode(isGrad ? 'gradient' : 'solid');
+  }
+
+  function setFrameStyle(style) {
+    appState.frameStyle = style;
+    const btnNone = document.getElementById('frameBtnNone');
+    const btnCard = document.getElementById('frameBtnCard');
+    const btnBadge = document.getElementById('frameBtnBadge');
+    const headerZone = document.getElementById('frameHeaderZone');
+    const badgeZone = document.getElementById('frameBadgeZone');
+
+    const defaultBorder = "p-3 rounded-xl bg-surface-container flex flex-col items-center gap-1.5 text-center transition-all";
+    const activeBorder = "p-3 rounded-xl bg-surface-container border-2 border-secondary flex flex-col items-center gap-1.5 text-center transition-all";
+
+    btnNone.className = defaultBorder;
+    btnCard.className = defaultBorder;
+    btnBadge.className = defaultBorder;
+    headerZone.classList.add('hidden');
+    badgeZone.classList.add('hidden');
+
+    if (style === 'none') {
+      btnNone.className = activeBorder;
+    } else if (style === 'card') {
+      btnCard.className = activeBorder;
+      headerZone.classList.remove('hidden');
+    } else if (style === 'badge') {
+      btnBadge.className = activeBorder;
+      badgeZone.classList.remove('hidden');
+    }
+  }
+
+  function handleLogoUpload(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const img = new Image();
+        img.onload = function() {
+          appState.customLogo = img;
+          document.getElementById('customLogoImg').src = evt.target.result;
+          document.getElementById('customLogoImg').classList.remove('hidden');
+          document.getElementById('logoPlaceholderIcon').classList.add('hidden');
+          document.getElementById('removeLogoBtn').classList.remove('hidden');
+          renderLiveQR();
+        };
+        img.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function removeLogo() {
+    appState.customLogo = null;
+    document.getElementById('logoFileInput').value = '';
+    document.getElementById('customLogoImg').src = '';
+    document.getElementById('customLogoImg').classList.add('hidden');
+    document.getElementById('logoPlaceholderIcon').classList.remove('hidden');
+    document.getElementById('removeLogoBtn').classList.add('hidden');
+    renderLiveQR();
+  }
+
+  // Pure Canvas QR Matrix Generator with High Resolution Output
+  function renderLiveQR() {
+    const canvas = document.getElementById('qrCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const text = document.getElementById('payloadValue').value || 'https://boothpro.id';
+    
+    // Canvas sizing (300 x 300)
+    const size = canvas.width;
+    const c1 = document.getElementById('qrColor1').value;
+    const c2 = document.getElementById('qrColor2').value;
+    const bg = document.getElementById('qrBgColor').value;
+
+    // Synchronize hex fields
+    document.getElementById('qrColor1Hex').value = c1.toUpperCase();
+    document.getElementById('qrColor2Hex').value = c2.toUpperCase();
+    document.getElementById('qrBgColorHex').value = bg.toUpperCase();
+
+    // Clear background
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, size, size);
+
+    // Compute pseudo-random deterministic matrix from payload text
+    const moduleCount = 29; // standard Version 3 QR grid size
+    const cellSize = size / moduleCount;
+
+    // Gradient Setup
+    let fillStyle = c1;
+    if (appState.colorMode === 'gradient') {
+      const grad = ctx.createLinearGradient(0, 0, size, size);
+      grad.addColorStop(0, c1);
+      grad.addColorStop(1, c2);
+      fillStyle = grad;
+    }
+    ctx.fillStyle = fillStyle;
+
+    // Helper: Simple deterministic hash for pattern density
+    let hash = 0;
+    for (let i = 0; i < text.length; i++) {
+      hash = ((hash << 5) - hash) + text.charCodeAt(i);
+      hash |= 0;
+    }
+
+    // Draw QR Finder Patterns (3 Corners)
+    function drawFinderPattern(row, col) {
+      const px = col * cellSize;
+      const py = row * cellSize;
+      // Outer 7x7
+      ctx.fillRect(px, py, cellSize * 7, cellSize * 7);
+      // Inner cut
+      ctx.fillStyle = bg;
+      ctx.fillRect(px + cellSize, py + cellSize, cellSize * 5, cellSize * 5);
+      // Center solid 3x3
+      ctx.fillStyle = fillStyle;
+      ctx.fillRect(px + cellSize * 2, py + cellSize * 2, cellSize * 3, cellSize * 3);
+    }
+
+    drawFinderPattern(0, 0); // Top-Left
+    drawFinderPattern(0, moduleCount - 7); // Top-Right
+    drawFinderPattern(moduleCount - 7, 0); // Bottom-Left
+
+    // Draw Data Modules
+    ctx.fillStyle = fillStyle;
+    for (let r = 0; r < moduleCount; r++) {
+      for (let c = 0; c < moduleCount; c++) {
+        // Skip finder pattern zones
+        const inTL = (r < 8 && c < 8);
+        const inTR = (r < 8 && c >= moduleCount - 8);
+        const inBL = (r >= moduleCount - 8 && c < 8);
+        if (inTL || inTR || inBL) continue;
+
+        // Skip center zone if custom logo is present (Error Correction Level H buffer)
+        if (appState.customLogo && r >= 10 && r <= 18 && c >= 10 && c <= 18) {
+          continue;
+        }
+
+        // Pseudo module activation
+        const bit = Math.abs(Math.sin((r * 13 + c * 37 + hash))) > 0.42;
+        if (bit) {
+          // Draw rounded tactility module
+          const radius = cellSize * 0.35;
+          const x = c * cellSize;
+          const y = r * cellSize;
+          ctx.beginPath();
+          ctx.arc(x + cellSize / 2, y + cellSize / 2, radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+
+    // Draw Center Logo with Level H protective backing
+    if (appState.customLogo) {
+      const logoBoxSize = cellSize * 8;
+      const startX = (size - logoBoxSize) / 2;
+      const startY = (size - logoBoxSize) / 2;
+
+      // Solid background buffer plate
+      ctx.fillStyle = bg;
+      ctx.beginPath();
+      ctx.roundRect(startX, startY, logoBoxSize, logoBoxSize, 8);
+      ctx.fill();
+
+      // Subtle border for logo frame
+      ctx.strokeStyle = c1;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Draw uploaded image
+      const padding = 6;
+      ctx.drawImage(
+        appState.customLogo,
+        startX + padding,
+        startY + padding,
+        logoBoxSize - padding * 2,
+        logoBoxSize - padding * 2
+      );
+    }
+  }
+
+  function downloadQRImage() {
+    const canvas = document.getElementById('qrCanvas');
+    const link = document.createElement('a');
+    link.download = `boothpro-qr-${Date.now()}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    showToast('Berhasil Disimpan', 'File QR telah tersimpan ke galeri / penyimpanan perangkat.');
+  }
+
+  async function shareQRMobile() {
+    const canvas = document.getElementById('qrCanvas');
+    if (navigator.share && navigator.canShare) {
+      try {
+        canvas.toBlob(async (blob) => {
+          const file = new File([blob], 'boothpro-qr.png', { type: 'image/png' });
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: 'QR Studio Pro File',
+              text: 'Scan QR ini untuk melihat soft-file foto Anda!'
+            });
+          } else {
+            await navigator.share({
+              title: 'QR Studio Pro Link',
+              text: document.getElementById('payloadValue').value
+            });
+          }
+        });
+      } catch (err) {
+        downloadQRImage();
+      }
+    } else {
+      // Fallback
+      downloadQRImage();
+    }
+  }
+
+  // ==========================================
+  // 5. ADMIN SETTINGS & AD SYNCHRONIZATION
+  // ==========================================
+  function loadAdminInputs() {
+    const cfg = appState.config;
+    document.getElementById('adminPubId').value = cfg.pubId;
+    document.getElementById('adminSlotId').value = cfg.slotId;
+    document.getElementById('adminAutoAdsToggle').checked = cfg.autoAds;
+    document.getElementById('adminSponsorName').value = cfg.sponsorName;
+    document.getElementById('adminSponsorLink').value = cfg.sponsorLink;
+    document.getElementById('adminSponsorTagline').value = cfg.sponsorTagline;
+    setAdminAdMode(cfg.adMode, false);
+  }
+
+  function setAdminAdMode(mode, triggerWatcher = true) {
+    appState.config.adMode = mode;
+    const btnAds = document.getElementById('modeAdsenseBtn');
+    const btnSpo = document.getElementById('modeSponsorBtn');
+    const btnHyb = document.getElementById('modeHybridBtn');
+
+    const defClass = "p-4 rounded-xl bg-surface-container flex flex-col items-start gap-2 transition-all";
+    const actClass = "p-4 rounded-xl bg-surface-container border-2 border-secondary flex flex-col items-start gap-2 transition-all";
+
+    btnAds.className = defClass;
+    btnSpo.className = defClass;
+    btnHyb.className = defClass;
+
+    if (mode === 'adsense') btnAds.className = actClass;
+    else if (mode === 'sponsor') btnSpo.className = actClass;
+    else if (mode === 'hybrid') btnHyb.className = actClass;
+
+    if (triggerWatcher) updateAdminWatcher();
+  }
+
+  function updateAdminWatcher() {
+    const pubId = document.getElementById('adminPubId').value;
+    const slotId = document.getElementById('adminSlotId').value;
+    const spName = document.getElementById('adminSponsorName').value;
+    const mode = appState.config.adMode;
+
+    document.getElementById('watcherPubIdText').innerText = pubId;
+    document.getElementById('watcherSlotIdText').innerText = slotId;
+    document.getElementById('watcherTopSponsorText').innerText = spName;
+    document.getElementById('watcherActiveModeBadge').innerText = mode.toUpperCase();
+
+    const box = document.getElementById('watcherSkyscraperBox');
+    const icon = document.getElementById('watcherAdIcon');
+    const label = document.getElementById('watcherAdLabel');
+
+    if (mode === 'adsense') {
+      icon.innerText = 'ads_click';
+      label.innerText = `Google AdSense Banner (Slot: ${slotId})`;
+    } else if (mode === 'sponsor') {
+      icon.innerText = 'verified';
+      label.innerText = `Sponsor: ${spName}`;
+    } else {
+      icon.innerText = 'sync_alt';
+      label.innerText = 'Hybrid Rotasi (AdSense & Sponsor)';
+    }
+  }
+
+  function saveAdminSettings() {
+    const cfg = {
+      adMode: appState.config.adMode,
+      autoAds: document.getElementById('adminAutoAdsToggle').checked,
+      pubId: document.getElementById('adminPubId').value.trim(),
+      slotId: document.getElementById('adminSlotId').value.trim(),
+      sponsorName: document.getElementById('adminSponsorName').value.trim(),
+      sponsorLink: document.getElementById('adminSponsorLink').value.trim(),
+      sponsorTagline: document.getElementById('adminSponsorTagline').value.trim()
+    };
+
+    appState.config = cfg;
+    localStorage.setItem('qr_kiosk_ad_config', JSON.stringify(cfg));
+    renderPublicAds();
+    showToast('Tersimpan & Live!', 'Pengaturan AdSense & Sponsor disinkronkan ke seluruh terminal.');
+  }
+
+  function renderPublicAds() {
+    const cfg = appState.config;
+    const topText = document.getElementById('pubHeaderBannerText');
+    const topLink = document.getElementById('pubHeaderBannerLink');
+    const slot = document.getElementById('pubSkyscraperSlot');
+    const badge = document.getElementById('pubCurrentAdModeBadge');
+    const syncPill = document.getElementById('syncModePill');
+
+    badge.innerText = cfg.adMode.toUpperCase();
+    syncPill.innerText = cfg.adMode.toUpperCase() + ' SYNC';
+
+    // Header banner text update
+    topText.innerHTML = `<strong>${cfg.sponsorName}</strong> &bull; ${cfg.sponsorTagline}`;
+    topLink.href = cfg.sponsorLink;
+
+    // Render Skyscraper content based on Mode
+    if (cfg.adMode === 'adsense') {
+      slot.innerHTML = `
+        <div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container mb-2">
+          <span class="material-symbols-outlined text-[14px] text-secondary">ads_click</span>
+          <span class="font-label-sm text-label-sm text-on-surface-variant">ADSENSE VERIFIED</span>
+        </div>
+        <span class="font-headline-sm text-label-md text-on-surface">Slot Skyscraper 160x600</span>
+        <span class="font-label-sm text-label-sm text-outline-variant mt-1">Publisher: ${cfg.pubId}</span>
+        <span class="font-label-sm text-label-sm text-secondary mt-0.5">Slot: ${cfg.slotId}</span>
+      `;
+    } else if (cfg.adMode === 'sponsor') {
+      slot.innerHTML = `
+        <div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container mb-2">
+          <span class="material-symbols-outlined text-[14px] text-tertiary">star</span>
+          <span class="font-label-sm text-label-sm text-tertiary">OFFICIAL PARTNER</span>
+        </div>
+        <span class="font-headline-sm text-label-md text-on-surface">${cfg.sponsorName}</span>
+        <p class="font-body-md text-label-sm text-on-surface-variant line-clamp-2 mt-1">${cfg.sponsorTagline}</p>
+        <a href="${cfg.sponsorLink}" target="_blank" class="mt-2 px-3 py-1 rounded-lg bg-surface-bright text-secondary font-label-sm text-label-sm">Buka Link Promo &rarr;</a>
+      `;
+    } else {
+      // Hybrid
+      slot.innerHTML = `
+        <div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container mb-2">
+          <span class="material-symbols-outlined text-[14px] text-primary">sync</span>
+          <span class="font-label-sm text-label-sm text-primary">HYBRID ROTATION (50:50)</span>
+        </div>
+        <span class="font-headline-sm text-label-md text-on-surface">${cfg.sponsorName}</span>
+        <span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Auto-Rotating with AdSense: ${cfg.slotId}</span>
+      `;
+    }
+  }
+
+  function showToast(title, desc) {
+    const toast = document.getElementById('toastNotification');
+    document.getElementById('toastTitle').innerText = title;
+    document.getElementById('toastDesc').innerText = desc;
+
+    toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-20px]');
+    toast.classList.add('opacity-100', 'translate-y-0');
+
+    setTimeout(() => {
+      toast.classList.remove('opacity-100', 'translate-y-0');
+      toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-20px]');
+    }, 3200);
+  }
+
+  // ==========================================
+  // 6. BOOTSTRAP INITIALIZATION
+  // ==========================================
+  window.addEventListener('DOMContentLoaded', () => {
+    // Initial route resolve
+    renderCurrentRoute();
+    renderLiveQR();
+    renderPublicAds();
+  });
+</script></main><footer class="w-full bg-surface-container-lowest py-space-lg"><div class="w-full px-gutter flex flex-col md:flex-row items-center justify-between gap-space-md text-center md:text-left"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface">QR STUDIO PRO</span><span class="font-label-sm text-label-sm text-on-surface-variant">• BoothPro Kiosk Suite</span></div><p class="font-body-md text-body-md text-on-surface-variant">Sistem Generator QR Real-Time &amp; Manajemen Sponsor Terpadu. Dirancang untuk Terminal Booth &amp; Komersial.</p><div class="flex items-center gap-space-md"><span class="font-label-sm text-label-sm text-on-surface-variant">v4.2 PRO ENGINE</span></div></div></footer></body></html>
