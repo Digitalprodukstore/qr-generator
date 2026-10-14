@@ -97,7 +97,20 @@ jobs:
             if (!decoded) throw new Error('QR canvas rendered, but a QR decoder could not decode it.');
             if (decoded.data !== result.payload) throw new Error('Decoded payload does not match the input payload.');
             if (pageErrors.length) throw new Error(`Browser JavaScript errors: ${pageErrors.join(' | ')}`);
-            console.log('PASS: QR is standards-compliant, decodes to the expected payload, and the page has no uncaught JavaScript errors.');
+            const downloadPromise = page.waitForEvent('download', { timeout: 10000 });
+            await page.locator('button[onclick="downloadQRImage()"]').click();
+            const download = await downloadPromise;
+            if (!download.suggestedFilename().endsWith('.png')) {
+              throw new Error(`Expected a PNG download, received: ${download.suggestedFilename()}`);
+            }
+            const downloadPath = await download.path();
+            const fs = require('node:fs');
+            const pngHeader = fs.readFileSync(downloadPath).subarray(0, 8);
+            if (pngHeader.toString('hex') !== '89504e470d0a1a0a') {
+              throw new Error('Downloaded file does not have a valid PNG signature.');
+            }
+            if (pageErrors.length) throw new Error(`Browser JavaScript errors: ${pageErrors.join(' | ')}`);
+            console.log('PASS: QR decodes to the expected payload, PNG download is valid, and the page has no uncaught JavaScript errors.');
             await browser.close();
           })().catch(error => { console.error(error); process.exit(1); });
           NODE
