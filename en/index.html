@@ -51,7 +51,7 @@
 </div>
 </div>
 <!-- ============================================================== -->
-<!-- VIEW 1: GENERATOR PUBLIK (#generator)                         -->
+<!-- VIEW 1: PUBLIC GENERATOR (#generator)                         -->
 <!-- ============================================================== -->
 <section class="w-full py-space-md px-gutter" id="view-generator"><div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
 <!-- GET-QR-inspired visual introduction: presentation only; existing generator controls and engine remain unchanged. -->
@@ -145,7 +145,7 @@
 <div class="flex-1 w-full min-w-0 grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
 <!-- Controls Column (7 Cols) -->
 <div class="lg:col-span-7 flex flex-col gap-space-md">
-<!-- Section 1: Tipe Konten & Payload -->
+<!-- Section 1: Content Type & Payload -->
 <div class="bg-surface-container-low rounded-2xl p-space-md shadow-md flex flex-col gap-space-sm">
 <div class="flex items-center justify-between">
 <div class="flex items-center gap-2">
@@ -189,7 +189,7 @@
 </div>
 </div>
 </div>
-<!-- Section 2: Palet Warna & Gradasi Titik -->
+<!-- Section 2: Color Palette & Dot Gradient -->
 <div class="bg-surface-container-low rounded-2xl p-space-md shadow-md flex flex-col gap-space-sm">
 <div class="flex items-center justify-between">
 <div class="flex items-center gap-2">
@@ -231,7 +231,7 @@
 <button class="px-2.5 py-1 rounded bg-surface-container font-label-sm text-label-sm text-on-surface hover:bg-surface-container-high transition-all" onclick="applyPreset('#DFE2EF', '#DFE2EF', '#000000', false)">High-Contrast Monochrome</button>
 </div>
 </div>
-<!-- Section 3: Frame & Custom Logo Center -->
+<!-- Section 3: Frame & Custom Center Logo -->
 <div class="bg-surface-container-low rounded-2xl p-space-md shadow-md flex flex-col gap-space-sm">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-secondary text-[22px]">photo_filter</span>
@@ -268,7 +268,7 @@
 <div class="flex items-center gap-2">
 <input accept="image/*" class="hidden" id="logoFileInput" onchange="handleLogoUpload(event)" type="file"/>
 <button class="px-space-sm py-2 rounded-xl bg-surface-container-highest text-on-surface font-label-md text-label-md hover:bg-surface-bright transition-all" onclick="document.getElementById('logoFileInput').click()">Choose Logo File</button>
-<button class="p-2 rounded-xl bg-surface-container-high text-error hover:bg-surface-bright hidden" id="removeLogoBtn" onclick="removeLogo()" title="Hapus Logo">
+<button class="p-2 rounded-xl bg-surface-container-high text-error hover:bg-surface-bright hidden" id="removeLogoBtn" onclick="removeLogo()" title="Remove logo">
 <span class="material-symbols-outlined text-[20px]">close</span>
 </button>
 </div>
@@ -406,7 +406,7 @@
 </div>
 </section>
 <!-- ============================================================== -->
-<!-- VIEW 3: DASHBOARD ADMIN MONETISASI & ADSENSE (#admin)         -->
+<!-- VIEW 3: ADMIN MONETIZATION DASHBOARD (#admin)                 -->
 <!-- ============================================================== -->
 <section class="hidden w-full py-space-md px-gutter" id="view-admin">
 <div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
@@ -657,7 +657,7 @@
 
     // Nav Label based on Auth State
     if (appState.auth) {
-      navAdminLabel.innerText = "Dashboard Admin";
+      navAdminLabel.innerText = "Admin Dashboard";
     } else {
       navAdminLabel.innerText = "Admin Portal";
     }
@@ -687,14 +687,14 @@
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok || result.authenticated !== true) {
-        errorBox.textContent = result.error || 'Login gagal. Periksa kredensial atau konfigurasi server.';
+        errorBox.textContent = result.error || 'Sign-in failed. Check your credentials or server configuration.';
         errorBox.classList.remove('hidden');
         return;
       }
       appState.auth = true;
       document.getElementById('loginPassword').value = '';
       document.getElementById('loginPin').value = '';
-      showToast('Login Berhasil', 'Sesi administrator terverifikasi oleh server.');
+      showToast('Sign-in successful', 'Your administrator session has been verified by the server.');
       navigateTo('admin');
     } catch (_) {
       errorBox.textContent = 'Server autentikasi tidak dapat dihubungi. Coba lagi.';
@@ -709,7 +709,7 @@
       await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' });
     } finally {
       appState.auth = false;
-      showToast('Logout Berhasil', 'Sesi administrator telah diakhiri.');
+      showToast('Signed out', 'Your administrator session has ended.');
       navigateTo('generator');
     }
   }
@@ -838,24 +838,24 @@
     const file = input?.files?.[0];
     if (!file) return;
     if (!file.type || !file.type.startsWith('image/')) {
-      showToast('Logo tidak valid', 'Pilih file gambar seperti PNG, JPG, atau WEBP.');
+      showToast('Invalid logo', 'Choose an image file such as PNG, JPG, or WEBP.');
       input.value = '';
       return;
     }
     if (file.size > 5 * 1024 * 1024) {
-      showToast('Ukuran logo terlalu besar', 'Pilih gambar berukuran maksimal 5 MB.');
+      showToast('Logo file too large', 'Choose an image no larger than 5 MB.');
       input.value = '';
       return;
     }
     const reader = new FileReader();
     reader.onerror = function() {
-      showToast('Logo gagal dibaca', 'Coba pilih file gambar lain.');
+      showToast('Could not read logo', 'Try choosing another image file.');
       input.value = '';
     };
     reader.onload = function(evt) {
       const dataUrl = evt.target?.result;
       if (typeof dataUrl !== 'string') {
-        showToast('Logo gagal dibaca', 'Coba pilih file gambar lain.');
+        showToast('Could not read logo', 'Try choosing another image file.');
         input.value = '';
         return;
       }
@@ -867,12 +867,12 @@
         document.getElementById('logoPlaceholderIcon').classList.add('hidden');
         document.getElementById('removeLogoBtn').classList.remove('hidden');
         renderLiveQR();
-        showToast('Logo diterapkan', 'Logo langsung disinkronkan ke hasil QR HD.');
+        showToast('Logo applied', 'The logo is included in the high-resolution QR output.');
       };
       img.onerror = function() {
         // Keep any previously applied logo intact if the replacement file fails.
         input.value = '';
-        showToast('Logo tidak dapat dibuka', 'Logo sebelumnya tetap digunakan. Coba PNG, JPG, atau WEBP yang valid.');
+        showToast('Unable to open logo', 'Your previous logo is still in use. Try a valid PNG, JPG, or WEBP file.');
       };
       img.src = dataUrl;
     };
@@ -906,7 +906,7 @@
     if (hex2) hex2.value = c2.toUpperCase();
     if (hexBg) hexBg.value = bg.toUpperCase();
     try {
-      if (typeof qrcode !== 'function') throw new Error('Pustaka QR belum termuat. Periksa koneksi internet lalu muat ulang halaman.');
+      if (typeof qrcode !== 'function') throw new Error('The QR library has not loaded. Check your internet connection and reload the page.');
       const qr = qrcode(0, 'H');
       qr.addData(text, 'Byte');
       qr.make();
@@ -973,20 +973,20 @@
       ctx.fillStyle = '#b91c1c';
       ctx.font = '14px sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('QR gagal dibuat', canvas.width / 2, canvas.height / 2);
-      if (typeof showToast === 'function') showToast('QR belum siap', error.message || 'Periksa isi data QR.');
+      ctx.fillText('QR generation failed', canvas.width / 2, canvas.height / 2);
+      if (typeof showToast === 'function') showToast('QR not ready', error.message || 'Check the QR content you entered.');
     }
   }
 
   async function downloadQRImage() {
     const canvas = document.getElementById('qrCanvas');
     if (!canvas || canvas.dataset.qrReady !== 'true') {
-      showToast('QR belum siap', 'Buat QR yang valid terlebih dahulu.');
+      showToast('QR not ready', 'Generate a valid QR code first.');
       return;
     }
     try {
       const blob = await new Promise((resolve, reject) => {
-        canvas.toBlob(value => value ? resolve(value) : reject(new Error('Browser gagal menyiapkan file PNG.')), 'image/png');
+        canvas.toBlob(value => value ? resolve(value) : reject(new Error('Your browser could not prepare the PNG file.')), 'image/png');
       });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -996,26 +996,26 @@
       link.click();
       link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-      showToast('Unduhan dimulai', 'Periksa folder Unduhan perangkat Anda.');
+      showToast('Download started', 'Check your device’s Downloads folder.');
     } catch (err) {
-      showToast('Unduhan gagal', err.message || 'Browser tidak dapat membuat file PNG.');
+      showToast('Download failed', err.message || 'Your browser could not create the PNG file.');
     }
   }
 
   async function shareQRMobile() {
     const canvas = document.getElementById('qrCanvas');
     if (!canvas || canvas.dataset.qrReady !== 'true') {
-      showToast('QR belum siap', 'Buat QR yang valid terlebih dahulu.');
+      showToast('QR not ready', 'Generate a valid QR code first.');
       return;
     }
     const payload = document.getElementById('payloadValue')?.value || '';
     try {
       const blob = await new Promise((resolve, reject) => {
-        canvas.toBlob(value => value ? resolve(value) : reject(new Error('Browser gagal menyiapkan gambar.')), 'image/png');
+        canvas.toBlob(value => value ? resolve(value) : reject(new Error('Your browser could not prepare the image.')), 'image/png');
       });
       const file = new File([blob], 'qr-studio.png', { type: 'image/png' });
       if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ files: [file], title: 'QR Studio Pro', text: 'QR code yang saya buat' });
+        await navigator.share({ files: [file], title: 'QR Generator', text: 'The QR code I created' });
         return;
       }
       if (navigator.share) {
