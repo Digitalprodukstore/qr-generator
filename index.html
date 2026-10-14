@@ -812,9 +812,9 @@
         showToast('Logo diterapkan', 'Logo langsung disinkronkan ke hasil QR HD.');
       };
       img.onerror = function() {
-        appState.customLogo = null;
+        // Keep any previously applied logo intact if the replacement file fails.
         input.value = '';
-        showToast('Logo tidak dapat dibuka', 'Coba gunakan PNG, JPG, atau WEBP yang valid.');
+        showToast('Logo tidak dapat dibuka', 'Logo sebelumnya tetap digunakan. Coba PNG, JPG, atau WEBP yang valid.');
       };
       img.src = dataUrl;
     };
