@@ -14,13 +14,11 @@ jobs:
   static-checks:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Validate page and inline JavaScript
+      - name: Validate document and inline JavaScript
         run: |
           node <<'NODE'
           const fs = require('node:fs');
@@ -30,19 +28,18 @@ jobs:
             if (!condition) {
               console.error('FAIL:', message);
               process.exitCode = 1;
-            } else {
-              console.log('PASS:', message);
-            }
+            } else console.log('PASS:', message);
           };
-          assert(/<!doctype html/i.test(html), 'HTML document has a doctype');
-          assert(/<html[\s>]/i.test(html) && /<\/html>/i.test(html), 'HTML root is present');
-          assert(/qrcode-generator\/1\.4\.4\/qrcode\.min\.js/.test(html), 'standards-based QR encoder is loaded');
-          assert(/qr\.isDark\(row, col\)/.test(html), 'QR modules are rendered from the encoder matrix');
-          assert(!/Compute pseudo-random deterministic matrix/.test(html), 'pseudo QR drawing code is removed');
-          const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
+          assert(/<!doctype html/i.test(html), 'HTML doctype exists');
+          assert(/<html[\\s>]/i.test(html) && /<\\/html>/i.test(html), 'HTML root exists');
+          assert(/qrcode-generator\\/1\\.4\\.4\\/qrcode\\.min\\.js/.test(html), 'QR encoder is loaded');
+          assert(/qr\\.isDark\\(row, col\\)/.test(html), 'real QR matrix is rendered');
+          assert(!/Compute pseudo-random deterministic matrix/.test(html), 'pseudo QR code is removed');
+          assert(/canvas\\.dataset\\.qrReady !== 'true'/.test(html), 'export checks QR readiness');
+          const scripts = [...html.matchAll(/<script\\b([^>]*)>([\\s\\S]*?)<\\/script>/gi)];
           let count = 0;
           for (const [, attrs, code] of scripts) {
-            if (/\bsrc\s*=/.test(attrs) || !code.trim()) continue;
+            if (/\\bsrc\\s*=/.test(attrs) || !code.trim()) continue;
             const file = `/tmp/qr-inline-${count++}.js`;
             fs.writeFileSync(file, code);
             const check = spawnSync(process.execPath, ['--check', file], { encoding: 'utf8' });
@@ -51,6 +48,54 @@ jobs:
               process.exitCode = 1;
             }
           }
-          assert(count > 0, 'inline JavaScript blocks were checked');
+          assert(count > 0, 'inline JavaScript syntax checked');
           if (process.exitCode) process.exit(process.exitCode);
+          NODE
+
+  browser-qr-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install browser test dependencies
+        run: |
+          npm install --no-save playwright jsqr http-server
+          npx playwright install --with-deps chromium
+      - name: Serve page
+        run: |
+          npx http-server . -p 4173 -c-1 > /tmp/qr-http.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/qr-http.log
+          exit 1
+      - name: Verify QR can be decoded
+        run: |
+          node <<'NODE'
+          const { chromium } = require('playwright');
+          const jsQR = require('jsqr');
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+            page.on('pageerror', error => { throw error; });
+            await page.goto('http://127.0.0.1:4173/', { waitUntil: 'networkidle', timeout: 60000 });
+            await page.waitForFunction(() => {
+              const c = document.getElementById('qrCanvas');
+              return c && c.dataset.qrReady === 'true';
+            }, null, { timeout: 30000 });
+            const result = await page.evaluate(() => {
+              const c = document.getElementById('qrCanvas');
+              const ctx = c.getContext('2d');
+              const image = ctx.getImageData(0, 0, c.width, c.height);
+              return { data: Array.from(image.data), width: image.width, height: image.height, payload: c.dataset.qrPayload };
+            });
+            const decoded = jsQR(new Uint8ClampedArray(result.data), result.width, result.height);
+            if (!decoded) throw new Error('QR canvas rendered, but a QR decoder could not decode it.');
+            if (decoded.data !== result.payload) throw new Error('Decoded payload does not match the input payload.');
+            console.log('PASS: QR is standards-compliant and decodes to the expected payload.');
+            await browser.close();
+          })().catch(error => { console.error(error); process.exit(1); });
           NODE
