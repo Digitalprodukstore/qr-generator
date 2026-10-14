@@ -223,9 +223,9 @@
 <div class="w-full flex items-center justify-between pb-3">
 <div class="flex items-center gap-1.5">
 <span class="w-2 h-2 rounded-full bg-secondary"></span>
-<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">HUD PREVIEW • 1024 PX</span>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">HUD PREVIEW • 1200 PX</span>
 </div>
-<span class="font-label-sm text-label-sm text-tertiary">300 DPI READY</span>
+<span class="font-label-sm text-label-sm text-tertiary">PNG HD • 1200 × 1200 PX</span>
 </div>
 <div class="relative p-6 rounded-2xl bg-surface-container-low transition-all duration-300 flex flex-col items-center max-w-sm w-full" id="qrFrameWrapper">
 <div class="hidden w-full pb-3 text-center border-b border-outline-variant/30 mb-3" id="frameHeaderZone">
@@ -233,7 +233,7 @@
 <p class="font-label-sm text-label-sm text-secondary">BOOTHPRO SOFT FILES</p>
 </div>
 <div class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center bg-surface-container-lowest rounded-xl overflow-hidden shadow-inner">
-<canvas class="w-full h-full object-contain" height="300" id="qrCanvas" width="300"></canvas>
+<canvas class="w-full h-full object-contain" height="1200" id="qrCanvas" width="1200"></canvas>
 <div class="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-secondary/40 pointer-events-none"></div>
 <div class="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-secondary/40 pointer-events-none"></div>
 <div class="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-secondary/40 pointer-events-none"></div>
@@ -776,23 +776,49 @@
   }
 
   function handleLogoUpload(e) {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        const img = new Image();
-        img.onload = function() {
-          appState.customLogo = img;
-          document.getElementById('customLogoImg').src = evt.target.result;
-          document.getElementById('customLogoImg').classList.remove('hidden');
-          document.getElementById('logoPlaceholderIcon').classList.add('hidden');
-          document.getElementById('removeLogoBtn').classList.remove('hidden');
-          renderLiveQR();
-        };
-        img.src = evt.target.result;
-      };
-      reader.readAsDataURL(file);
+    const input = e?.target || document.getElementById('logoFileInput');
+    const file = input?.files?.[0];
+    if (!file) return;
+    if (!file.type || !file.type.startsWith('image/')) {
+      showToast('Logo tidak valid', 'Pilih file gambar seperti PNG, JPG, atau WEBP.');
+      input.value = '';
+      return;
     }
+    if (file.size > 5 * 1024 * 1024) {
+      showToast('Ukuran logo terlalu besar', 'Pilih gambar berukuran maksimal 5 MB.');
+      input.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onerror = function() {
+      showToast('Logo gagal dibaca', 'Coba pilih file gambar lain.');
+      input.value = '';
+    };
+    reader.onload = function(evt) {
+      const dataUrl = evt.target?.result;
+      if (typeof dataUrl !== 'string') {
+        showToast('Logo gagal dibaca', 'Coba pilih file gambar lain.');
+        input.value = '';
+        return;
+      }
+      const img = new Image();
+      img.onload = function() {
+        appState.customLogo = img;
+        document.getElementById('customLogoImg').src = dataUrl;
+        document.getElementById('customLogoImg').classList.remove('hidden');
+        document.getElementById('logoPlaceholderIcon').classList.add('hidden');
+        document.getElementById('removeLogoBtn').classList.remove('hidden');
+        renderLiveQR();
+        showToast('Logo diterapkan', 'Logo langsung disinkronkan ke hasil QR HD.');
+      };
+      img.onerror = function() {
+        // Keep any previously applied logo intact if the replacement file fails.
+        input.value = '';
+        showToast('Logo tidak dapat dibuka', 'Logo sebelumnya tetap digunakan. Coba PNG, JPG, atau WEBP yang valid.');
+      };
+      img.src = dataUrl;
+    };
+    reader.readAsDataURL(file);
   }
 
   function removeLogo() {
@@ -851,6 +877,33 @@
             ctx.fillRect(x, y, right - x, bottom - y);
           }
         }
+      }
+      // Center logo is drawn on the same high-resolution canvas used by preview,
+      // PNG download and native share, so the visible and exported QR stay in sync.
+      if (appState.customLogo && appState.customLogo.complete && appState.customLogo.naturalWidth > 0) {
+        const logo = appState.customLogo;
+        const logoBox = Math.round(size * 0.22);
+        const logoPadding = Math.round(size * 0.025);
+        const logoSize = logoBox - logoPadding * 2;
+        const logoX = Math.round((size - logoBox) / 2);
+        const logoY = logoX;
+        const radius = Math.round(size * 0.025);
+        ctx.save();
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        if (typeof ctx.roundRect === 'function') {
+          ctx.roundRect(logoX, logoY, logoBox, logoBox, radius);
+          ctx.fill();
+        } else {
+          ctx.fillRect(logoX, logoY, logoBox, logoBox);
+        }
+        const scale = Math.min(logoSize / logo.naturalWidth, logoSize / logo.naturalHeight);
+        const drawW = Math.round(logo.naturalWidth * scale);
+        const drawH = Math.round(logo.naturalHeight * scale);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(logo, Math.round((size - drawW) / 2), Math.round((size - drawH) / 2), drawW, drawH);
+        ctx.restore();
       }
       canvas.dataset.qrPayload = text;
       canvas.dataset.qrReady = 'true';
