@@ -1,0 +1,116 @@
+name: QR Generator checks
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, "fix/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate document and inline JavaScript
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const { spawnSync } = require('node:child_process');
+          const html = fs.readFileSync('index.html', 'utf8');
+          const assert = (condition, message) => {
+            if (!condition) {
+              console.error('FAIL:', message);
+              process.exitCode = 1;
+            } else console.log('PASS:', message);
+          };
+          assert(/<!doctype html/i.test(html), 'HTML doctype exists');
+          assert(/<html[\s>]/i.test(html) && /<\/html>/i.test(html), 'HTML root exists');
+          assert(/qrcode-generator\/1\.4\.4\/qrcode\.min\.js/.test(html), 'QR encoder is loaded');
+          assert(/qr\.isDark\(row, col\)/.test(html), 'real QR matrix is rendered');
+          assert(!/Compute pseudo-random deterministic matrix/.test(html), 'pseudo QR code is removed');
+          assert(/canvas\.dataset\.qrReady !== 'true'/.test(html), 'export checks QR readiness');
+          const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
+          let count = 0;
+          for (const [, attrs, code] of scripts) {
+            if (/\bsrc\s*=/.test(attrs) || !code.trim()) continue;
+            const file = `/tmp/qr-inline-${count++}.js`;
+            fs.writeFileSync(file, code);
+            const check = spawnSync(process.execPath, ['--check', file], { encoding: 'utf8' });
+            if (check.status !== 0) {
+              console.error(check.stderr || check.stdout);
+              process.exitCode = 1;
+            }
+          }
+          assert(count > 0, 'inline JavaScript syntax checked');
+          if (process.exitCode) process.exit(process.exitCode);
+          NODE
+
+  browser-qr-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install browser test dependencies
+        run: |
+          npm install --no-save playwright jsqr http-server
+          npx playwright install --with-deps chromium
+      - name: Serve page
+        run: |
+          npx http-server . -p 4173 -c-1 > /tmp/qr-http.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/qr-http.log
+          exit 1
+      - name: Verify QR can be decoded
+        run: |
+          node <<'NODE'
+          const { chromium } = require('playwright');
+          const jsQR = require('jsqr');
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+            const pageErrors = [];
+            page.on('pageerror', error => pageErrors.push(error.message));
+            await page.goto('http://127.0.0.1:4173/', { waitUntil: 'networkidle', timeout: 60000 });
+            await page.waitForFunction(() => {
+              const c = document.getElementById('qrCanvas');
+              return c && c.dataset.qrReady === 'true';
+            }, null, { timeout: 30000 });
+            const result = await page.evaluate(() => {
+              const c = document.getElementById('qrCanvas');
+              const ctx = c.getContext('2d');
+              const image = ctx.getImageData(0, 0, c.width, c.height);
+              return { data: Array.from(image.data), width: image.width, height: image.height, payload: c.dataset.qrPayload };
+            });
+            const decoded = jsQR(new Uint8ClampedArray(result.data), result.width, result.height);
+            if (!decoded) throw new Error('QR canvas rendered, but a QR decoder could not decode it.');
+            if (decoded.data !== result.payload) throw new Error('Decoded payload does not match the input payload.');
+            if (pageErrors.length) throw new Error(`Browser JavaScript errors: ${pageErrors.join(' | ')}`);
+            const downloadPromise = page.waitForEvent('download', { timeout: 10000 });
+            await page.locator('button[onclick="downloadQRImage()"]').click();
+            const download = await downloadPromise;
+            if (!download.suggestedFilename().endsWith('.png')) {
+              throw new Error(`Expected a PNG download, received: ${download.suggestedFilename()}`);
+            }
+            const downloadPath = await download.path();
+            const fs = require('node:fs');
+            const pngHeader = fs.readFileSync(downloadPath).subarray(0, 8);
+            if (pngHeader.toString('hex') !== '89504e470d0a1a0a') {
+              throw new Error('Downloaded file does not have a valid PNG signature.');
+            }
+            if (pageErrors.length) throw new Error(`Browser JavaScript errors: ${pageErrors.join(' | ')}`);
+            console.log('PASS: QR decodes to the expected payload, PNG download is valid, and the page has no uncaught JavaScript errors.');
+            await browser.close();
+          })().catch(error => { console.error(error); process.exit(1); });
+          NODE
