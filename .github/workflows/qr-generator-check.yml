@@ -1,0 +1,56 @@
+name: QR Generator checks
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, "fix/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate page and inline JavaScript
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const { spawnSync } = require('node:child_process');
+          const html = fs.readFileSync('index.html', 'utf8');
+          const assert = (condition, message) => {
+            if (!condition) {
+              console.error('FAIL:', message);
+              process.exitCode = 1;
+            } else {
+              console.log('PASS:', message);
+            }
+          };
+          assert(/<!doctype html/i.test(html), 'HTML document has a doctype');
+          assert(/<html[\s>]/i.test(html) && /<\/html>/i.test(html), 'HTML root is present');
+          assert(/qrcode-generator\/1\.4\.4\/qrcode\.min\.js/.test(html), 'standards-based QR encoder is loaded');
+          assert(/qr\.isDark\(row, col\)/.test(html), 'QR modules are rendered from the encoder matrix');
+          assert(!/Compute pseudo-random deterministic matrix/.test(html), 'pseudo QR drawing code is removed');
+          const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
+          let count = 0;
+          for (const [, attrs, code] of scripts) {
+            if (/\bsrc\s*=/.test(attrs) || !code.trim()) continue;
+            const file = `/tmp/qr-inline-${count++}.js`;
+            fs.writeFileSync(file, code);
+            const check = spawnSync(process.execPath, ['--check', file], { encoding: 'utf8' });
+            if (check.status !== 0) {
+              console.error(check.stderr || check.stdout);
+              process.exitCode = 1;
+            }
+          }
+          assert(count > 0, 'inline JavaScript blocks were checked');
+          if (process.exitCode) process.exit(process.exitCode);
+          NODE
