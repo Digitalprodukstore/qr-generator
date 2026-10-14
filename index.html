@@ -849,44 +849,62 @@
     }
   }
 
-  function downloadQRImage() {
+  async function downloadQRImage() {
     const canvas = document.getElementById('qrCanvas');
-    const link = document.createElement('a');
-    link.download = `boothpro-qr-${Date.now()}.png`;
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-    showToast('Berhasil Disimpan', 'File QR telah tersimpan ke galeri / penyimpanan perangkat.');
+    if (!canvas || canvas.dataset.qrReady !== 'true') {
+      showToast('QR belum siap', 'Buat QR yang valid terlebih dahulu.');
+      return;
+    }
+    try {
+      const blob = await new Promise((resolve, reject) => {
+        canvas.toBlob(value => value ? resolve(value) : reject(new Error('Browser gagal menyiapkan file PNG.')), 'image/png');
+      });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = `qr-studio-${Date.now()}.png`;
+      link.href = url;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      showToast('Unduhan dimulai', 'Periksa folder Unduhan perangkat Anda.');
+    } catch (err) {
+      showToast('Unduhan gagal', err.message || 'Browser tidak dapat membuat file PNG.');
+    }
   }
 
   async function shareQRMobile() {
     const canvas = document.getElementById('qrCanvas');
-    if (navigator.share && navigator.canShare) {
-      try {
-        canvas.toBlob(async (blob) => {
-          const file = new File([blob], 'boothpro-qr.png', { type: 'image/png' });
-          if (navigator.canShare({ files: [file] })) {
-            await navigator.share({
-              files: [file],
-              title: 'QR Studio Pro File',
-              text: 'Scan QR ini untuk melihat soft-file foto Anda!'
-            });
-          } else {
-            await navigator.share({
-              title: 'QR Studio Pro Link',
-              text: document.getElementById('payloadValue').value
-            });
-          }
-        });
-      } catch (err) {
-        downloadQRImage();
+    if (!canvas || canvas.dataset.qrReady !== 'true') {
+      showToast('QR belum siap', 'Buat QR yang valid terlebih dahulu.');
+      return;
+    }
+    const payload = document.getElementById('payloadValue')?.value || '';
+    try {
+      const blob = await new Promise((resolve, reject) => {
+        canvas.toBlob(value => value ? resolve(value) : reject(new Error('Browser gagal menyiapkan gambar.')), 'image/png');
+      });
+      const file = new File([blob], 'qr-studio.png', { type: 'image/png' });
+      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: 'QR Studio Pro', text: 'QR code yang saya buat' });
+        return;
       }
-    } else {
-      // Fallback
-      downloadQRImage();
+      if (navigator.share) {
+        await navigator.share({ title: 'QR Studio Pro', text: payload });
+        return;
+      }
+      await downloadQRImage();
+      if (navigator.clipboard && payload) {
+        try { await navigator.clipboard.writeText(payload); } catch (_) {}
+      }
+    } catch (err) {
+      if (err && err.name === 'AbortError') return;
+      showToast('Bagikan tidak tersedia', 'Mencoba mengunduh gambar QR sebagai alternatif.');
+      await downloadQRImage();
     }
   }
 
-  // ==========================================
+    // ==========================================
   // 5. ADMIN SETTINGS & AD SYNCHRONIZATION
   // ==========================================
   function loadAdminInputs() {
@@ -964,6 +982,21 @@
     showToast('Tersimpan & Live!', 'Pengaturan AdSense & Sponsor disinkronkan ke seluruh terminal.');
   }
 
+  function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, ch => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[ch]));
+  }
+
+  function safeHttpUrl(value) {
+    try {
+      const url = new URL(String(value || ''), window.location.origin);
+      return (url.protocol === 'https:' || url.protocol === 'http:') ? url.href : '#';
+    } catch (_) {
+      return '#';
+    }
+  }
+
   function renderPublicAds() {
     const cfg = appState.config;
     const topText = document.getElementById('pubHeaderBannerText');
@@ -988,9 +1021,20 @@
     }
     if (!slot) return;
 
-    // Header banner text update
-    topText.innerHTML = `<strong>${cfg.sponsorName}</strong> &bull; ${cfg.sponsorTagline}`;
-    topLink.href = cfg.sponsorLink;
+    // Use text nodes for administrator-provided values to avoid HTML injection.
+    if (topText) {
+      topText.replaceChildren();
+      const strong = document.createElement('strong');
+      strong.textContent = cfg.sponsorName || 'QR Studio Pro';
+      topText.appendChild(strong);
+      topText.appendChild(document.createTextNode(' • ' + (cfg.sponsorTagline || '')));
+    }
+    if (topLink && cfg.sponsorLink) {
+      try {
+        const target = new URL(cfg.sponsorLink, window.location.origin);
+        if (target.protocol === 'https:' || target.protocol === 'http:') topLink.href = target.href;
+      } catch (_) {}
+    }
 
     // Render Skyscraper content based on Mode
     if (cfg.adMode === 'adsense') {
@@ -1000,8 +1044,8 @@
           <span class="font-label-sm text-label-sm text-on-surface-variant">ADSENSE VERIFIED</span>
         </div>
         <span class="font-headline-sm text-label-md text-on-surface">Slot Skyscraper 160x600</span>
-        <span class="font-label-sm text-label-sm text-outline-variant mt-1">Publisher: ${cfg.pubId}</span>
-        <span class="font-label-sm text-label-sm text-secondary mt-0.5">Slot: ${cfg.slotId}</span>
+        <span class="font-label-sm text-label-sm text-outline-variant mt-1">Publisher: ${escapeHtml(cfg.pubId)}</span>
+        <span class="font-label-sm text-label-sm text-secondary mt-0.5">Slot: ${escapeHtml(cfg.slotId)}</span>
       `;
     } else if (cfg.adMode === 'sponsor') {
       slot.innerHTML = `
@@ -1009,9 +1053,9 @@
           <span class="material-symbols-outlined text-[14px] text-tertiary">star</span>
           <span class="font-label-sm text-label-sm text-tertiary">OFFICIAL PARTNER</span>
         </div>
-        <span class="font-headline-sm text-label-md text-on-surface">${cfg.sponsorName}</span>
-        <p class="font-body-md text-label-sm text-on-surface-variant line-clamp-2 mt-1">${cfg.sponsorTagline}</p>
-        <a href="${cfg.sponsorLink}" target="_blank" class="mt-2 px-3 py-1 rounded-lg bg-surface-bright text-secondary font-label-sm text-label-sm">Buka Link Promo &rarr;</a>
+        <span class="font-headline-sm text-label-md text-on-surface">${escapeHtml(cfg.sponsorName)}</span>
+        <p class="font-body-md text-label-sm text-on-surface-variant line-clamp-2 mt-1">${escapeHtml(cfg.sponsorTagline)}</p>
+        <a href="${escapeHtml(safeHttpUrl(cfg.sponsorLink))}" target="_blank" class="mt-2 px-3 py-1 rounded-lg bg-surface-bright text-secondary font-label-sm text-label-sm">Buka Link Promo &rarr;</a>
       `;
     } else {
       // Hybrid
@@ -1020,8 +1064,8 @@
           <span class="material-symbols-outlined text-[14px] text-primary">sync</span>
           <span class="font-label-sm text-label-sm text-primary">HYBRID ROTATION (50:50)</span>
         </div>
-        <span class="font-headline-sm text-label-md text-on-surface">${cfg.sponsorName}</span>
-        <span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Auto-Rotating with AdSense: ${cfg.slotId}</span>
+        <span class="font-headline-sm text-label-md text-on-surface">${escapeHtml(cfg.sponsorName)}</span>
+        <span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Auto-Rotating with AdSense: ${escapeHtml(cfg.slotId)}</span>
       `;
     }
   }
