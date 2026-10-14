@@ -312,24 +312,24 @@
 <label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Email Administrator</label>
 <div class="relative flex items-center">
 <span class="material-symbols-outlined absolute left-3 text-outline text-[20px]">badge</span>
-<input class="w-full bg-surface-container-highest text-on-surface font-body-md text-body-md pl-10 pr-3 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary" id="loginEmail" required="" type="email" value="admin@boothpro.id"/>
+<input class="w-full bg-surface-container-highest text-on-surface font-body-md text-body-md pl-10 pr-3 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary" id="loginEmail" required="" type="email" autocomplete="username" value=""/>
 </div>
 </div>
 <div class="flex flex-col gap-1">
 <label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Kata Sandi</label>
 <div class="relative flex items-center">
 <span class="material-symbols-outlined absolute left-3 text-outline text-[20px]">key</span>
-<input class="w-full bg-surface-container-highest text-on-surface font-body-md text-body-md pl-10 pr-3 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary" id="loginPassword" required="" type="password" value="admin123"/>
+<input class="w-full bg-surface-container-highest text-on-surface font-body-md text-body-md pl-10 pr-3 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary" id="loginPassword" required="" type="password" autocomplete="current-password" value=""/>
 </div>
 </div>
 <div class="flex flex-col gap-1">
 <div class="flex items-center justify-between">
 <label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">PIN Keamanan 2FA Kios</label>
-<span class="font-label-sm text-label-sm text-tertiary">Default: 990022</span>
+<span class="font-label-sm text-label-sm text-tertiary">PIN ditentukan oleh administrator</span>
 </div>
 <div class="relative flex items-center">
 <span class="material-symbols-outlined absolute left-3 text-outline text-[20px]">pin</span>
-<input class="w-full bg-surface-container-highest text-on-surface font-headline-sm text-headline-sm tracking-widest pl-10 pr-3 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary" id="loginPin" maxlength="6" required="" type="text" value="990022"/>
+<input class="w-full bg-surface-container-highest text-on-surface font-headline-sm text-headline-sm tracking-widest pl-10 pr-3 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary" id="loginPin" maxlength="12" required="" type="password" autocomplete="one-time-code" inputmode="numeric" value=""/>
 </div>
 </div>
 <div class="hidden p-3 rounded-xl bg-error-container text-on-error-container font-label-md text-label-md flex items-center gap-2" id="loginErrorMessage">
@@ -540,12 +540,9 @@
     config: JSON.parse(localStorage.getItem('qr_kiosk_ad_config') || JSON.stringify(DEFAULT_CONFIG))
   };
 
-  // Check persisted session
-  if (sessionStorage.getItem('qr_admin_auth') === 'true') {
-    appState.auth = true;
-  }
+  // Admin access is verified by the server session endpoint at startup.
 
-  // ==========================================
+// ==========================================
   // 2. SPA HASH ROUTING & VIEW CONTROLLER
   // ==========================================
   function navigateTo(targetRoute) {
@@ -613,29 +610,50 @@
   // ==========================================
   // 3. AUTHENTICATION CONTROLLER
   // ==========================================
-  function handleAdminLogin(e) {
+  async function handleAdminLogin(e) {
     e.preventDefault();
-    const email = document.getElementById('loginEmail').value.trim();
-    const password = document.getElementById('loginPassword').value.trim();
-    const pin = document.getElementById('loginPin').value.trim();
     const errorBox = document.getElementById('loginErrorMessage');
-
-    if (email === 'admin@boothpro.id' && password === 'admin123' && pin === '990022') {
-      errorBox.classList.add('hidden');
+    const submitButton = e.submitter || e.target.querySelector('button[type="submit"],button:not([type])');
+    const credentials = {
+      email: document.getElementById('loginEmail').value.trim(),
+      password: document.getElementById('loginPassword').value,
+      pin: document.getElementById('loginPin').value.trim()
+    };
+    if (submitButton) submitButton.disabled = true;
+    errorBox.classList.add('hidden');
+    try {
+      const response = await fetch('/api/admin/login', {
+        method: 'POST', credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials)
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.authenticated !== true) {
+        errorBox.textContent = result.error || 'Login gagal. Periksa kredensial atau konfigurasi server.';
+        errorBox.classList.remove('hidden');
+        return;
+      }
       appState.auth = true;
-      sessionStorage.setItem('qr_admin_auth', 'true');
-      showToast('Login Berhasil', 'Selamat datang di Dashboard Admin Monetisasi.');
+      document.getElementById('loginPassword').value = '';
+      document.getElementById('loginPin').value = '';
+      showToast('Login Berhasil', 'Sesi administrator terverifikasi oleh server.');
       navigateTo('admin');
-    } else {
+    } catch (_) {
+      errorBox.textContent = 'Server autentikasi tidak dapat dihubungi. Coba lagi.';
       errorBox.classList.remove('hidden');
+    } finally {
+      if (submitButton) submitButton.disabled = false;
     }
   }
 
-  function handleAdminLogout() {
-    appState.auth = false;
-    sessionStorage.removeItem('qr_admin_auth');
-    showToast('Logout Berhasil', 'Sesi administrator telah diakhiri.');
-    navigateTo('generator');
+  async function handleAdminLogout() {
+    try {
+      await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' });
+    } finally {
+      appState.auth = false;
+      showToast('Logout Berhasil', 'Sesi administrator telah diakhiri.');
+      navigateTo('generator');
+    }
   }
 
   // ==========================================
@@ -1087,8 +1105,15 @@
   // ==========================================
   // 6. BOOTSTRAP INITIALIZATION
   // ==========================================
-  window.addEventListener('DOMContentLoaded', () => {
-    // Initial route resolve
+  window.addEventListener('DOMContentLoaded', async () => {
+    // Never trust browser storage for admin authorization; validate the HttpOnly server session.
+    try {
+      const response = await fetch('/api/admin/session', { credentials: 'same-origin', cache: 'no-store' });
+      const result = await response.json().catch(() => ({}));
+      appState.auth = response.ok && result.authenticated === true;
+    } catch (_) {
+      appState.auth = false;
+    }
     renderCurrentRoute();
     renderLiveQR();
     renderPublicAds();
