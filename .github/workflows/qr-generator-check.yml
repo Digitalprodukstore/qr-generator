@@ -31,15 +31,15 @@ jobs:
             } else console.log('PASS:', message);
           };
           assert(/<!doctype html/i.test(html), 'HTML doctype exists');
-          assert(/<html[\\s>]/i.test(html) && /<\\/html>/i.test(html), 'HTML root exists');
-          assert(/qrcode-generator\\/1\\.4\\.4\\/qrcode\\.min\\.js/.test(html), 'QR encoder is loaded');
-          assert(/qr\\.isDark\\(row, col\\)/.test(html), 'real QR matrix is rendered');
+          assert(/<html[\s>]/i.test(html) && /<\/html>/i.test(html), 'HTML root exists');
+          assert(/qrcode-generator\/1\.4\.4\/qrcode\.min\.js/.test(html), 'QR encoder is loaded');
+          assert(/qr\.isDark\(row, col\)/.test(html), 'real QR matrix is rendered');
           assert(!/Compute pseudo-random deterministic matrix/.test(html), 'pseudo QR code is removed');
-          assert(/canvas\\.dataset\\.qrReady !== 'true'/.test(html), 'export checks QR readiness');
-          const scripts = [...html.matchAll(/<script\\b([^>]*)>([\\s\\S]*?)<\\/script>/gi)];
+          assert(/canvas\.dataset\.qrReady !== 'true'/.test(html), 'export checks QR readiness');
+          const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
           let count = 0;
           for (const [, attrs, code] of scripts) {
-            if (/\\bsrc\\s*=/.test(attrs) || !code.trim()) continue;
+            if (/\bsrc\s*=/.test(attrs) || !code.trim()) continue;
             const file = `/tmp/qr-inline-${count++}.js`;
             fs.writeFileSync(file, code);
             const check = spawnSync(process.execPath, ['--check', file], { encoding: 'utf8' });
