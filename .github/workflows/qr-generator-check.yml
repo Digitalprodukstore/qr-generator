@@ -35,6 +35,27 @@ jobs:
           assert(/qrcode-generator\/1\.4\.4\/qrcode\.min\.js/.test(html), 'QR encoder is loaded');
           assert(/qr\.isDark\(row, col\)/.test(html), 'real QR matrix is rendered');
           assert(!/Compute pseudo-random deterministic matrix/.test(html), 'pseudo QR code is removed');
+          const english = fs.readFileSync('en/index.html', 'utf8');
+          const robots = fs.readFileSync('robots.txt', 'utf8');
+          const sitemap = fs.readFileSync('sitemap.xml', 'utf8');
+          const vercel = JSON.parse(fs.readFileSync('vercel.json', 'utf8'));
+          assert(/<html[^>]*lang="id"/i.test(html), 'Indonesian page declares its language');
+          assert(/<html[^>]*lang="en"/i.test(english), 'English page declares its language');
+          assert(/rel="canonical" href="https:\/\/qrnode\\.boothpro\\.my\\.id\/"?/.test(html) || /rel="canonical" href="https:\/\/qrnode\.boothpro\.my\.id\//.test(html), 'Indonesian canonical URL is present');
+          assert(english.includes('https://qrnode.boothpro.my.id/en/'), 'English canonical URL is present');
+          for (const [name, document] of [['Indonesian', html], ['English', english]]) {
+            assert(/hreflang="id-ID"/.test(document) && /hreflang="en"/.test(document) && /hreflang="x-default"/.test(document), name + ' page has reciprocal language alternatives');
+          }
+          assert(/Sitemap:\\s*https:\/\/qrnode\.boothpro\.my\.id\/sitemap\.xml/.test(robots), 'robots.txt advertises the public sitemap');
+          assert(sitemap.includes('https://qrnode.boothpro.my.id/') && sitemap.includes('https://qrnode.boothpro.my.id/en/'), 'sitemap includes both language URLs');
+          assert(sitemap.includes('hreflang="id-ID"') && sitemap.includes('hreflang="en"') && sitemap.includes('hreflang="x-default"'), 'sitemap includes language alternates');
+          const headers = (vercel.headers || []).flatMap(rule => rule.headers || []).map(header => [header.key.toLowerCase(), header.value]);
+          for (const [key, value] of [['x-content-type-options', 'nosniff'], ['x-frame-options', 'DENY'], ['referrer-policy', 'strict-origin-when-cross-origin']]) {
+            assert(headers.some(([actualKey, actualValue]) => actualKey === key && actualValue === value), 'security header configured: ' + key);
+          }
+          const anchors = [...html.matchAll(/<a\\b[^>]*>/gi)].map(match => match[0]);
+          const unsafeBlankLinks = anchors.filter(anchor => /\\btarget\\s*=\\s*["']_blank["']/i.test(anchor) && !/\\brel\\s*=\\s*["'][^"']*\\bnoopener\\b/i.test(anchor));
+          assert(unsafeBlankLinks.length === 0, 'external new-tab links use rel=noopener');
           assert(/canvas\.dataset\.qrReady !== 'true'/.test(html), 'export checks QR readiness');
           const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
           let count = 0;
