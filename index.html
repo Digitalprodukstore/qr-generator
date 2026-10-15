@@ -112,7 +112,7 @@
 <span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-tertiary">SPONSORED CAMPAIGN</span>
 <span class="font-body-md text-label-md text-on-surface" id="pubHeaderBannerText">BoothPro Studio &amp; Coffee Lab • Cetak Foto Kilat 4K &amp; Nikmati Promo Kopi Spesial Hari Ini!</span>
 </div>
-<a class="z-10 px-space-sm py-1 rounded-lg bg-surface-container-high text-secondary hover:bg-surface-bright font-label-sm text-label-sm uppercase flex items-center gap-1 transition-all" href="#generator" id="pubHeaderBannerLink" target="_blank">
+<a class="z-10 px-space-sm py-1 rounded-lg bg-surface-container-high text-secondary hover:bg-surface-bright font-label-sm text-label-sm uppercase flex items-center gap-1 transition-all" href="#generator" id="pubHeaderBannerLink" target="_blank" rel="noopener noreferrer">
 <span>Kunjungi Mitra</span>
 <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
 </a>
@@ -141,7 +141,7 @@
 <span class="text-[8px] text-outline-variant uppercase">Programmatic 300 DPI</span>
 </div>
 <div class="flex flex-col gap-1.5 w-full">
-<a class="w-full py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-secondary font-label-sm text-[11px] font-semibold transition-all block" href="#generator" id="leftBannerCta" target="_blank">Kunjungi Studio</a>
+<a class="w-full py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-secondary font-label-sm text-[11px] font-semibold transition-all block" href="#generator" id="leftBannerCta" target="_blank" rel="noopener noreferrer">Kunjungi Studio</a>
 <span class="font-label-sm text-[9px] text-outline-variant">SPONSOR PARTNER</span>
 </div>
 </aside>
@@ -346,7 +346,7 @@
 <span class="text-[8px] text-outline-variant uppercase">160x600 Vertical</span>
 </div>
 <div class="flex flex-col gap-1.5 w-full">
-<a class="w-full py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-tertiary font-label-sm text-[11px] font-semibold transition-all block" href="#generator" id="rightBannerCta" target="_blank">Info Mitra</a>
+<a class="w-full py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-tertiary font-label-sm text-[11px] font-semibold transition-all block" href="#generator" id="rightBannerCta" target="_blank" rel="noopener noreferrer">Info Mitra</a>
 <span class="font-label-sm text-[9px] text-outline-variant">ADSENSE VERIFIED</span>
 </div>
 </aside>
@@ -1188,7 +1188,7 @@
         </div>
         <span class="font-headline-sm text-label-md text-on-surface">${escapeHtml(cfg.sponsorName)}</span>
         <p class="font-body-md text-label-sm text-on-surface-variant line-clamp-2 mt-1">${escapeHtml(cfg.sponsorTagline)}</p>
-        <a href="${escapeHtml(safeHttpUrl(cfg.sponsorLink))}" target="_blank" class="mt-2 px-3 py-1 rounded-lg bg-surface-bright text-secondary font-label-sm text-label-sm">Buka Link Promo &rarr;</a>
+        <a href="${escapeHtml(safeHttpUrl(cfg.sponsorLink))}" target="_blank" rel="noopener noreferrer" class="mt-2 px-3 py-1 rounded-lg bg-surface-bright text-secondary font-label-sm text-label-sm">Buka Link Promo &rarr;</a>
       `;
     } else {
       // Hybrid
