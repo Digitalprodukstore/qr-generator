@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [main, "fix/**"]
+    branches: [main, "fix/**", "audit/**"]
   workflow_dispatch:
 
 permissions:
@@ -114,3 +114,14 @@ jobs:
             await browser.close();
           })().catch(error => { console.error(error); process.exit(1); });
           NODE
+
+
+  admin-auth-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Test admin authentication handlers
+        run: node scripts/test-admin-auth.js
