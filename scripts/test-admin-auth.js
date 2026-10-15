@@ -47,7 +47,7 @@ async function test(name, fn) {
     assert.match(r.headers['set-cookie'], /HttpOnly/);
     assert.match(r.headers['set-cookie'], /Secure/);
     assert.match(r.headers['set-cookie'], /SameSite=Strict/);
-    assert.match(r.headers['set-cookie'], /Path=\\//);
+    assert.match(r.headers['set-cookie'], /Path=\//);
     const cookie = r.headers['set-cookie'].split(';')[0];
     assert.equal((await call(session, 'GET', {}, { cookie })).json().authenticated, true);
   });
