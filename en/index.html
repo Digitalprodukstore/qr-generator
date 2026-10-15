@@ -121,6 +121,145 @@ footer *{color:#f4efe5!important}
 }
 </style>
 
+<style id="qr-studio-premium-v3">
+/* Premium redesign pass 3 — presentation-only CSS; preserves generator and admin behavior. */
+:root{
+ --qsp-ink:#191916;--qsp-muted:#777166;--qsp-gold:#b79555;--qsp-gold-deep:#80632f;
+ --qsp-ivory:#f6f3ec;--qsp-line:#e7e0d3;--qsp-white:#fffefa;
+}
+html,body{background:var(--qsp-ivory)!important;color:var(--qsp-ink)!important}
+body{font-family:Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:-.012em}
+header{
+ background:rgba(25,25,22,.97)!important;color:#fbf7ee!important;
+ border-bottom:1px solid rgba(220,195,145,.22)!important;
+ box-shadow:0 8px 28px rgba(20,19,16,.10)!important;backdrop-filter:blur(18px)
+}
+header *{color:#f7f1e5}
+header .w-9.h-9{background:#c4a66c!important;color:#211f1a!important;box-shadow:none!important}
+header .font-headline-sm{letter-spacing:.09em}
+header nav a[aria-current="page"],header nav button[aria-current="page"]{background:#d2b679!important;color:#201e19!important}
+header nav a:hover,header nav button:hover{background:rgba(255,255,255,.09)!important}
+main,#view-generator{background:var(--qsp-ivory)!important}
+#view-generator{padding-top:2rem!important;padding-bottom:4rem!important}
+#view-generator>div{gap:1.4rem!important}
+#view-generator section[aria-labelledby="generator-hero-title"]{
+ position:relative;background:#fdfbf6!important;border:1px solid #e7dfd0!important;
+ border-radius:28px!important;box-shadow:0 18px 50px rgba(48,39,24,.045)!important;
+ padding:clamp(1.5rem,4vw,3.75rem)!important;isolation:isolate
+}
+#view-generator section[aria-labelledby="generator-hero-title"]>div[aria-hidden="true"]{opacity:.38}
+#generator-hero-title{
+ max-width:11ch!important;font-size:clamp(2.4rem,4.5vw,4.35rem)!important;
+ line-height:1.02!important;letter-spacing:-.065em!important;font-weight:600!important
+}
+#view-generator section[aria-labelledby="generator-hero-title"] p{max-width:39rem;line-height:1.8!important;color:#696458!important}
+#view-generator section[aria-labelledby="generator-hero-title"] .rounded-2xl{
+ border-radius:20px!important;background:#201f1b!important;border-color:#353229!important;
+ box-shadow:0 20px 44px rgba(28,26,20,.12)!important
+}
+#view-generator section[aria-labelledby="generator-hero-title"] .rounded-2xl *{color:#f7f1e5}
+#view-generator section[aria-labelledby="generator-hero-title"] .rounded-2xl .bg-surface-container-low{background:#2b2923!important;border:1px solid #3d392f}
+#view-generator section[aria-labelledby="generator-hero-title"] .rounded-2xl .bg-primary-container{background:#d2b679!important}
+#view-generator section[aria-labelledby="generator-hero-title"] .rounded-2xl .bg-primary-container *{color:#211f1a!important}
+#pubHeaderBannerContainer{
+ background:#eae2d2!important;color:#363127!important;border:1px solid #ddd1ba!important;
+ border-radius:15px!important;box-shadow:none!important;padding:1rem 1.2rem!important
+}
+#pubHeaderBannerContainer *{color:#514735!important}
+#pubHeaderBannerContainer>div{min-width:0}
+#pubHeaderBannerContainer a{background:#292720!important;color:#f9f4e8!important;border-radius:9px!important;padding:.65rem .9rem!important}
+#pubHeaderBannerContainer a *{color:#f9f4e8!important}
+#view-generator [class~="xl:flex-row"]{gap:1.25rem!important;align-items:stretch!important}
+#view-generator [class~="xl:flex-row"]>div{
+ min-width:0;gap:1.25rem!important
+}
+#view-generator [class~="xl:flex-row"]>div>div{
+ gap:1.25rem!important
+}
+#view-generator [class~="xl:flex-row"]>div>div>div,
+#view-generator [class~="xl:flex-row"]>div>div>section{
+ background:var(--qsp-white)!important;border:1px solid var(--qsp-line)!important;
+ border-radius:20px!important;padding:clamp(1rem,2vw,1.45rem)!important;
+ box-shadow:0 7px 24px rgba(40,33,22,.035)!important
+}
+#view-generator [class~="xl:flex-row"]>div>div>div h2,
+#view-generator [class~="xl:flex-row"]>div>div>section h2{
+ font-size:1.05rem!important;letter-spacing:-.025em!important;font-weight:600!important
+}
+#view-generator .bg-surface-container{background:#f3efe7!important}
+#view-generator .bg-surface-container-high{background:#eee7db!important}
+#view-generator .bg-surface-container-highest{background:#f6f2ea!important}
+#view-generator .bg-surface-container-low{background:#faf8f3!important}
+#view-generator .bg-surface-container-lowest{background:#fffefa!important}
+#view-generator .border-outline-variant,
+#view-generator [class*="border-outline-variant"]{border-color:#e7dfd2!important}
+#view-generator label{color:#71695c!important;font-size:.72rem!important;font-weight:600!important;letter-spacing:.045em!important}
+#view-generator input:not([type=checkbox]):not([type=radio]):not([type=color]),
+#view-generator select,#view-generator textarea{
+ background:#fffefa!important;color:#211f1a!important;border:1px solid #ded5c6!important;
+ border-radius:11px!important;min-height:45px;box-shadow:inset 0 1px 2px rgba(35,29,19,.02)
+}
+#view-generator input::placeholder,#view-generator textarea::placeholder{color:#a69e90!important;opacity:1}
+#view-generator input:focus,#view-generator select:focus,#view-generator textarea:focus{
+ border-color:#b79555!important;box-shadow:0 0 0 3px rgba(183,149,85,.14)!important;outline:none!important
+}
+#view-generator button{transition:background-color .16s ease,border-color .16s ease,box-shadow .16s ease,transform .16s ease}
+#view-generator button:hover{box-shadow:0 4px 12px rgba(40,33,22,.07)}
+#view-generator button:focus-visible,#view-generator a:focus-visible{outline:3px solid rgba(183,149,85,.48)!important;outline-offset:3px}
+#view-generator .bg-primary{background:#26251f!important;color:#fffaf0!important}
+#view-generator .bg-primary *{color:#fffaf0!important}
+#view-generator .bg-primary-container{background:#eee2c9!important;color:#514126!important}
+#view-generator .bg-secondary{background:#c5a76a!important;color:#211f1a!important}
+#view-generator .text-secondary,#view-generator .text-tertiary{color:var(--qsp-gold-deep)!important}
+#view-generator .rounded-2xl{border-radius:18px}
+#view-generator .rounded-xl{border-radius:12px}
+#view-generator #qrFrameWrapper{background:#f5f0e6!important;border:1px solid #e4d9c6!important;border-radius:20px!important;box-shadow:none!important}
+#view-generator #qrCanvas{display:block;background:#fffefa;border-radius:8px}
+#view-generator #qrFrameWrapper .bg-surface-container-lowest{background:#fffefa!important;border:1px solid #e5dccb!important}
+#view-generator #left-skyscraper,#view-generator #right-skyscraper{
+ background:#fbf9f4!important;border:1px solid #e5ddce!important;border-radius:15px!important;
+ box-shadow:none!important;opacity:.96
+}
+#view-generator #left-skyscraper h4,#view-generator #right-skyscraper h4{font-size:.8rem!important}
+#view-login .max-w-md{
+ background:#fffefa!important;border:1px solid var(--qsp-line)!important;border-radius:24px!important;
+ box-shadow:0 24px 70px rgba(35,29,19,.10)!important
+}
+#view-login .w-14.h-14{background:#eee2c9!important;color:#80632f!important;box-shadow:none!important}
+#view-admin .bg-surface-container-low,#view-admin .bg-surface-container{
+ background:#fffefa!important;border-color:var(--qsp-line)!important;
+ box-shadow:0 7px 24px rgba(40,33,22,.035)!important
+}
+#view-admin .bg-surface-container-high,#view-admin .bg-surface-container-highest{background:#f2ece1!important}
+#view-admin input:not([type=checkbox]):not([type=radio]):not([type=color]),
+#view-admin select,#view-admin textarea{background:#fffefa!important;border:1px solid #ded5c6!important;border-radius:10px!important}
+#view-admin button:focus-visible,#view-login button:focus-visible,
+#view-admin a:focus-visible,#view-login input:focus-visible{outline:3px solid rgba(183,149,85,.48)!important;outline-offset:3px}
+footer{background:#191916!important;color:#f5efe3!important;border-top:1px solid #39352c!important}
+footer *{color:#e9e0d0!important}
+#toastNotification{border:1px solid var(--qsp-line)!important;box-shadow:0 18px 42px rgba(38,32,22,.14)!important}
+@media(max-width:1279px){
+ #view-generator #left-skyscraper,#view-generator #right-skyscraper{display:none!important}
+}
+@media(min-width:1280px) and (max-width:1599px){
+ #view-generator #left-skyscraper,#view-generator #right-skyscraper{display:none!important}
+}
+@media(min-width:1600px){
+ #view-generator #left-skyscraper,#view-generator #right-skyscraper{width:140px!important}
+}
+@media(max-width:640px){
+ #view-generator{padding:1rem .85rem 2.5rem!important}
+ #view-generator section[aria-labelledby="generator-hero-title"]{padding:1.35rem!important;border-radius:20px!important}
+ #generator-hero-title{font-size:2.55rem!important;line-height:1.02!important;max-width:10ch!important}
+ #view-generator section[aria-labelledby="generator-hero-title"] .rounded-2xl{padding:1rem!important}
+ #pubHeaderBannerContainer{align-items:flex-start!important;gap:.75rem!important;flex-wrap:wrap!important}
+ #pubHeaderBannerContainer>div{align-items:flex-start!important;flex-wrap:wrap!important;gap:.5rem!important}
+ #pubHeaderBannerText{font-size:.8rem!important;line-height:1.45!important}
+ #view-generator [class~="xl:flex-row"]>div>div>div{padding:1rem!important}
+ #view-generator button{min-height:42px}
+}
+@media(prefers-reduced-motion:reduce){#view-generator button{transition:none!important}}
+</style>
 </head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-16 w-full px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><a href="/" hreflang="id" lang="id" aria-label="Switch to Indonesian" class="px-2 py-1 rounded-lg border border-outline-variant bg-surface text-on-surface font-label-sm text-label-sm">ID</a><div class="w-9 h-9 rounded-xl bg-surface-container-high flex items-center justify-center text-secondary shadow-[0_0_16px_rgba(201,164,92,0.25)]"><span class="material-symbols-outlined text-[22px]">qr_code_scanner</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface leading-none">QR_GENERATOR</span><span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary leading-none mt-1">100% FREE • ONLINE QR CODES</span></div></div><nav class="hidden md:flex items-center gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-label-md rounded-xl"><a aria-current="page" class="px-space-sm py-2 transition-all bg-primary-container text-on-primary-container font-label-md rounded-xl" data-path="qr-generator" href="#">QR Generator</a><a class="px-space-sm py-2 rounded-xl font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="admin-login" href="#">Admin Portal</a></nav><div class="flex items-center gap-space-sm"><div class="hidden sm:flex items-center px-3 py-1.5 rounded-full bg-surface-container-low gap-2"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm text-secondary uppercase">SYS ONLINE</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-background min-h-screen"><div class="flex flex-col w-full">
 <!-- SPA ROUTER CONTROLLER & SUB-NAV HUD -->
 <div class="w-full bg-surface-container-lowest px-gutter py-space-sm shadow-md">
