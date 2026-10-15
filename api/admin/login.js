@@ -1,10 +1,11 @@
 const {
   sendJson, secretsConfigured, constantTimeEqual, issueSessionCookie
 } = require('../_adminAuth');
+const { checkAdminLoginRateLimit } = require('../_adminRateLimit');
 
 const MAX_LOGIN_BODY_BYTES = 4096;
 
-module.exports = function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return sendJson(res, 405, { error: 'Method tidak diizinkan.' });
@@ -41,6 +42,15 @@ module.exports = function handler(req, res) {
 
   if (email.length > 254 || password.length > 1024 || pin.length > 128) {
     return sendJson(res, 400, { error: 'Format kredensial tidak valid.' });
+  }
+
+  const rateLimit = await checkAdminLoginRateLimit(req);
+  if (rateLimit.error) {
+    return sendJson(res, 503, { error: 'Perlindungan percobaan login belum tersedia. Coba lagi nanti.' });
+  }
+  if (rateLimit.limited) {
+    res.setHeader('Retry-After', String(10 * 60));
+    return sendJson(res, 429, { authenticated: false, error: 'Terlalu banyak percobaan login. Coba lagi dalam 10 menit.' });
   }
 
   // Evaluate each comparison before combining the results to avoid short-circuiting
