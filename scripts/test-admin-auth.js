@@ -84,7 +84,15 @@ async function test(name, fn) {
     const oldUrl = process.env.UPSTASH_REDIS_REST_URL;
     const oldToken = process.env.UPSTASH_REDIS_REST_TOKEN;
     let count = MAX_ATTEMPTS + 1;
-    global.fetch = async () => ({ ok: true, json: async () => [{ result: count }, { result: count === 1 ? 1 : 0 }] });
+    global.fetch = async (url, options) => {
+      assert.ok(url.endsWith('/pipeline'));
+      assert.equal(options.method, 'POST');
+      const commands = JSON.parse(options.body);
+      assert.equal(commands[0][0], 'INCR');
+      assert.equal(commands[1][0], 'EXPIRE');
+      assert.equal(commands[1][3], 'NX');
+      return { ok: true, json: async () => [{ result: count }, { result: count === 1 ? 1 : 0 }] };
+    };
     process.env.UPSTASH_REDIS_REST_URL = 'https://example.test';
     process.env.UPSTASH_REDIS_REST_TOKEN = 'test-token';
     try {
