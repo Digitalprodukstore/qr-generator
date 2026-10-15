@@ -39,7 +39,7 @@ jobs:
           const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
           let count = 0;
           for (const [, attrs, code] of scripts) {
-            if (/\bsrc\s*=/.test(attrs) || !code.trim()) continue;
+            if (/\bsrc\s*=/.test(attrs) || /\btype\s*=\s*["']application\/ld\+json["']/i.test(attrs) || !code.trim()) continue;
             const file = `/tmp/qr-inline-${count++}.js`;
             fs.writeFileSync(file, code);
             const check = spawnSync(process.execPath, ['--check', file], { encoding: 'utf8' });
