@@ -14,7 +14,7 @@ module.exports = function handler(req, res) {
   }
 
   const contentType = String(req.headers['content-type'] || '').toLowerCase();
-  if (!/^application\\/json(?:\\s*;|$)/i.test(contentType)) {
+  if (!/^application\/json(?:\s*;|$)/i.test(contentType)) {
     return sendJson(res, 415, { error: 'Gunakan Content-Type application/json.' });
   }
 
