@@ -67,6 +67,60 @@ footer *{color:#f4efe5!important}
 }
 @media(prefers-reduced-motion:reduce){#view-generator button{transition:none}#view-generator button:hover{transform:none}}
 </style>
+
+<style id="qr-studio-premium-v2-refinements">
+/* Visual refinement pass: clearer workspace hierarchy, softer surfaces, and accessible controls. */
+#view-generator .bg-surface-container-low.rounded-2xl,
+#view-generator .bg-surface-container-lowest.rounded-2xl,
+#view-generator .bg-surface-container.rounded-2xl,
+#view-generator .bg-surface-container-high.rounded-2xl,
+#view-login .bg-surface-container-low.rounded-2xl,
+#view-login .bg-surface-container-lowest.rounded-2xl,
+#view-admin .bg-surface-container-low.rounded-2xl,
+#view-admin .bg-surface-container-lowest.rounded-2xl,
+#view-admin .bg-surface-container.rounded-2xl{
+  background:var(--qsp-white)!important;
+  border-color:var(--qsp-line)!important;
+  box-shadow:0 8px 26px rgba(45,36,22,.045);
+}
+#view-generator .bg-surface-container:not(.rounded-full):not(.rounded-lg),
+#view-admin .bg-surface-container:not(.rounded-full):not(.rounded-lg){
+  border-color:#e9e2d6;
+}
+#view-generator label,#view-admin label,#view-login label{
+  color:#625d53;
+  letter-spacing:.015em;
+}
+#view-generator input::placeholder,#view-generator textarea::placeholder,
+#view-admin input::placeholder,#view-admin textarea::placeholder{
+  color:#a19a8d;opacity:1;
+}
+#view-generator button:not(:disabled),#view-admin button:not(:disabled),#view-login button:not(:disabled){
+  border-radius:12px;
+}
+#view-generator button:disabled,#view-admin button:disabled{
+  cursor:not-allowed;filter:saturate(.65);
+}
+#view-generator #qrCanvas{display:block;background:#fffefa}
+#view-generator #qrCanvas:focus-visible{outline:3px solid rgba(181,138,67,.45);outline-offset:4px}
+#view-generator .bg-surface-container-lowest.rounded-xl{background:#fffefa!important;border:1px solid #e8e0d2}
+#view-generator .bg-surface-container-highest{color:var(--qsp-ink)!important}
+#view-generator .bg-primary-container,#view-admin .bg-primary-container{background:#efe2c7!important;color:#4c391a!important}
+#view-generator .text-secondary,#view-admin .text-secondary{color:var(--qsp-gold-deep)}
+#view-generator .border-secondary,#view-admin .border-secondary{border-color:var(--qsp-gold)!important}
+#view-generator .bg-secondary:not(.animate-pulse),#view-admin .bg-secondary:not(.animate-pulse){background:#c5a05d!important;color:#211f1a!important}
+#view-generator .rounded-full.border,#view-generator span.rounded-full{border-color:#e4dac7}
+#view-generator #pubHeaderBannerContainer{border-radius:16px!important;padding:1rem 1.15rem!important}
+#view-generator #left-skyscraper,#view-generator #right-skyscraper{border-radius:16px!important}
+#view-login,#view-admin{color:var(--qsp-ink)}
+@media(max-width:640px){
+ #view-generator .bg-surface-container-low.rounded-2xl,#view-generator .bg-surface-container-lowest.rounded-2xl,
+ #view-generator .bg-surface-container.rounded-2xl,#view-admin .bg-surface-container-low.rounded-2xl,
+ #view-admin .bg-surface-container-lowest.rounded-2xl{border-radius:16px!important}
+ #view-generator button,#view-admin button{min-height:40px}
+}
+</style>
+
 </head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-16 w-full px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><a href="/" hreflang="id" lang="id" aria-label="Switch to Indonesian" class="px-2 py-1 rounded-lg border border-outline-variant bg-surface text-on-surface font-label-sm text-label-sm">ID</a><div class="w-9 h-9 rounded-xl bg-surface-container-high flex items-center justify-center text-secondary shadow-[0_0_16px_rgba(201,164,92,0.25)]"><span class="material-symbols-outlined text-[22px]">qr_code_scanner</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface leading-none">QR_GENERATOR</span><span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary leading-none mt-1">100% FREE • ONLINE QR CODES</span></div></div><nav class="hidden md:flex items-center gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-label-md rounded-xl"><a aria-current="page" class="px-space-sm py-2 transition-all bg-primary-container text-on-primary-container font-label-md rounded-xl" data-path="qr-generator" href="#">QR Generator</a><a class="px-space-sm py-2 rounded-xl font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="admin-login" href="#">Admin Portal</a></nav><div class="flex items-center gap-space-sm"><div class="hidden sm:flex items-center px-3 py-1.5 rounded-full bg-surface-container-low gap-2"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm text-secondary uppercase">SYS ONLINE</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-background min-h-screen"><div class="flex flex-col w-full">
 <!-- SPA ROUTER CONTROLLER & SUB-NAV HUD -->
 <div class="w-full bg-surface-container-lowest px-gutter py-space-sm shadow-md">
