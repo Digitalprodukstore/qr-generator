@@ -25,3 +25,13 @@ Configure variables for both **Preview** and **Production** as appropriate, then
 ## Important migration note
 
 The former demo credentials were embedded in the old client-side HTML and therefore must be considered exposed. Replace them with new values before deploying this change. Git history may retain old source snapshots; rotating the credentials is essential.
+
+
+## Optional shared login rate limiting (recommended before production)
+
+To enable a shared per-IP login attempt limit across Vercel serverless instances, create an Upstash Redis database and configure these environment variables in Vercel Preview first:
+
+- `UPSTASH_REDIS_REST_URL`: the database REST URL.
+- `UPSTASH_REDIS_REST_TOKEN`: the database REST token.
+
+Keep both values secret. When both are configured, login is limited to 10 attempts per IP per 10-minute window. The counter is stored in Redis, not in process memory. If only one variable is present or Redis returns an error, login fails closed with HTTP 503 rather than silently bypassing the configured protection. If neither variable is configured, rate limiting is inactive; therefore do not consider login rate-limited until the backend has been configured and tested on Preview. Do not configure Production or change the production domain as part of this audit without explicit approval.
