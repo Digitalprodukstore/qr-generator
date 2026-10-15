@@ -84,7 +84,7 @@ async function test(name, fn) {
     const oldUrl = process.env.UPSTASH_REDIS_REST_URL;
     const oldToken = process.env.UPSTASH_REDIS_REST_TOKEN;
     let count = MAX_ATTEMPTS + 1;
-    global.fetch = async (url) => ({ ok: true, json: async () => ({ result: url.includes('/incr/') ? count : 1 }) });
+    global.fetch = async () => ({ ok: true, json: async () => [{ result: count }, { result: count === 1 ? 1 : 0 }] });
     process.env.UPSTASH_REDIS_REST_URL = 'https://example.test';
     process.env.UPSTASH_REDIS_REST_TOKEN = 'test-token';
     try {
