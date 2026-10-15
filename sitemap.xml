@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://qrnode.boothpro.my.id/</loc>
+    <xhtml:link rel="alternate" hreflang="id-ID" href="https://qrnode.boothpro.my.id/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qrnode.boothpro.my.id/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qrnode.boothpro.my.id/"/>
+  </url>
+  <url>
+    <loc>https://qrnode.boothpro.my.id/en/</loc>
+    <xhtml:link rel="alternate" hreflang="id-ID" href="https://qrnode.boothpro.my.id/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qrnode.boothpro.my.id/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qrnode.boothpro.my.id/"/>
+  </url>
+</urlset>
