@@ -6,7 +6,7 @@ Status: preparation only. Google AdSense is not yet approved or connected. No Ad
 - Responsive, clearly labeled advertisement placeholders on the generator and result/design workspace.
 - The placeholders do not request ads, create impressions, block QR creation, or delay PNG/SVG downloads.
 - Footer navigation to About Us, Contact, Privacy Policy, Terms of Service, Disclaimer, FAQ, Tutorial, and Use Cases.
-- Eight public information pages with editable owner/contact placeholders.
+- Eight public information pages with editable owner/contact placeholders; Privacy/Terms/Disclaimer text now reflects the inspected app behavior.
 - Sitemap entries for all eight pages.
 - Existing QR creation, design, size selection, PNG/SVG export, and mobile file delivery are retained.
 
@@ -17,9 +17,10 @@ Status: preparation only. Google AdSense is not yet approved or connected. No Ad
 - [ ] Hosting provider, server-log practices, retention periods, and security measures.
 - [ ] Confirm exact data flows for QR content, localStorage projects, admin configuration, and any future analytics.
 - [ ] List all third-party libraries, hosting, analytics, cookies, and advertising providers actually used.
-- [ ] Complete children's privacy statement and applicable jurisdiction.
+- [ ] Owner to confirm audience/children statement and complete legal identity/contact details.
 - [ ] Review Terms and Disclaimer with the owner's actual operating model and applicable law.
-- [ ] Add a visible last-updated date and final editorial review.
+- [x] Add visible last-updated date to Privacy, Terms, and Disclaimer pages.
+- [ ] Owner to complete all identity/contact placeholders and conduct final editorial/legal review.
 
 ## Before enabling AdSense
 1. Apply for AdSense using the real site/domain after the information pages and content are complete.
