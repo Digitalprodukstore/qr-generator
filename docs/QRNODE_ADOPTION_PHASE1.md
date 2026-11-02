@@ -26,7 +26,7 @@ Source: `qrnode.zip` — selective adoption only
 
 ## QA required before promotion
 
-1. Run the static module checks and browser QR decode workflow.
+1. Run the static module checks and browser QR decode workflow (12 category payloads, independent QR decode, PNG and SVG export).
 2. Verify each of the 12 payload types with at least two independent phone scanners.
 3. Specifically test Wi-Fi credentials containing semicolons, commas, colons, quotes, and backslashes.
 4. Test vCard import into iOS Contacts and Android Contacts.
