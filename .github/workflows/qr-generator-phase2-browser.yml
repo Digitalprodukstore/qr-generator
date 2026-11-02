@@ -54,13 +54,18 @@ jobs:
               background: document.getElementById('qrBgColor')?.value,
               contrast: document.getElementById('qrnodeContrast')?.textContent || ''
             }));
-            if (coffee.foreground !== '#4B2E1E' || coffee.background !== '#FFF8EE') {
+            if (coffee.foreground?.toLowerCase() !== '#4b2e1e' || coffee.background?.toLowerCase() !== '#fff8ee') {
               throw new Error('Coffee preset did not update the live color controls: ' + JSON.stringify(coffee));
             }
-            if (!/Kontras\\s+[0-9.]+:1/.test(coffee.contrast)) {
+            if (!/Kontras\\s+[0-9.]+:1/.test(coffee.contrast) || !coffee.contrast.includes('Baik untuk pemindaian')) {
               throw new Error('Contrast checker did not calculate a ratio after preset selection: ' + coffee.contrast);
             }
-            console.log('PASS: design preset updates colors and contrast checker.');
+            for (const preset of ['gold','midnight','mono','coffee','forest']) {
+  await page.locator('[data-preset="' + preset + '"]').click();
+  const status = await page.locator('#qrnodeContrast').textContent();
+  if (!status.includes('Baik untuk pemindaian')) throw new Error(preset + ' preset has insufficient contrast: ' + status);
+}
+console.log('PASS: all five presets meet the contrast threshold and update live controls.');
 
             // Save, reload, and delete a real project using browser storage.
             const originalUrl = await page.locator('[data-qrfield="url"]').inputValue();
