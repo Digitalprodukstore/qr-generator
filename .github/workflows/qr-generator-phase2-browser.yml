@@ -1,0 +1,105 @@
+name: QR Studio Pro Phase 2 browser tests
+
+on:
+  pull_request:
+  push:
+    branches: ["fix/**", "audit/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  premium-browser-e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install browser test dependencies
+        run: |
+          npm install --no-save playwright pngjs http-server
+          npx playwright install --with-deps chromium
+      - name: Serve QR Studio Pro
+        run: |
+          npx http-server . -p 4173 -c-1 > /tmp/qr-http.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/qr-http.log
+          exit 1
+      - name: Exercise premium design studio in Chromium
+        run: |
+          node <<'NODE'
+          const { chromium } = require('playwright');
+          const fs = require('node:fs');
+          const { PNG } = require('pngjs');
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            const page = await browser.newPage({ viewport: { width: 1365, height: 950 }, acceptDownloads: true });
+            const errors = [];
+            page.on('pageerror', error => errors.push(error.message));
+            await page.goto('http://127.0.0.1:4173/', { waitUntil: 'networkidle', timeout: 60000 });
+            await page.waitForFunction(() => {
+              const c = document.getElementById('qrCanvas');
+              return c && c.dataset.qrReady === 'true' && document.getElementById('qrnodeStudio');
+            }, null, { timeout: 30000 });
+
+            // Preset must update the actual color controls and refresh the contrast status.
+            await page.locator('[data-preset="coffee"]').click();
+            const coffee = await page.evaluate(() => ({
+              foreground: document.getElementById('qrColor1')?.value,
+              background: document.getElementById('qrBgColor')?.value,
+              contrast: document.getElementById('qrnodeContrast')?.textContent || ''
+            }));
+            if (coffee.foreground !== '#4B2E1E' || coffee.background !== '#FFF8EE') {
+              throw new Error('Coffee preset did not update the live color controls: ' + JSON.stringify(coffee));
+            }
+            if (!/Kontras\\s+[0-9.]+:1/.test(coffee.contrast)) {
+              throw new Error('Contrast checker did not calculate a ratio after preset selection: ' + coffee.contrast);
+            }
+            console.log('PASS: design preset updates colors and contrast checker.');
+
+            // Save, reload, and delete a real project using browser storage.
+            const originalUrl = await page.locator('[data-qrfield="url"]').inputValue();
+            await page.locator('#qrnodeSave').click();
+            let saved = await page.evaluate(() => JSON.parse(localStorage.getItem('qrstudio.projects') || '[]'));
+            if (saved.length !== 1 || saved[0].type !== 'url') {
+              throw new Error('Save project did not persist the current QR project.');
+            }
+            await page.locator('[data-qrfield="url"]').fill('https://changed.example/test');
+            await page.locator('#qrnodeProjects button').first().click();
+            const restoredUrl = await page.locator('[data-qrfield="url"]').inputValue();
+            if (restoredUrl !== originalUrl) throw new Error('Load project did not restore the saved URL.');
+            await page.locator('#qrnodeProjects button').last().click();
+            saved = await page.evaluate(() => JSON.parse(localStorage.getItem('qrstudio.projects') || '[]'));
+            if (saved.length !== 0) throw new Error('Delete project did not remove the saved project.');
+            console.log('PASS: save, reload, and delete project round-trip.');
+
+            // Validate actual downloaded PNG dimensions and SVG document.
+            const pngPromise = page.waitForEvent('download', { timeout: 15000 });
+            await page.locator('#qrnodePng2048').click();
+            const pngDownload = await pngPromise;
+            const pngPath = await pngDownload.path();
+            const png = PNG.sync.read(fs.readFileSync(pngPath));
+            if (png.width !== 2048 || png.height !== 2048) {
+              throw new Error('PNG dimensions are not 2048x2048: ' + png.width + 'x' + png.height);
+            }
+            console.log('PASS: PNG export downloads as 2048x2048.');
+
+            const svgPromise = page.waitForEvent('download', { timeout: 15000 });
+            await page.locator('#qrSvgButton').click();
+            const svgDownload = await svgPromise;
+            const svgText = fs.readFileSync(await svgDownload.path(), 'utf8');
+            if (!svgText.includes('<svg') || !svgText.includes('</svg>') || !svgText.includes('<rect')) {
+              throw new Error('SVG export is missing its vector document or QR modules.');
+            }
+            console.log('PASS: SVG export downloads as a vector SVG document.');
+
+            if (errors.length) throw new Error('Uncaught browser errors: ' + errors.join(' | '));
+            console.log('PASS: no uncaught browser JavaScript errors.');
+            await browser.close();
+          })().catch(error => { console.error(error); process.exit(1); });
+          NODE
