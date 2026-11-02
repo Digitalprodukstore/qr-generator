@@ -1256,6 +1256,53 @@ footer *{color:#e9e0d0!important}
     }
   }
 
+  // Deliver files in a way that works with iOS Safari as well as desktop/Android browsers.
+  // iOS does not reliably honor <a download> for Blob URLs; use the native share sheet
+  // so the user can explicitly choose Save Image / Save to Files.
+  async function deliverQrFile(blob, filename, title) {
+    if (!(blob instanceof Blob) || blob.size === 0) throw new Error('File kosong atau gagal dibuat.');
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const file = new File([blob], filename, { type: blob.type || 'application/octet-stream' });
+    if (isIOS && navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: title || 'QR Studio Pro' });
+        showToast('Menu berbagi selesai', 'Jika belum tersimpan, pilih Bagikan lagi lalu Simpan Gambar atau Simpan ke File.');
+        return 'shared';
+      } catch (error) {
+        if (error && error.name === 'AbortError') return 'cancelled';
+        // Continue to a visible preview fallback if the native share sheet fails.
+      }
+    }
+    const url = URL.createObjectURL(blob);
+    if (isIOS) {
+      const opened = window.open(url, '_blank', 'noopener');
+      if (!opened) {
+        const link = document.createElement('a');
+        link.href = url;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      }
+      showToast('File siap disimpan', 'Gambar/file dibuka. Tekan Bagikan lalu pilih Simpan Gambar atau Simpan ke File.');
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+      return 'opened';
+    }
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    showToast('Unduhan dikirim ke browser', 'Periksa folder Unduhan/Downloads perangkat Anda.');
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+    return 'download-requested';
+  }
+  window.qrnodeDeliverFile = deliverQrFile;
+
   async function downloadQRImage() {
     const canvas = document.getElementById('qrCanvas');
     if (!canvas || canvas.dataset.qrReady !== 'true') {
@@ -1266,15 +1313,7 @@ footer *{color:#e9e0d0!important}
       const blob = await new Promise((resolve, reject) => {
         canvas.toBlob(value => value ? resolve(value) : reject(new Error('Browser gagal menyiapkan file PNG.')), 'image/png');
       });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.download = `qr-studio-${Date.now()}.png`;
-      link.href = url;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-      showToast('Unduhan dimulai', 'Periksa folder Unduhan perangkat Anda.');
+      await deliverQrFile(blob, `qr-studio-${Date.now()}.png`, 'QR Studio Pro — PNG');
     } catch (err) {
       showToast('Unduhan gagal', err.message || 'Browser tidak dapat membuat file PNG.');
     }
