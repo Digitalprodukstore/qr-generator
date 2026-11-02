@@ -178,15 +178,37 @@
     const view = $("view-generator");
     if (!view) return;
     const hero = view.querySelector('section[aria-labelledby="generator-hero-title"]');
-    const studio = $("qrnodeStudio");
     if (hero && !$("qspAdGenerator")) {
       const slot = addAdPlaceholder("qspAdGenerator", "generator-banner", "Ruang iklan responsif. Iklan belum aktif karena akun Google AdSense belum disetujui.");
       if (slot) hero.insertAdjacentElement("afterend", slot);
     }
-    if (studio && !$("qspAdResult")) {
-      const slot = addAdPlaceholder("qspAdResult", "result-banner", "Ruang iklan pada area hasil. Proses dan unduhan QR tetap langsung tersedia tanpa jeda iklan.");
-      if (slot) studio.insertAdjacentElement("afterend", slot);
+
+    // Place the second slot immediately below the live QR preview, not after
+    // the entire design studio. Keep it hidden until a valid QR is rendered.
+    const preview = $("qrFrameWrapper");
+    if (preview && !$("qspAdResult")) {
+      const slot = addAdPlaceholder("qspAdResult", "generated-qr-result", "Iklan akan ditempatkan di area ini setelah QR berhasil dibuat. Tombol unduh tetap tersedia tanpa jeda iklan.");
+      if (slot) {
+        slot.hidden = true;
+        preview.insertAdjacentElement("afterend", slot);
+      }
     }
+    const resultSlot = $("qspAdResult");
+    const qrCanvas = $("qrCanvas");
+    if (resultSlot && qrCanvas) {
+      const syncResultSlot = () => {
+        const ready = qrCanvas.dataset.qrReady === "true";
+        resultSlot.hidden = !ready;
+        resultSlot.setAttribute("aria-hidden", String(!ready));
+      };
+      syncResultSlot();
+      if (qrCanvas.dataset.qspAdObserver !== "attached") {
+        const observer = new MutationObserver(syncResultSlot);
+        observer.observe(qrCanvas, { attributes: true, attributeFilter: ["data-qr-ready"] });
+        qrCanvas.dataset.qspAdObserver = "attached";
+      }
+    }
+
     let hasLocalAdConfig = false;
     try { hasLocalAdConfig = Boolean(localStorage.getItem("qr_kiosk_ad_config")); } catch (_) {}
     if (!hasLocalAdConfig) {
@@ -200,9 +222,10 @@
       style.id = "qspAdStyles";
       style.textContent = `
         .qsp-ad-placeholder{display:flex;min-height:118px;width:100%;margin:1.25rem 0;padding:18px;gap:7px;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:rgba(255,254,250,.72);border:1px dashed #c7b68f;border-radius:16px;color:#71695c}
+        .qsp-ad-placeholder[hidden]{display:none!important}
         .qsp-ad-label{font-size:10px;font-weight:800;letter-spacing:.18em;color:#80632f}
         .qsp-ad-note{max-width:620px;font-size:12px;line-height:1.6}
-        #qspAdResult{min-height:100px}
+        #qspAdResult{min-height:100px;margin:.85rem 0 1.1rem}
         @media(min-width:768px){.qsp-ad-placeholder{min-height:132px}}
       `;
       document.head.append(style);
@@ -238,7 +261,6 @@
       }
     }
   }
-
   window.addEventListener("DOMContentLoaded", preparePublicMonetization);
   if (document.readyState !== "loading") preparePublicMonetization();
 
