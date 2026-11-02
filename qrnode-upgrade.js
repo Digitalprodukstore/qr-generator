@@ -156,4 +156,90 @@
   function init(){const tabs=$("tabUrl")?.parentElement,oldInput=$("inputPayloadContainer"),oldWa=$("waExtrasContainer");if(!tabs||!$("payloadValue")||$("qrnodeCategory"))return;const panel=document.createElement("section");panel.id="qrnodeCategory";panel.className="mb-3 rounded-xl border border-outline-variant bg-surface p-3 sm:p-4";panel.innerHTML='<div class="flex items-center justify-between gap-2 mb-3"><div><h3 class="font-label-md text-label-md text-on-surface">Pilih jenis QR</h3><p class="text-xs text-on-surface-variant mt-1">12 format untuk kebutuhan pribadi dan bisnis</p></div><span class="text-xs rounded-full bg-primary-container px-2 py-1">QRNode</span></div><select id="qrnodeSelect" class="w-full rounded-xl border border-outline-variant bg-surface-container-highest text-on-surface px-3 py-3 font-label-md"></select><div id="qrnodeFields" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3"></div><p id="qrnodeStatus" role="status" aria-live="polite" class="mt-2 text-sm text-on-surface-variant">Lengkapi data untuk membuat QR.</p><p class="mt-2 text-xs text-on-surface-variant">Menu digital dan undangan menggunakan tautan publik agar hasil QR dapat dibuka oleh semua pemindai.</p>';tabs.parentElement.insertBefore(panel,tabs);tabs.classList.add("hidden");if(oldInput)oldInput.classList.add("hidden");if(oldWa)oldWa.classList.add("hidden");const sel=$("qrnodeSelect");for(const id of ids){const o=document.createElement("option");o.value=id;o.textContent=labels[id];sel.append(o)}sel.addEventListener("change",()=>{active=sel.value;values={};renderFields();update()});values={url:"https://example.com"};renderFields();update();addStudio();addSvgButton()}
   window.qrStudioApplyDesignPreset=applyDesignPreset;window.qrStudioSaveProject=saveProject;
   window.addEventListener("DOMContentLoaded",init);if(document.readyState!=="loading")init();
+
+  // ==========================================
+  // 7. ADSENSE-READY PUBLIC EXPERIENCE
+  // AdSense is intentionally inactive until the publisher account is approved.
+  // These are clearly labeled layout reservations, not ad requests or impressions.
+  // ==========================================
+  function addAdPlaceholder(id, placement, note) {
+    if ($(id)) return;
+    const section = document.createElement("aside");
+    section.id = id;
+    section.className = "qsp-ad-placeholder";
+    section.setAttribute("aria-label", "Advertisement placeholder");
+    section.dataset.adPlacement = placement;
+    section.innerHTML = '<div class="qsp-ad-label">ADVERTISEMENT</div><div class="qsp-ad-note"></div>';
+    section.querySelector(".qsp-ad-note").textContent = note;
+    return section;
+  }
+
+  function preparePublicMonetization() {
+    const view = $("view-generator");
+    if (!view) return;
+    const hero = view.querySelector('section[aria-labelledby="generator-hero-title"]');
+    const studio = $("qrnodeStudio");
+    if (hero && !$("qspAdGenerator")) {
+      const slot = addAdPlaceholder("qspAdGenerator", "generator-banner", "Ruang iklan responsif. Iklan belum aktif karena akun Google AdSense belum disetujui.");
+      if (slot) hero.insertAdjacentElement("afterend", slot);
+    }
+    if (studio && !$("qspAdResult")) {
+      const slot = addAdPlaceholder("qspAdResult", "result-banner", "Ruang iklan pada area hasil. Proses dan unduhan QR tetap langsung tersedia tanpa jeda iklan.");
+      if (slot) studio.insertAdjacentElement("afterend", slot);
+    }
+    let hasLocalAdConfig = false;
+    try { hasLocalAdConfig = Boolean(localStorage.getItem("qr_kiosk_ad_config")); } catch (_) {}
+    if (!hasLocalAdConfig) {
+      ["pubHeaderBannerContainer", "left-skyscraper", "right-skyscraper"].forEach(id => {
+        const el = $(id);
+        if (el) el.hidden = true;
+      });
+    }
+    if (!$("qspAdStyles")) {
+      const style = document.createElement("style");
+      style.id = "qspAdStyles";
+      style.textContent = `
+        .qsp-ad-placeholder{display:flex;min-height:118px;width:100%;margin:1.25rem 0;padding:18px;gap:7px;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:rgba(255,254,250,.72);border:1px dashed #c7b68f;border-radius:16px;color:#71695c}
+        .qsp-ad-label{font-size:10px;font-weight:800;letter-spacing:.18em;color:#80632f}
+        .qsp-ad-note{max-width:620px;font-size:12px;line-height:1.6}
+        #qspAdResult{min-height:100px}
+        @media(min-width:768px){.qsp-ad-placeholder{min-height:132px}}
+      `;
+      document.head.append(style);
+    }
+    const footer = document.querySelector("body > footer");
+    if (footer && !$("qspInfoFooter")) {
+      const nav = document.createElement("nav");
+      nav.id = "qspInfoFooter";
+      nav.setAttribute("aria-label", "Informasi QR Studio Pro");
+      nav.className = "qsp-info-footer";
+      const links = [
+        ["about.html","About Us"],["contact.html","Contact"],["privacy.html","Privacy Policy"],
+        ["terms.html","Terms of Service"],["disclaimer.html","Disclaimer"],
+        ["faq.html","FAQ"],["tutorial.html","Tutorial"],["use-cases.html","Use Cases"]
+      ];
+      for (const [href,label] of links) {
+        const a = document.createElement("a");
+        a.href = "/" + href;
+        a.textContent = label;
+        nav.append(a);
+      }
+      footer.prepend(nav);
+      if (!$("qspInfoFooterStyles")) {
+        const style = document.createElement("style");
+        style.id = "qspInfoFooterStyles";
+        style.textContent = `
+          #qspInfoFooter{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 18px;max-width:1080px;margin:0 auto 22px;padding:0 12px 20px;border-bottom:1px solid rgba(215,181,110,.22)}
+          #qspInfoFooter a{color:#e2c98d!important;font-size:12px;text-decoration:none;transition:opacity .15s}
+          #qspInfoFooter a:hover{text-decoration:underline;opacity:.85}
+          #qspInfoFooter a:focus-visible{outline:2px solid #e2c98d;outline-offset:4px;border-radius:3px}
+        `;
+        document.head.append(style);
+      }
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", preparePublicMonetization);
+  if (document.readyState !== "loading") preparePublicMonetization();
+
 })();
