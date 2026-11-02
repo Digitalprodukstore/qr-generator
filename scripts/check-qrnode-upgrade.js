@@ -16,6 +16,10 @@ for (const marker of ['mailto:', 'https://wa.me/', 'WIFI:T:', 'BEGIN:VCARD', 'BE
   assert(moduleSource.includes(marker), 'standard payload encoding exists: ' + marker);
 }
 assert(moduleSource.includes('function downloadSvg()'), 'SVG export implementation exists');
+assert(moduleSource.includes('const icsEsc='), 'calendar fields are escaped for iCalendar');
+assert(moduleSource.includes('Kata sandi Wi-Fi wajib diisi'), 'secured Wi-Fi requires a password');
+assert(moduleSource.includes('n>1200'), 'oversized payloads are rejected before QR rendering');
+assert(moduleSource.includes('png|jpeg|webp'), 'SVG embeds only supported raster logo formats');
 assert(moduleSource.includes('dataset.qrReady!=="true"'), 'SVG export refuses invalid/unready QR');
 assert(!moduleSource.includes('MENU:') && !moduleSource.includes('UNDANGAN:'), 'menu and invitation do not use proprietary non-scannable pseudo schemes');
 assert(html.includes('qrcode-generator/1.4.4/qrcode.min.js'), 'standards-compliant QR encoder remains loaded');
