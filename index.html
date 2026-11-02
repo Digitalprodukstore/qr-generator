@@ -410,8 +410,8 @@ footer *{color:#e9e0d0!important}
 <!-- AdSense Spec Simulator Box in Left Banner -->
 <div class="w-full my-auto py-3 px-1.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 flex flex-col items-center gap-1">
 <span class="material-symbols-outlined text-secondary text-[18px]">ads_click</span>
-<span class="font-label-sm text-[10px] text-on-surface uppercase font-semibold">AdSense Slot</span>
-<span class="font-label-sm text-[9px] text-outline-variant truncate w-full" id="leftPubSlotId">slot-9918204912</span>
+<span class="font-label-sm text-[10px] text-on-surface uppercase font-semibold">Slot Iklan (Simulasi)</span>
+<span class="font-label-sm text-[9px] text-outline-variant truncate w-full" id="leftPubSlotId">Belum aktif</span>
 <span class="text-[8px] text-outline-variant uppercase">Programmatic 300 DPI</span>
 </div>
 <div class="flex flex-col gap-1.5 w-full">
@@ -615,13 +615,13 @@ footer *{color:#e9e0d0!important}
 <!-- AdSense Spec Simulator Box in Right Banner -->
 <div class="w-full my-auto py-3 px-1.5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 flex flex-col items-center gap-1">
 <span class="material-symbols-outlined text-tertiary text-[18px]">featured_play_list</span>
-<span class="font-label-sm text-[10px] text-on-surface uppercase font-semibold">Google AdSense</span>
-<span class="font-label-sm text-[9px] text-secondary truncate w-full" id="rightPubSlotId">slot-9918204912</span>
+<span class="font-label-sm text-[10px] text-on-surface uppercase font-semibold">Slot Iklan (Simulasi)</span>
+<span class="font-label-sm text-[9px] text-secondary truncate w-full" id="rightPubSlotId">Belum aktif</span>
 <span class="text-[8px] text-outline-variant uppercase">160x600 Vertical</span>
 </div>
 <div class="flex flex-col gap-1.5 w-full">
 <a class="w-full py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-tertiary font-label-sm text-[11px] font-semibold transition-all block" href="#generator" id="rightBannerCta" target="_blank" rel="noopener noreferrer">Info Mitra</a>
-<span class="font-label-sm text-[9px] text-outline-variant">ADSENSE VERIFIED</span>
+<span class="font-label-sm text-[9px] text-outline-variant">IKLAN BELUM AKTIF</span>
 </div>
 </aside>
 </div>
@@ -751,17 +751,17 @@ footer *{color:#e9e0d0!important}
 </div>
 <div class="flex items-center gap-2">
 <label class="font-label-sm text-label-sm text-on-surface-variant">Auto-Ads:</label>
-<input checked="" class="w-5 h-5 accent-secondary cursor-pointer" id="adminAutoAdsToggle" onchange="updateAdminWatcher()" type="checkbox"/>
+<input class="w-5 h-5 accent-secondary cursor-pointer" id="adminAutoAdsToggle" onchange="updateAdminWatcher()" type="checkbox"/>
 </div>
 </div>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm mt-1">
 <div class="flex flex-col gap-1">
-<label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Publisher ID (AdSense)</label>
-<input class="bg-surface-container-highest text-on-surface font-body-md text-body-md px-3 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary" id="adminPubId" oninput="updateAdminWatcher()" type="text" value="ca-pub-8923049102948201"/>
+<label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Publisher ID (isi setelah disetujui)</label>
+<input class="bg-surface-container-highest text-on-surface font-body-md text-body-md px-3 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary" id="adminPubId" oninput="updateAdminWatcher()" type="text" value="" placeholder="Belum ada — isi setelah akun disetujui"/>
 </div>
 <div class="flex flex-col gap-1">
 <label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Slot Skyscraper (160x600)</label>
-<input class="bg-surface-container-highest text-on-surface font-body-md text-body-md px-3 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary" id="adminSlotId" oninput="updateAdminWatcher()" type="text" value="slot-9918204912"/>
+<input class="bg-surface-container-highest text-on-surface font-body-md text-body-md px-3 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary" id="adminSlotId" oninput="updateAdminWatcher()" type="text" value="" placeholder="Belum ada — isi setelah unit iklan dibuat"/>
 </div>
 </div>
 </div>
@@ -833,11 +833,11 @@ footer *{color:#e9e0d0!important}
 <div class="grid grid-cols-2 gap-2 pt-2 border-t border-outline-variant/30">
 <div class="flex flex-col">
 <span class="font-label-sm text-label-sm text-on-surface-variant">Publisher ID:</span>
-<span class="font-label-sm text-label-sm text-on-surface truncate" id="watcherPubIdText">ca-pub-8923049102948201</span>
+<span class="font-label-sm text-label-sm text-on-surface truncate" id="watcherPubIdText">Belum diisi</span>
 </div>
 <div class="flex flex-col">
 <span class="font-label-sm text-label-sm text-on-surface-variant">Slot ID:</span>
-<span class="font-label-sm text-label-sm text-on-surface truncate" id="watcherSlotIdText">slot-9918204912</span>
+<span class="font-label-sm text-label-sm text-on-surface truncate" id="watcherSlotIdText">Belum diisi</span>
 </div>
 </div>
 </div>
@@ -858,9 +858,9 @@ footer *{color:#e9e0d0!important}
   // ==========================================
   const DEFAULT_CONFIG = {
     adMode: 'hybrid', // 'adsense' | 'sponsor' | 'hybrid'
-    autoAds: true,
-    pubId: 'ca-pub-8923049102948201',
-    slotId: 'slot-9918204912',
+    autoAds: false,
+    pubId: '',
+    slotId: '',
     sponsorName: 'BoothPro Studio & Coffee Lab',
     sponsorLink: 'https://instagram.com/boothpro.id',
     sponsorTagline: 'Cetak Foto Kilat 4K & Nikmati Promo Kopi Spesial Hari Ini!'
@@ -1487,7 +1487,7 @@ footer *{color:#e9e0d0!important}
       slot.innerHTML = `
         <div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container mb-2">
           <span class="material-symbols-outlined text-[14px] text-secondary">ads_click</span>
-          <span class="font-label-sm text-label-sm text-on-surface-variant">ADSENSE VERIFIED</span>
+          <span class="font-label-sm text-label-sm text-on-surface-variant">SIMULASI — IKLAN BELUM AKTIF</span>
         </div>
         <span class="font-headline-sm text-label-md text-on-surface">Slot Skyscraper 160x600</span>
         <span class="font-label-sm text-label-sm text-outline-variant mt-1">Publisher: ${escapeHtml(cfg.pubId)}</span>
@@ -1508,10 +1508,10 @@ footer *{color:#e9e0d0!important}
       slot.innerHTML = `
         <div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container mb-2">
           <span class="material-symbols-outlined text-[14px] text-primary">sync</span>
-          <span class="font-label-sm text-label-sm text-primary">HYBRID ROTATION (50:50)</span>
+          <span class="font-label-sm text-label-sm text-primary">SIMULASI ROTASI — IKLAN BELUM AKTIF</span>
         </div>
         <span class="font-headline-sm text-label-md text-on-surface">${escapeHtml(cfg.sponsorName)}</span>
-        <span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Auto-Rotating with AdSense: ${escapeHtml(cfg.slotId)}</span>
+        <span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Contoh slot (belum aktif): ${escapeHtml(cfg.slotId || "belum diisi")}</span>
       `;
     }
   }
