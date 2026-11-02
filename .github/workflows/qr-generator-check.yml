@@ -225,7 +225,7 @@ jobs:
             if (coffee.foreground?.toLowerCase() !== '#4b2e1e' || coffee.background?.toLowerCase() !== '#fff8ee') {
               throw new Error('Coffee preset did not update color controls: ' + JSON.stringify(coffee));
             }
-            if (!/Kontras\\s+[0-9.]+:1/.test(coffee.contrast) || !coffee.contrast.includes('Baik untuk pemindaian')) {
+            if (!/Kontras\s+[0-9.]+:1/.test(coffee.contrast) || !coffee.contrast.includes('Baik untuk pemindaian')) {
               throw new Error('Coffee preset contrast check failed: ' + coffee.contrast);
             }
             await page.locator('#qrColor2Hex').fill('#FFFFFF');
