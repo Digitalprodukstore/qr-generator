@@ -73,6 +73,18 @@ jobs:
           if (process.exitCode) process.exit(process.exitCode);
           NODE
 
+  qrnode-phase1-static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate adopted module syntax and payload coverage
+        run: |
+          node --check qrnode-upgrade.js
+          node scripts/check-qrnode-upgrade.js
+
   browser-qr-scan:
     runs-on: ubuntu-latest
     steps:
