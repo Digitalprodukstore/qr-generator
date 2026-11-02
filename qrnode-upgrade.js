@@ -59,7 +59,7 @@
       body+='<g fill="'+(gradient?"url(#qrGradient)":fg)+'">';
       for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(qr.isDark(r,c))body+='<rect x="'+(c+q)+'" y="'+(r+q)+'" width="1" height="1"/>';
       body+='</g>';
-      if(logo&&!logo.classList.contains("hidden")&&/^data:image\\/(png|jpeg|webp);base64,/i.test(logo.src)){
+      if(logo&&!logo.classList.contains("hidden")&&/^data:image\/(png|jpeg|webp);base64,/i.test(logo.src)){
         const side=total*.20,x=(total-side)/2,y=(total-side)/2;
         body+='<rect x="'+(x-.25)+'" y="'+(y-.25)+'" width="'+(side+.5)+'" height="'+(side+.5)+'" rx="1" fill="#fff"/><image href="'+logo.src+'" x="'+x+'" y="'+y+'" width="'+side+'" height="'+side+'" preserveAspectRatio="xMidYMid meet"/>';
       }
