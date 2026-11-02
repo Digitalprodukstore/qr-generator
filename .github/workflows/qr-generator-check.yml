@@ -142,7 +142,57 @@ jobs:
             if (pngHeader.toString('hex') !== '89504e470d0a1a0a') {
               throw new Error('Downloaded file does not have a valid PNG signature.');
             }
-            if (pageErrors.length) throw new Error(`Browser JavaScript errors: ${pageErrors.join(' | ')}`);
+            async function verifyCategory(category, values, prefix) {
+              await page.locator('#qrnodeSelect').selectOption(category);
+              for (const [key, value] of Object.entries(values)) {
+                const field = page.locator('[data-qrfield="' + key + '"]');
+                if (key === 'security') await field.selectOption(value);
+                else await field.fill(value);
+              }
+              await page.waitForFunction(() => {
+                const c = document.getElementById('qrCanvas');
+                return c && c.dataset.qrReady === 'true';
+              }, null, { timeout: 10000 });
+              const sample = await page.evaluate(() => {
+                const source = document.getElementById('qrCanvas');
+                const small = document.createElement('canvas');
+                small.width = 600; small.height = 600;
+                const ctx = small.getContext('2d');
+                ctx.drawImage(source, 0, 0, 600, 600);
+                const image = ctx.getImageData(0, 0, 600, 600);
+                return { data: Array.from(image.data), payload: source.dataset.qrPayload };
+              });
+              if (!sample.payload.startsWith(prefix)) {
+                throw new Error(category + ' payload prefix mismatch: ' + sample.payload.slice(0, 80));
+              }
+              const result = jsQR(new Uint8ClampedArray(sample.data), 600, 600);
+              if (!result || result.data !== sample.payload) {
+                throw new Error(category + ' QR failed independent decode or payload comparison.');
+              }
+              console.log('PASS: ' + category + ' payload validates and independently decodes.');
+            }
+            await verifyCategory('url', { url: 'https://example.org/qr-test' }, 'https://');
+            await verifyCategory('text', { text: 'Halo dari QR Studio Pro' }, 'Halo dari');
+            await verifyCategory('wa', { number: '6281234567890', message: 'Halo QR' }, 'https://wa.me/6281234567890');
+            await verifyCategory('email', { to: 'halo@example.org', subject: 'Tes', body: 'Halo' }, 'mailto:halo@example.org');
+            await verifyCategory('tel', { number: '+62215550188' }, 'tel:+62215550188');
+            await verifyCategory('sms', { number: '+6281234567890', message: 'Tes SMS' }, 'smsto:6281234567890');
+            await verifyCategory('wifi', { ssid: 'QR Booth WiFi', security: 'WPA', password: 'aman12345' }, 'WIFI:T:WPA;');
+            await verifyCategory('vcard', { name: 'Rizki Test', org: 'QR Studio', phone: '+6281234567890', email: 'test@example.org' }, 'BEGIN:VCARD');
+            await verifyCategory('geo', { lat: '-6.914744', lng: '107.609810', address: 'Bandung' }, 'geo:-6.914744,107.60981');
+            await verifyCategory('event', { title: 'QR Test Event', start: '2026-11-03T10:00', end: '2026-11-03T11:00', location: 'Bandung' }, 'BEGIN:VCALENDAR');
+            await verifyCategory('menu', { url: 'https://example.org/menu' }, 'https://example.org/menu');
+            await verifyCategory('invitation', { url: 'https://example.org/invitation' }, 'https://example.org/invitation');
+            const svgPromise = page.waitForEvent('download', { timeout: 10000 });
+            await page.locator('#qrSvgButton').click();
+            const svgDownload = await svgPromise;
+            const svgPath = await svgDownload.path();
+            const svgText = fs.readFileSync(svgPath, 'utf8');
+            if (!svgText.includes('<svg') || !svgText.includes('</svg>')) {
+              throw new Error('SVG export did not produce a valid SVG document.');
+            }
+            console.log('PASS: SVG download contains a valid SVG document.');
+            if (pageErrors.length) throw new Error(\`Browser JavaScript errors: \${pageErrors.join(' | ')}\`);
             console.log('PASS: QR decodes to the expected payload, PNG download is valid, and the page has no uncaught JavaScript errors.');
             await browser.close();
           })().catch(error => { console.error(error); process.exit(1); });
