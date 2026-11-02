@@ -47,8 +47,56 @@
   function renderFields(){const host=$("qrnodeFields");if(!host)return;host.replaceChildren();for(const[name,label,type,placeholder]of defs[active]){const w=document.createElement("label");w.className="flex flex-col gap-1.5 min-w-0";const t=document.createElement("span");t.className="font-label-sm text-label-sm text-on-surface-variant";t.textContent=label;w.append(t);let input;if(type==="textarea"){input=document.createElement("textarea");input.rows=2}else if(type==="select"){input=document.createElement("select");for(const v of ["WPA","WEP","nopass"]){const o=document.createElement("option");o.value=v;o.textContent=v==="nopass"?"Tanpa sandi":v;input.append(o)}}else{input=document.createElement("input");input.type=type}input.dataset.qrfield=name;input.value=values[name]??(type==="select"?"WPA":"");if(!input.value&&placeholder)input.placeholder=placeholder;input.className="w-full rounded-xl bg-surface-container-highest text-on-surface px-3 py-2.5 font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-secondary";const changed=()=>{values[name]=input.value;update()};input.addEventListener("input",changed);input.addEventListener("change",changed);w.append(input);host.append(w)}}
   function safeName(s){return String(s||"qr-studio").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-zA-Z0-9_-]+/g,"-").replace(/^-+|-+$/g,"").slice(0,60)||"qr-studio"}
   function qrMatrix(){const p=$("payloadValue")?.value||"",gen=window.qrcode||(typeof qrcode==="function"?qrcode:null);if(!p||!gen)throw Error("QR belum siap.");const qr=gen(0,"H");qr.addData(p,"Byte");qr.make();return qr}
-  function downloadSvg(){try{const qr=qrMatrix(),n=qr.getModuleCount(),q=4,total=n+q*2,fg=$("qrColor1")?.value||"#111827",bg=$("qrBgColor")?.value||"#fff",g2=$("qrColor2")?.value||fg,gradient=$("modeGradientBtn")?.classList.contains("bg-secondary"),logo=$("customLogoImg");let body='<rect width="'+total+'" height="'+total+'" fill="'+bg+'"/>';if(gradient)body+='<defs><linearGradient id="qrGradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="'+fg+'"/><stop offset="100%" stop-color="'+g2+'"/></linearGradient></defs>';body+='<g fill="'+(gradient?"url(#qrGradient)":fg)+'">';for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(qr.isDark(r,c))body+='<rect x="'+(c+q)+'" y="'+(r+q)+'" width="1" height="1"/>';body+='</g>';if(logo&&!logo.classList.contains("hidden")&&/^data:image\/(png|jpeg|webp);base64,/i.test(logo.src)){const side=total*.20,x=(total-side)/2,y=(total-side)/2;body+='<rect x="'+(x-.25)+'" y="'+(y-.25)+'" width="'+(side+.5)+'" height="'+(side+.5)+'" rx="1" fill="#fff"/><image href="'+logo.src+'" x="'+x+'" y="'+y+'" width="'+side+'" height="'+side+'" preserveAspectRatio="xMidYMid meet"/>'}const svg='<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 '+total+' '+total+'" role="img" aria-label="QR Code">'+body+"</svg>",blob=new Blob([svg],{type:"image/svg+xml;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=safeName("qr-studio-"+active)+"-"+Date.now()+".svg";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);window.showToast?.("SVG berhasil dibuat","File vektor siap digunakan untuk desain.")}catch(e){window.showToast?.("Ekspor SVG gagal",e.message||"Coba lagi.")}}
-  function downloadPng2048(){const c=$("qrCanvas");if(!c||c.dataset.qrReady!=="true"){window.showToast?.("QR belum siap","Lengkapi data QR terlebih dahulu.");return}const out=document.createElement("canvas");out.width=2048;out.height=2048;const x=out.getContext("2d");x.imageSmoothingEnabled=false;x.drawImage(c,0,0,2048,2048);const a=document.createElement("a");a.href=out.toDataURL("image/png");a.download=safeName("qr-studio-"+active)+"-2048.png";a.click();window.showToast?.("PNG 2048 berhasil dibuat","Versi resolusi tinggi siap digunakan.")}
+  async function downloadSvg(){
+    try {
+      const qr=qrMatrix(),n=qr.getModuleCount(),q=4,total=n+q*2,
+        fg=$("qrColor1")?.value||"#111827",bg=$("qrBgColor")?.value||"#fff",
+        g2=$("qrColor2")?.value||fg,
+        gradient=$("modeGradientBtn")?.classList.contains("bg-secondary"),
+        logo=$("customLogoImg");
+      let body='<rect width="'+total+'" height="'+total+'" fill="'+bg+'"/>';
+      if(gradient)body+='<defs><linearGradient id="qrGradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="'+fg+'"/><stop offset="100%" stop-color="'+g2+'"/></linearGradient></defs>';
+      body+='<g fill="'+(gradient?"url(#qrGradient)":fg)+'">';
+      for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(qr.isDark(r,c))body+='<rect x="'+(c+q)+'" y="'+(r+q)+'" width="1" height="1"/>';
+      body+='</g>';
+      if(logo&&!logo.classList.contains("hidden")&&/^data:image\\/(png|jpeg|webp);base64,/i.test(logo.src)){
+        const side=total*.20,x=(total-side)/2,y=(total-side)/2;
+        body+='<rect x="'+(x-.25)+'" y="'+(y-.25)+'" width="'+(side+.5)+'" height="'+(side+.5)+'" rx="1" fill="#fff"/><image href="'+logo.src+'" x="'+x+'" y="'+y+'" width="'+side+'" height="'+side+'" preserveAspectRatio="xMidYMid meet"/>';
+      }
+      const svg='<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 '+total+' '+total+'" role="img" aria-label="QR Code">'+body+"</svg>";
+      const blob=new Blob([svg],{type:"image/svg+xml;charset=utf-8"});
+      const filename=safeName("qr-studio-"+active)+"-"+Date.now()+".svg";
+      if(typeof window.qrnodeDeliverFile==="function") await window.qrnodeDeliverFile(blob,filename,"QR Studio Pro — SVG");
+      else {
+        const url=URL.createObjectURL(blob),a=document.createElement("a");
+        a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();
+        setTimeout(()=>URL.revokeObjectURL(url),60000);
+        window.showToast?.("Unduhan dikirim ke browser","Periksa folder Unduhan/Downloads perangkat Anda.");
+      }
+    } catch(e) {
+      window.showToast?.("Ekspor SVG gagal",e.message||"Coba lagi.");
+    }
+  }
+  async function downloadPng2048(){
+    const c=$("qrCanvas");
+    if(!c||c.dataset.qrReady!=="true"){window.showToast?.("QR belum siap","Lengkapi data QR terlebih dahulu.");return}
+    try {
+      const out=document.createElement("canvas");out.width=2048;out.height=2048;
+      const x=out.getContext("2d");if(!x)throw Error("Browser tidak dapat menyiapkan canvas.");
+      x.imageSmoothingEnabled=false;x.drawImage(c,0,0,2048,2048);
+      const blob=await new Promise((resolve,reject)=>out.toBlob(value=>value?resolve(value):reject(Error("Browser gagal membuat PNG 2048.")),"image/png"));
+      const filename=safeName("qr-studio-"+active)+"-2048.png";
+      if(typeof window.qrnodeDeliverFile==="function") await window.qrnodeDeliverFile(blob,filename,"QR Studio Pro — PNG 2048");
+      else {
+        const url=URL.createObjectURL(blob),a=document.createElement("a");
+        a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();
+        setTimeout(()=>URL.revokeObjectURL(url),60000);
+        window.showToast?.("Unduhan dikirim ke browser","Periksa folder Unduhan/Downloads perangkat Anda.");
+      }
+    } catch(e) {
+      window.showToast?.("Ekspor PNG gagal",e.message||"Coba lagi.");
+    }
+  }
   function luminance(hex){const h=String(hex||"").replace("#","");if(!/^[0-9a-f]{6}$/i.test(h))return 0;const rgb=[0,2,4].map(i=>parseInt(h.slice(i,i+2),16)/255).map(v=>v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4));return .2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2]}
   function contrast(a,b){const x=luminance(a),y=luminance(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
   function updateContrast(){const el=$("qrnodeContrast");if(!el)return;const c1=$("qrColor1")?.value||"#111111",c2=$("qrColor2")?.value||c1,bg=$("qrBgColor")?.value||"#ffffff",ratio=Math.min(contrast(c1,bg),contrast(c2,bg)),pass=ratio>=4.5;el.textContent="Kontras "+ratio.toFixed(2)+":1 • "+(pass?"Baik untuk pemindaian":"Ubah warna agar lebih mudah dipindai");el.className="mt-2 text-xs "+(pass?"text-emerald-700":"text-amber-700")}
