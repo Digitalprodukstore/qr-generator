@@ -60,6 +60,15 @@ jobs:
             if (!/Kontras\s+[0-9.]+:1/.test(coffee.contrast) || !coffee.contrast.includes('Baik untuk pemindaian')) {
               throw new Error('Contrast checker did not calculate a ratio after preset selection: ' + coffee.contrast);
             }
+            // Manual edits to either color picker or hex field must refresh the contrast status.
+            await page.locator('#qrColor2Hex').fill('#FFFFFF');
+            const manualStatus = await page.locator('#qrnodeContrast').textContent();
+            if (!manualStatus.includes('Ubah warna agar lebih mudah dipindai')) {
+              throw new Error('Manual color edit did not refresh the contrast warning: ' + manualStatus);
+            }
+            console.log('PASS: manual color changes refresh the contrast warning.');
+            await page.locator('[data-preset="coffee"]').click();
+
             for (const preset of ['gold','midnight','mono','coffee','forest']) {
   await page.locator('[data-preset="' + preset + '"]').click();
   const status = await page.locator('#qrnodeContrast').textContent();
