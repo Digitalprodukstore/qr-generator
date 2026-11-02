@@ -17,7 +17,7 @@
   };
   const labels={url:"Website / URL",text:"Teks",wa:"WhatsApp",email:"Email",tel:"Telepon",sms:"SMS",wifi:"Wi-Fi",vcard:"Kontak (vCard)",geo:"Lokasi (Geo)",event:"Acara (Calendar)",menu:"Menu digital (tautan)",invitation:"Undangan (tautan)"};
   const ids=Object.keys(defs); let active="url", values={};
-  const esc=v=>String(v??"").replace(/\/g,"\\\\").replace(/\r?\n/g,"\\n").replace(/([,;])/g,"\\$1");
+  const esc=v=>String(v??"").replace(/\\/g,"\\\\").replace(/\r?\n/g,"\\n").replace(/([,;])/g,"\\$1");
   const icsEsc=v=>esc(v); // retained Phase 1 safety marker for iCalendar-compatible escaping
   const wifiEsc=v=>String(v??"").replace(/([\\;,:"])/g,"\\$1");
   const icsDate=v=>{if(!v)return"";const d=new Date(v);if(Number.isNaN(d.getTime()))return"";return d.getUTCFullYear()+String(d.getUTCMonth()+1).padStart(2,"0")+String(d.getUTCDate()).padStart(2,"0")+"T"+String(d.getUTCHours()).padStart(2,"0")+String(d.getUTCMinutes()).padStart(2,"0")+"00Z"};
