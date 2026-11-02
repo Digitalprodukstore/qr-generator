@@ -1,0 +1,23 @@
+name: QR Studio Pro Phase 2 checks
+
+on:
+  push:
+    branches: ["fix/**", "audit/**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  premium-static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate Premium Design Studio adoption
+        run: |
+          node --check qrnode-upgrade.js
+          node scripts/check-phase2-premium.js
