@@ -17,6 +17,7 @@ const labels={url:"Website / URL",text:"Teks",wa:"WhatsApp",email:"Email",tel:"T
 const ids=Object.keys(defs); let active="url",values={};
 const wifiEsc=v=>String(v??"").replace(/([\\;,:"])/g,"\\$1");
 const vcEsc=v=>String(v??"").replace(/\\/g,"\\\\").replace(/\n/g,"\\n").replace(/([,;])/g,"\\$1");
+const icsEsc=v=>String(v??"").replace(/\\/g,"\\\\").replace(/\r?\n/g,"\\n").replace(/([,;])/g,"\\$1");
 const icsDate=v=>{if(!v)return"";const d=new Date(v);if(Number.isNaN(d.getTime()))return"";return d.getUTCFullYear()+String(d.getUTCMonth()+1).padStart(2,"0")+String(d.getUTCDate()).padStart(2,"0")+"T"+String(d.getUTCHours()).padStart(2,"0")+String(d.getUTCMinutes()).padStart(2,"0")+"00Z";};
 function payload(c,f){const g=k=>String(f[k]??"").trim();switch(c){
 case"url":case"menu":case"invitation":return g("url");case"text":return g("text");
@@ -34,14 +35,14 @@ if(c==="text"&&!g("text"))return"Teks tidak boleh kosong.";
 if(c==="wa"&&!/^\d{8,15}$/.test(digits(g("number"))))return"Nomor WhatsApp harus 8–15 digit termasuk kode negara.";
 if(c==="email"&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(g("to")))return"Alamat email belum valid.";
 if(["tel","sms"].includes(c)&&! /^\+?\d{6,16}$/.test(g("number").replace(/[\s()-]/g,"")))return"Nomor telepon harus 6–16 digit.";
-if(c==="wifi"&&!g("ssid"))return"Nama jaringan (SSID) wajib diisi.";
+if(c==="wifi"&&!g("ssid"))return"Nama jaringan (SSID) wajib diisi.";if(c==="wifi"&&g("security")!=="nopass"&&!g("password"))return"Kata sandi Wi-Fi wajib diisi untuk keamanan WPA/WEP.";
 if(c==="vcard"&&!g("name"))return"Nama kontak wajib diisi.";
 if(c==="geo"){const a=Number(g("lat")),b=Number(g("lng"));if(!g("lat")||!g("lng")||!Number.isFinite(a)||a< -90||a>90||!Number.isFinite(b)||b< -180||b>180)return"Latitude harus -90 s/d 90 dan longitude -180 s/d 180.";}
 if(c==="event"){if(!g("title")||!g("start"))return"Nama acara dan waktu mulai wajib diisi.";if(!icsDate(g("start")))return"Waktu mulai tidak valid.";if(g("end")&&(!icsDate(g("end"))||new Date(g("end"))<new Date(g("start"))))return"Waktu selesai harus valid dan tidak lebih awal dari waktu mulai.";}
 return null;}
 function clearPreview(){const c=$("qrCanvas");if(!c)return;const x=c.getContext("2d");if(x)x.clearRect(0,0,c.width,c.height);c.dataset.qrReady="false";c.dataset.qrPayload="";}
 function update(){const e=validate(active,values),s=$("qrnodeStatus");if(e){if(s){s.textContent=e;s.className="mt-2 text-sm text-red-700";}clearPreview();return;}
-const p=payload(active,values),n=new TextEncoder().encode(p).length;if(n>1800){if(s){s.textContent="Konten terlalu panjang ("+n+" byte). Ringkas konten agar mudah dipindai.";s.className="mt-2 text-sm text-red-700";}clearPreview();return;}
+const p=payload(active,values),n=new TextEncoder().encode(p).length;if(n>1200){if(s){s.textContent="Konten terlalu panjang ("+n+" byte). Ringkas konten agar mudah dipindai.";s.className="mt-2 text-sm text-red-700";}clearPreview();return;}
 $("payloadValue").value=p;if(s){s.textContent="Data valid • "+n+" byte • EC Level H";s.className="mt-2 text-sm text-emerald-700";}if(typeof window.renderLiveQR==="function")window.renderLiveQR();}
 function renderFields(){const host=$("qrnodeFields");if(!host)return;host.replaceChildren();for(const [name,label,type,placeholder]of defs[active]){
 const w=document.createElement("label");w.className="flex flex-col gap-1.5 min-w-0";const t=document.createElement("span");t.className="font-label-sm text-label-sm text-on-surface-variant";t.textContent=label;w.append(t);let input;
@@ -50,7 +51,7 @@ input.dataset.qrfield=name;input.value=values[name]??(type==="select"?"WPA":"");
 const changed=()=>{values[name]=input.value;update();};input.addEventListener("input",changed);input.addEventListener("change",changed);w.append(input);host.append(w);}}
 function safeName(s){return String(s||"qr-studio").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-zA-Z0-9_-]+/g,"-").replace(/^-+|-+$/g,"").slice(0,60)||"qr-studio";}
 function downloadSvg(){const c=$("qrCanvas"),p=$("payloadValue")?.value||"";if(!c||c.dataset.qrReady!=="true"||!p){if(window.showToast)window.showToast("QR belum siap","Lengkapi data QR yang valid terlebih dahulu.");return;}
-try{const gen=window.qrcode||(typeof qrcode==="function"?qrcode:null);if(!gen)throw Error("Library QR belum tersedia.");const qr=gen(0,"H");qr.addData(p,"Byte");qr.make();const n=qr.getModuleCount(),q=4,total=n+q*2,fg=$("qrColor1")?.value||"#111827",bg=$("qrBgColor")?.value||"#ffffff",g2=$("qrColor2")?.value||fg,gradient=window.appState?.colorMode==="gradient";
+try{const gen=window.qrcode||(typeof qrcode==="function"?qrcode:null);if(!gen)throw Error("Library QR belum tersedia.");const qr=gen(0,"H");qr.addData(p,"Byte");qr.make();const n=qr.getModuleCount(),q=4,total=n+q*2,fg=$("qrColor1")?.value||"#111827",bg=$("qrBgColor")?.value||"#ffffff",g2=$("qrColor2")?.value||fg,gradient=$("modeGradientBtn")?.classList.contains("bg-secondary")||false;
 let body='<rect width="'+total+'" height="'+total+'" fill="'+bg+'"/>';if(gradient)body+='<defs><linearGradient id="qrGradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="'+fg+'"/><stop offset="100%" stop-color="'+g2+'"/></linearGradient></defs>';
 body+='<g fill="'+(gradient?"url(#qrGradient)":fg)+'">';for(let r=0;r<n;r++)for(let col=0;col<n;col++)if(qr.isDark(r,col))body+='<rect x="'+(col+q)+'" y="'+(r+q)+'" width="1" height="1"/>';body+="</g>";
 const logo=$("customLogoImg");if(logo&&!logo.classList.contains("hidden")&&logo.src&&logo.src.startsWith("data:image/")){const side=total*.20,x=(total-side)/2,y=(total-side)/2;body+='<rect x="'+(x-.25)+'" y="'+(y-.25)+'" width="'+(side+.5)+'" height="'+(side+.5)+'" rx="1" fill="#ffffff"/><image href="'+logo.src+'" x="'+x+'" y="'+y+'" width="'+side+'" height="'+side+'" preserveAspectRatio="xMidYMid meet"/>';}
