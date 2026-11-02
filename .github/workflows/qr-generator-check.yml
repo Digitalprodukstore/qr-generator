@@ -94,7 +94,7 @@ jobs:
           node-version: 20
       - name: Install browser test dependencies
         run: |
-          npm install --no-save playwright jsqr http-server
+          npm install --no-save playwright jsqr pngjs http-server
           npx playwright install --with-deps chromium
       - name: Serve page
         run: |
@@ -194,6 +194,76 @@ jobs:
             console.log('PASS: SVG download contains a valid SVG document.');
             if (pageErrors.length) throw new Error('Browser JavaScript errors: ' + pageErrors.join(' | '));
             console.log('PASS: QR decodes to the expected payload, PNG download is valid, and the page has no uncaught JavaScript errors.');
+            await browser.close();
+          })().catch(error => { console.error(error); process.exit(1); });
+          NODE
+
+
+      - name: Exercise Premium Design Studio in Chromium
+        run: |
+          node <<'NODE'
+          const { chromium } = require('playwright');
+          const fs = require('node:fs');
+          const { PNG } = require('pngjs');
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            const page = await browser.newPage({ viewport: { width: 1365, height: 950 }, acceptDownloads: true });
+            const errors = [];
+            page.on('pageerror', error => errors.push(error.message));
+            await page.goto('http://127.0.0.1:4173/', { waitUntil: 'networkidle', timeout: 60000 });
+            await page.waitForFunction(() => {
+              const c = document.getElementById('qrCanvas');
+              return c && c.dataset.qrReady === 'true' && document.getElementById('qrnodeStudio');
+            }, null, { timeout: 30000 });
+
+            await page.locator('[data-preset="coffee"]').click();
+            const coffee = await page.evaluate(() => ({
+              foreground: document.getElementById('qrColor1')?.value,
+              background: document.getElementById('qrBgColor')?.value,
+              contrast: document.getElementById('qrnodeContrast')?.textContent || ''
+            }));
+            if (coffee.foreground?.toLowerCase() !== '#4b2e1e' || coffee.background?.toLowerCase() !== '#fff8ee') {
+              throw new Error('Coffee preset did not update color controls: ' + JSON.stringify(coffee));
+            }
+            if (!/Kontras\\s+[0-9.]+:1/.test(coffee.contrast) || !coffee.contrast.includes('Baik untuk pemindaian')) {
+              throw new Error('Coffee preset contrast check failed: ' + coffee.contrast);
+            }
+            await page.locator('#qrColor2Hex').fill('#FFFFFF');
+            const manualStatus = await page.locator('#qrnodeContrast').textContent();
+            if (!manualStatus.includes('Ubah warna agar lebih mudah dipindai')) {
+              throw new Error('Manual color edit did not refresh contrast status: ' + manualStatus);
+            }
+            for (const preset of ['gold','midnight','mono','coffee','forest']) {
+              await page.locator('[data-preset="' + preset + '"]').click();
+              const status = await page.locator('#qrnodeContrast').textContent();
+              if (!status.includes('Baik untuk pemindaian')) throw new Error(preset + ' contrast failed: ' + status);
+            }
+            console.log('PASS: five presets and manual contrast updates.');
+
+            const originalUrl = await page.locator('[data-qrfield="url"]').inputValue();
+            await page.locator('#qrnodeSave').click();
+            let saved = await page.evaluate(() => JSON.parse(localStorage.getItem('qrstudio.projects') || '[]'));
+            if (saved.length !== 1 || saved[0].type !== 'url') throw new Error('Save project failed.');
+            await page.locator('[data-qrfield="url"]').fill('https://changed.example/test');
+            await page.locator('#qrnodeProjects button').first().click();
+            if (await page.locator('[data-qrfield="url"]').inputValue() !== originalUrl) throw new Error('Load project failed.');
+            await page.locator('#qrnodeProjects button').last().click();
+            saved = await page.evaluate(() => JSON.parse(localStorage.getItem('qrstudio.projects') || '[]'));
+            if (saved.length !== 0) throw new Error('Delete project failed.');
+            console.log('PASS: save, load, delete project round-trip.');
+
+            const pngPromise = page.waitForEvent('download', { timeout: 15000 });
+            await page.locator('#qrnodePng2048').click();
+            const pngDownload = await pngPromise;
+            const png = PNG.sync.read(fs.readFileSync(await pngDownload.path()));
+            if (png.width !== 2048 || png.height !== 2048) throw new Error('PNG is not 2048x2048.');
+            const svgPromise = page.waitForEvent('download', { timeout: 15000 });
+            await page.locator('#qrSvgButton').click();
+            const svgDownload = await svgPromise;
+            const svg = fs.readFileSync(await svgDownload.path(), 'utf8');
+            if (!svg.includes('<svg') || !svg.includes('</svg>') || !svg.includes('<rect')) throw new Error('SVG export invalid.');
+            if (errors.length) throw new Error('Browser errors: ' + errors.join(' | '));
+            console.log('PASS: 2048px PNG, SVG export, no uncaught browser errors.');
             await browser.close();
           })().catch(error => { console.error(error); process.exit(1); });
           NODE
