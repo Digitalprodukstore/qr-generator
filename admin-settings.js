@@ -119,7 +119,7 @@
     const select=$("qrnodeSelect");
     if(!select||!settings)return;
     const enabled=Object.keys(TYPE_LABELS).filter(id=>settings.enabledTypes[id]!==false);
-    for(const option of select.options)option.hidden=settings.enabledTypes[option.value]===false;
+    for(const option of select.options){option.hidden=settings.enabledTypes[option.value]===false;option.disabled=settings.enabledTypes[option.value]===false;}
     if(!enabled.length)return;
     if(settings.enabledTypes[select.value]===false){
       select.value=enabled[0];
