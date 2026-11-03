@@ -25,7 +25,10 @@ const TYPE_IDS = Object.keys(DEFAULT_SETTINGS.enabledTypes);
 function redisConfig() {
   const url = process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.UPSTASH_REDIS_REST_TOKEN;
-  return url && token ? { url: url.replace(/\\/+$/, ''), token } : null;
+  if (!url || !token) return null;
+  let base = url;
+  while (base.endsWith('/')) base = base.slice(0, -1);
+  return { url: base, token };
 }
 async function redisCommand(commands) {
   const cfg = redisConfig();
@@ -50,7 +53,7 @@ function cleanSettings(input) {
   const pubId = text(ad.pubId, 80), slotId = text(ad.slotId, 40);
   const sponsorName = text(ad.sponsorName, 100), sponsorLink = text(ad.sponsorLink, 500), sponsorTagline = text(ad.sponsorTagline, 180);
   if ([pubId, slotId, sponsorName, sponsorLink, sponsorTagline].some(value => value === null)) return null;
-  if (sponsorLink && !/^https?:\\/\\//i.test(sponsorLink)) return null;
+  if (sponsorLink) { try { const parsed = new URL(sponsorLink); if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') return null; } catch { return null; } }
   if (typeof ad.autoAds !== 'boolean') return null;
   const enabledTypes = {};
   for (const id of TYPE_IDS) {
