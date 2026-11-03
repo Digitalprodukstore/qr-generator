@@ -37,3 +37,10 @@ Status: preparation only. Google AdSense is not approved or connected. No AdSens
 - Production domain `qrnode.boothpro.my.id` is locked. Do not deploy to or change Production.
 - Do not merge the PR or change Production without explicit owner approval.
 - Preview is for review/testing. The remaining owner/compliance checks above must be completed before a public production release or AdSense application.
+
+## Latest Preview QA note — 3 November 2026
+- Owner-reported manual end-to-end test: the user tested the public flow from start to finish and reported that it worked safely. This is recorded as owner-reported QA, not as an independently executed automated/browser test.
+- Tutorial and FAQ support-email placeholders were replaced with the configured support email.
+- English generator page was corrected to remove the unapproved sample Publisher ID, sample ad-slot ID, and “ADSENSE VERIFIED” claims; its default monetization preview is sponsor-only with Auto Ads disabled.
+- Indonesian generator default monetization preview is also sponsor-only with Auto Ads disabled; Publisher ID and slot ID remain blank until actual approval/configuration.
+- Preview still requires a fresh deployment and a final direct browser review after these edits.
