@@ -1,30 +1,32 @@
 # QR Studio Pro — AdSense Readiness Checklist
 
-Status: preparation only. Google AdSense is not yet approved or connected. No AdSense loader, publisher ID, ad-unit ID, or ad request is active in this branch.
+Status: preparation only. Google AdSense is not approved or connected. No AdSense loader, publisher ID, ad-unit ID, or ad request is active in this branch.
 
 ## Implemented in Preview
 - Responsive, clearly labeled advertisement placeholders on the generator and result/design workspace.
-- The placeholders do not request ads, create impressions, block QR creation, or delay PNG/SVG downloads.
+- Placeholders do not request ads, create impressions, block QR creation, or delay PNG/SVG downloads.
 - Footer navigation to About Us, Contact, Privacy Policy, Terms of Service, Disclaimer, FAQ, Tutorial, and Use Cases.
-- Eight public information pages with editable owner/contact placeholders; Privacy/Terms/Disclaimer text now reflects the inspected app behavior.
-- Sitemap entries for all eight pages.
+- Eight public information pages are present; Privacy, Terms, and Disclaimer reflect the inspected application behavior.
+- Public operator/contact details currently configured: operator BoothPro; product QR Studio Pro; country Indonesia; support contact Namachanel89@gmail.com and WhatsApp 0881022062137; service hours Monday–Friday, 09:00–17:00 WIB.
+- No physical business address is displayed because this is a software service without a customer-facing physical location. Do not invent or add an address.
+- Sitemap entries for all eight public information pages.
 - Existing QR creation, design, size selection, PNG/SVG export, and mobile file delivery are retained.
 
-## Owner details to complete before applying
-- [ ] Legal owner/business name and business address.
-- [ ] Support email, privacy email, and contact/working hours.
-- [ ] Contact details and commercial partnership contact.
-- [ ] Hosting provider, server-log practices, retention periods, and security measures.
+## Remaining owner and compliance checks
+- [ ] Confirm the legal entity/individual responsible for the service and whether “BoothPro” is the correct public-facing operator name for legal notices.
+- [ ] Confirm hosting provider, server-log practices, retention periods, and security measures from the actual hosting/account configuration.
 - [ ] Confirm exact data flows for QR content, localStorage projects, admin configuration, and any future analytics.
-- [ ] List all third-party libraries, hosting, analytics, cookies, and advertising providers actually used.
-- [ ] Owner to confirm audience/children statement and complete legal identity/contact details.
-- [ ] Review Terms and Disclaimer with the owner's actual operating model and applicable law.
-- [x] Add visible last-updated date to Privacy, Terms, and Disclaimer pages.
-- [ ] Owner to complete all identity/contact placeholders and conduct final editorial/legal review.
+- [ ] Verify the list of third-party libraries, hosting, analytics, cookies, and advertising providers against the deployed build.
+- [ ] Owner to confirm audience/children statement and complete any legally required identity disclosures.
+- [ ] Review Terms and Disclaimer against the actual operating model and applicable Indonesian law.
+- [ ] Conduct final editorial, accessibility, mobile, and legal review before production release.
+- [x] Public support email and WhatsApp contact are configured.
+- [x] Service hours are configured as Monday–Friday, 09:00–17:00 WIB.
+- [x] Visible last-updated dates are present on Privacy, Terms, and Disclaimer pages.
 
 ## Before enabling AdSense
-1. Apply for AdSense using the real site/domain after the information pages and content are complete.
-2. Wait for Google review and approval.
+1. Apply using the real site/domain only after public information pages and original useful content are complete.
+2. Wait for Google's review and approval.
 3. Only then add the real publisher ID and approved ad-unit IDs.
 4. Keep ad labels distinct from navigation and download controls; never incentivize clicks or force ad viewing.
 5. Verify ads do not cover content, obstruct navigation, or delay downloads.
@@ -32,5 +34,6 @@ Status: preparation only. Google AdSense is not yet approved or connected. No Ad
 
 ## Release guardrails
 - This work is on `fix/qrnode-phase1-adoption-2026-11-02` and the existing draft PR only.
-- Do not merge or change Production without explicit owner approval.
-- Preview pages are drafts; owner placeholders must be replaced and legal text reviewed before public production release or an AdSense application.
+- Production domain `qrnode.boothpro.my.id` is locked. Do not deploy to or change Production.
+- Do not merge the PR or change Production without explicit owner approval.
+- Preview is for review/testing. The remaining owner/compliance checks above must be completed before a public production release or AdSense application.
