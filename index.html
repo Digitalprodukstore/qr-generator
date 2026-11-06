@@ -1470,13 +1470,6 @@ footer *{color:#e9e0d0!important}
       topText.appendChild(strong);
       topText.appendChild(document.createTextNode(' • ' + (cfg.sponsorTagline || '')));
     }
-    if (topLink && cfg.sponsorLink) {
-      try {
-        const target = new URL(cfg.sponsorLink, window.location.origin);
-        if (target.protocol === 'https:' || target.protocol === 'http:') topLink.href = target.href;
-      } catch (_) {}
-    }
-
     // Render Skyscraper content based on Mode
     if (cfg.adMode === 'adsense') {
       slot.innerHTML = `
