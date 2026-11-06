@@ -18,13 +18,15 @@ function clientAddress(req) {
 async function checkAdminLoginRateLimit(req) {
   const url = process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.UPSTASH_REDIS_REST_TOKEN;
-  if (!url && !token) return { configured: false, limited: false };
-  if (!url || !token) return { configured: true, error: true };
+
+  // Fail closed: Admin login must never proceed without the shared limiter.
+  // Redis is already a required dependency for global Admin settings.
+  if (!url || !token) return { configured: false, error: true };
 
   const ip = clientAddress(req);
   const digest = crypto.createHash('sha256').update(ip).digest('hex');
   const key = 'qr-admin-login:' + digest;
-  const base = url.replace(/\/+$/, '');
+  const base = url.replace(/\\/+$/, '');
 
   try {
     // Use one Upstash pipeline and EXPIRE NX so the first request sets a
