@@ -258,6 +258,30 @@ jobs:
             if (saved.length !== 0) throw new Error('Delete project failed.');
             console.log('PASS: save, load, delete project round-trip.');
 
+            const sponsorLinkResult = await page.evaluate(() => {
+              const link = document.getElementById('pubHeaderBannerLink');
+              if (!link || typeof renderPublicAds !== 'function') {
+                throw new Error('Sponsor banner link or renderer is missing.');
+              }
+              const previous = appState.config.sponsorLink;
+              appState.config.sponsorLink = 'https://example.org/sponsor';
+              renderPublicAds();
+              const configured = link.getAttribute('href');
+              appState.config.sponsorLink = '';
+              renderPublicAds();
+              const cleared = link.getAttribute('href');
+              appState.config.sponsorLink = previous;
+              renderPublicAds();
+              return { configured, cleared };
+            });
+            if (sponsorLinkResult.configured !== 'https://example.org/sponsor') {
+              throw new Error('Sponsor banner did not apply the configured URL: ' + JSON.stringify(sponsorLinkResult));
+            }
+            if (sponsorLinkResult.cleared !== '#') {
+              throw new Error('Clearing sponsor URL left a stale banner destination: ' + JSON.stringify(sponsorLinkResult));
+            }
+            console.log('PASS: sponsor banner link updates and clears without retaining stale URLs.');
+
             const pngPromise = page.waitForEvent('download', { timeout: 15000 });
             await page.locator('#qrnodePng2048').click();
             const pngDownload = await pngPromise;
