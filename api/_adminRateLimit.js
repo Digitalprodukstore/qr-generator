@@ -26,7 +26,7 @@ async function checkAdminLoginRateLimit(req) {
   const ip = clientAddress(req);
   const digest = crypto.createHash('sha256').update(ip).digest('hex');
   const key = 'qr-admin-login:' + digest;
-  const base = url.replace(/\\/+$/, '');
+  const base = url.replace(new RegExp('/+$'), '');
 
   try {
     // Use one Upstash pipeline and EXPIRE NX so the first request sets a
