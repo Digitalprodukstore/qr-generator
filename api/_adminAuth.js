@@ -26,7 +26,7 @@ function redisConfig() {
   const url = process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.UPSTASH_REDIS_REST_TOKEN;
   if (!url || !token) return null;
-  return { url: url.replace(/\\/+$/, ''), token };
+  return { url: url.replace(new RegExp('/+$'), ''), token };
 }
 
 async function redisCommand(command) {
@@ -63,7 +63,7 @@ function parseSession(req) {
   const parts = value.split('.');
   if (parts.length !== 3) return null;
   const [expiryText, sessionId, signature] = parts;
-  if (!/^\\d{10}$/.test(expiryText) || !/^[a-f0-9]{64}$/.test(sessionId)) return null;
+  if (!/^[0-9]{10}$/.test(expiryText) || !/^[a-f0-9]{64}$/.test(sessionId)) return null;
   if (Number(expiryText) <= Math.floor(Date.now() / 1000)) return null;
   if (!constantTimeEqual(signature, signSession(expiryText, sessionId))) return null;
   return { expiry: Number(expiryText), sessionId };
