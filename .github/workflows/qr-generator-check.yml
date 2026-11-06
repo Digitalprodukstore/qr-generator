@@ -183,6 +183,12 @@ jobs:
             await verifyCategory('event', { title: 'QR Test Event', start: '2026-11-03T10:00', end: '2026-11-03T11:00', location: 'Bandung' }, 'BEGIN:VCALENDAR');
             await verifyCategory('menu', { url: 'https://example.org/menu' }, 'https://example.org/menu');
             await verifyCategory('invitation', { url: 'https://example.org/invitation' }, 'https://example.org/invitation');
+            await verifyCategory('review', { url: 'https://example.org/review' }, 'https://example.org/review');
+            await verifyCategory('social', { url: 'https://example.org/social' }, 'https://example.org/social');
+            await verifyCategory('pdf', { url: 'https://example.org/catalog.pdf' }, 'https://example.org/catalog.pdf');
+            await verifyCategory('multilink', { url: 'https://example.org/links' }, 'https://example.org/links');
+            await verifyCategory('form', { url: 'https://example.org/feedback' }, 'https://example.org/feedback');
+            await verifyCategory('app', { url: 'https://example.org/app' }, 'https://example.org/app');
             const svgPromise = page.waitForEvent('download', { timeout: 10000 });
             await page.locator('#qrSvgButton').click();
             const svgDownload = await svgPromise;
