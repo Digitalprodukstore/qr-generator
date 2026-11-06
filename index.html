@@ -1459,12 +1459,7 @@ footer *{color:#e9e0d0!important}
       if (strong) strong.textContent = cfg.sponsorName || 'QR Studio Pro';
       topText.appendChild(document.createTextNode(cfg.sponsorTagline ? ' ' + cfg.sponsorTagline : ''));
     }
-    if (topLink && cfg.sponsorLink) {
-      try {
-        const target = new URL(cfg.sponsorLink, window.location.origin);
-        if (target.protocol === 'https:' || target.protocol === 'http:') topLink.href = target.href;
-      } catch (_) {}
-    }
+    if (topLink) topLink.href = cfg.sponsorLink ? safeHttpUrl(cfg.sponsorLink) : '#';
     if (!slot) return;
 
     // Use text nodes for administrator-provided values to avoid HTML injection.
