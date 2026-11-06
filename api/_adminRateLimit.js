@@ -1,4 +1,5 @@
 const crypto = require('node:crypto');
+const { fetchRedisJson } = require('./_redisFetch');
 
 const WINDOW_SECONDS = 10 * 60;
 const MAX_ATTEMPTS = 10;
@@ -33,7 +34,7 @@ async function checkAdminLoginRateLimit(req) {
     // fixed-window TTL without resetting it on every subsequent attempt.
     // Applying EXPIRE NX on every request also repairs a missing TTL if an
     // earlier expiry command failed after INCR succeeded.
-    const response = await fetch(base + '/pipeline', {
+    const { response, payload } = await fetchRedisJson(base + '/pipeline', {
       method: 'POST',
       headers: {
         Authorization: 'Bearer ' + token,
@@ -45,7 +46,6 @@ async function checkAdminLoginRateLimit(req) {
       ])
     });
     if (!response.ok) return { configured: true, error: true };
-    const payload = await response.json();
     const count = Number(payload && payload[0] && payload[0].result);
     const expiryResult = payload && payload[1] && payload[1].result;
     if (!Number.isSafeInteger(count) || count < 1) return { configured: true, error: true };
