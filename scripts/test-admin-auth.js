@@ -5,6 +5,7 @@ const session = require('../api/admin/session');
 const logout = require('../api/admin/logout');
 const settingsHandler = require('../api/admin/settings');
 const { checkAdminLoginRateLimit, MAX_ATTEMPTS, WINDOW_SECONDS } = require('../api/_adminRateLimit');
+const { fetchRedisJson, REDIS_TIMEOUT_MS } = require('../api/_redisFetch');
 
 const testSecrets = {
   ADMIN_EMAIL: ['admin', 'example.test'].join('@'),
@@ -64,6 +65,19 @@ async function test(name, fn) {
   catch (e) { console.error('FAIL:', name, e.message); process.exitCode = 1; }
 }
 (async () => {
+  await test('Redis requests have a bounded timeout and abort the request', async () => {
+    const oldFetch = global.fetch;
+    let signal;
+    global.fetch = async (_url, options) => {
+      signal = options.signal;
+      return new Promise(() => {});
+    };
+    try {
+      await assert.rejects(fetchRedisJson('https://redis.example.test', {}, 20), error => error.code === 'REDIS_TIMEOUT');
+      assert.equal(signal.aborted, true);
+      assert.equal(REDIS_TIMEOUT_MS, 5000);
+    } finally { global.fetch = oldFetch; }
+  });
   await test('login rejects wrong HTTP method', async () => assert.equal((await call(login, 'GET')).statusCode, 405));
   await test('login rejects non-JSON request', async () => assert.equal((await call(login, 'POST', {}, { 'content-type': 'text/plain' })).statusCode, 415));
   await test('login rejects JSONP-like content type', async () => assert.equal((await call(login, 'POST', {}, { 'content-type': 'application/jsonp' })).statusCode, 415));
