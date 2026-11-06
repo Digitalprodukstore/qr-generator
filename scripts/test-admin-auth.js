@@ -12,8 +12,33 @@ const testSecrets = {
   ADMIN_SESSION_SECRET: 'x'.repeat(40)
 };
 Object.assign(process.env, testSecrets);
-delete process.env.UPSTASH_REDIS_REST_URL;
-delete process.env.UPSTASH_REDIS_REST_TOKEN;
+process.env.UPSTASH_REDIS_REST_URL = 'https://redis.example.test';
+process.env.UPSTASH_REDIS_REST_TOKEN = 'test-token';
+const redis = new Map();
+const rateCounts = new Map();
+global.fetch = async (url, options = {}) => {
+  const commands = JSON.parse(options.body || 'null');
+  if (String(url).endsWith('/pipeline')) {
+    const key = commands[0][1];
+    const count = (rateCounts.get(key) || 0) + 1;
+    rateCounts.set(key, count);
+    return { ok: true, json: async () => [{ result: count }, { result: count === 1 ? 1 : 0 }] };
+  }
+  if (!Array.isArray(commands)) return { ok: false, json: async () => ({ error: 'invalid command' }) };
+  const [command, key, value] = commands;
+  if (command === 'SET') {
+    redis.set(key, value);
+    return { ok: true, json: async () => ({ result: 'OK' }) };
+  }
+  if (command === 'GET') {
+    return { ok: true, json: async () => ({ result: redis.get(key) ?? null }) };
+  }
+  if (command === 'DEL') {
+    const existed = redis.delete(key);
+    return { ok: true, json: async () => ({ result: existed ? 1 : 0 }) };
+  }
+  return { ok: false, json: async () => ({ error: 'unsupported command' }) };
+};
 
 async function call(handler, method, body = {}, headers = {}) {
   const res = {
@@ -71,13 +96,22 @@ async function test(name, fn) {
     try { assert.equal((await call(login, 'POST', {})).statusCode, 503); }
     finally { process.env.ADMIN_SESSION_SECRET = previous; }
   });
-  await test('rate limiter remains inactive without its optional backend configured', async () => {
-    assert.deepEqual(await checkAdminLoginRateLimit({ headers: {} }), { configured: false, limited: false });
+  await test('rate limiter fails closed when backend is not configured', async () => {
+    const oldUrl = process.env.UPSTASH_REDIS_REST_URL;
+    const oldToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+    delete process.env.UPSTASH_REDIS_REST_URL;
+    delete process.env.UPSTASH_REDIS_REST_TOKEN;
+    try { assert.deepEqual(await checkAdminLoginRateLimit({ headers: {} }), { configured: false, error: true }); }
+    finally {
+      process.env.UPSTASH_REDIS_REST_URL = oldUrl;
+      process.env.UPSTASH_REDIS_REST_TOKEN = oldToken;
+    }
   });
   await test('rate limiter fails closed on incomplete backend configuration', async () => {
-    process.env.UPSTASH_REDIS_REST_URL = 'https://example.test';
-    try { assert.deepEqual(await checkAdminLoginRateLimit({ headers: {} }), { configured: true, error: true }); }
-    finally { delete process.env.UPSTASH_REDIS_REST_URL; }
+    const oldToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+    delete process.env.UPSTASH_REDIS_REST_TOKEN;
+    try { assert.deepEqual(await checkAdminLoginRateLimit({ headers: {} }), { configured: false, error: true }); }
+    finally { process.env.UPSTASH_REDIS_REST_TOKEN = oldToken; }
   });
   await test('rate limiter blocks requests beyond the configured threshold', async () => {
     const oldFetch = global.fetch;
