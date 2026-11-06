@@ -9,7 +9,7 @@ const assert = (condition, message) => {
 const syntax = spawnSync(process.execPath, ['--check', 'qrnode-upgrade.js'], { encoding: 'utf8' });
 assert(syntax.status === 0, 'QRNode upgrade module has valid JavaScript syntax');
 assert(html.includes('src="/qrnode-upgrade.js"'), 'QRNode upgrade module is loaded by the existing app');
-for (const id of ['url','text','wa','email','tel','sms','wifi','vcard','geo','event','menu','invitation']) {
+for (const id of ['url','text','wifi','wa','email','tel','sms','vcard','review','social','menu','geo','pdf','multilink','form','event','invitation','app']) {
   assert(new RegExp('(^|[,{])\\s*' + id + '\\s*:', 'm').test(moduleSource), 'category payload form exists: ' + id);
 }
 for (const marker of ['mailto:', 'https://wa.me/', 'WIFI:T:', 'BEGIN:VCARD', 'BEGIN:VCALENDAR', 'geo:']) {
