@@ -32,7 +32,7 @@
     case"wifi":return"WIFI:T:"+g("security")+";S:"+wifiEsc(g("ssid"))+";P:"+wifiEsc(g("password"))+";;";
     case"vcard":return["BEGIN:VCARD","VERSION:3.0","FN:"+esc(g("name")),g("org")?"ORG:"+esc(g("org")):"",g("phone")?"TEL;TYPE=CELL:"+esc(g("phone")):"",g("email")?"EMAIL:"+esc(g("email")):"","END:VCARD"].filter(Boolean).join("\r\n");
     case"geo":return"geo:"+g("lat")+","+g("lng")+(g("address")?"?q="+enc(g("address")):"");
-    case"event":return["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//QR Studio Pro//ID","BEGIN:VEVENT","SUMMARY:"+g("title").replace(/[\r\n]/g," "),g("start")?"DTSTART:"+icsDate(g("start")):"",g("end")?"DTEND:"+icsDate(g("end")):"",g("location")?"LOCATION:"+g("location").replace(/[\r\n]/g," "):"","END:VEVENT","END:VCALENDAR"].filter(Boolean).join("\r\n");
+    case"event":return["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//QR Studio Pro//ID","BEGIN:VEVENT","SUMMARY:"+icsEsc(g("title")),g("start")?"DTSTART:"+icsDate(g("start")):"",g("end")?"DTEND:"+icsDate(g("end")):"",g("location")?"LOCATION:"+icsEsc(g("location")):"","END:VEVENT","END:VCALENDAR"].filter(Boolean).join("\r\n");
     default:return"";}}
   function validate(c,f){const g=k=>String(f[k]??"").trim();
     if(["url","menu","invitation","review","social","pdf","multilink","form","app"].includes(c)){try{const u=new URL(g("url"));if(!["http:","https:"].includes(u.protocol))throw 0}catch{return"Masukkan tautan valid yang diawali https:// atau http://."}}
