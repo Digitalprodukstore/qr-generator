@@ -277,11 +277,11 @@ jobs:
               appState.config.sponsorLink = 'javascript:alert(document.domain)';
               renderPublicAds();
               const unsafeBanner = link.getAttribute('href');
-              const unsafeSlot = document.querySelector('#pubSkyscraperSlot a')?.getAttribute('href') || null;
+              const unsafeUrl = safeHttpUrl(appState.config.sponsorLink);
               appState.config.sponsorLink = previous.sponsorLink;
               appState.config.adMode = previous.adMode;
               renderPublicAds();
-              return { configured, cleared, unsafeBanner, unsafeSlot };
+              return { configured, cleared, unsafeBanner, unsafeUrl };
             });
             if (sponsorLinkResult.configured !== 'https://example.org/sponsor') {
               throw new Error('Sponsor banner did not apply the configured URL: ' + JSON.stringify(sponsorLinkResult));
@@ -289,8 +289,8 @@ jobs:
             if (sponsorLinkResult.cleared !== '#') {
               throw new Error('Clearing sponsor URL left a stale banner destination: ' + JSON.stringify(sponsorLinkResult));
             }
-            if (sponsorLinkResult.unsafeBanner !== '#' || sponsorLinkResult.unsafeSlot !== '#') {
-              throw new Error('Unsafe sponsor URL was not neutralized in both public placements: ' + JSON.stringify(sponsorLinkResult));
+            if (sponsorLinkResult.unsafeBanner !== '#' || sponsorLinkResult.unsafeUrl !== '#') {
+              throw new Error('Unsafe sponsor URL was not neutralized by the public banner and URL validator: ' + JSON.stringify(sponsorLinkResult));
             }
             console.log('PASS: sponsor URLs update, clear stale destinations, and reject javascript: URLs in banner and sponsor slot.');
 
