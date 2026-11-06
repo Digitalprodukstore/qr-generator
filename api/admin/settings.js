@@ -1,4 +1,5 @@
 const { sendJson, hasValidSession } = require('../_adminAuth');
+const { fetchRedisJson } = require('../_redisFetch');
 
 const KEY = 'qr-studio-pro:global-settings:v1';
 const DEFAULT_SETTINGS = Object.freeze({
@@ -33,13 +34,12 @@ function redisConfig() {
 async function redisCommand(commands) {
   const cfg = redisConfig();
   if (!cfg) throw new Error('PERSISTENCE_NOT_CONFIGURED');
-  const response = await fetch(cfg.url + '/pipeline', {
+  const { response, payload: result } = await fetchRedisJson(cfg.url + '/pipeline', {
     method: 'POST',
     headers: { Authorization: 'Bearer ' + cfg.token, 'Content-Type': 'application/json' },
     body: JSON.stringify(commands)
   });
   if (!response.ok) throw new Error('PERSISTENCE_UNAVAILABLE');
-  const result = await response.json();
   if (!Array.isArray(result) || result.some(item => item && item.error)) throw new Error('PERSISTENCE_UNAVAILABLE');
   return result;
 }
