@@ -1,6 +1,6 @@
 const REDIS_TIMEOUT_MS = 5000;
 
-async function fetchRedisJson(url, options = {}) {
+async function fetchRedisJson(url, options = {}, timeoutMs = REDIS_TIMEOUT_MS) {
   const controller = new AbortController();
   let timer;
   const request = fetch(url, { ...options, signal: controller.signal })
@@ -14,7 +14,7 @@ async function fetchRedisJson(url, options = {}) {
       const error = new Error('REDIS_TIMEOUT');
       error.code = 'REDIS_TIMEOUT';
       reject(error);
-    }, REDIS_TIMEOUT_MS);
+    }, timeoutMs);
   });
 
   try {
