@@ -78,7 +78,7 @@ function isSameOriginRequest(req) {
     const parsedOrigin = new URL(origin);
     if (parsedOrigin.username || parsedOrigin.password || parsedOrigin.pathname !== '/' || parsedOrigin.search || parsedOrigin.hash) return false;
     const forwardedProto = String(req.headers['x-forwarded-proto'] || '').split(',')[0].trim().toLowerCase();
-    const protocol = forwardedProto || (/^(localhost|127\\.0\\.0\\.1)(:\\d+)?$/i.test(host) ? 'http' : 'https');
+    const protocol = forwardedProto || (/^(localhost|127\.0\.0\.1)(:\d+)?$/i.test(host) ? 'http' : 'https');
     if (protocol !== 'https' && protocol !== 'http') return false;
     const expectedOrigin = new URL(protocol + '://' + host).origin;
     return parsedOrigin.origin === expectedOrigin;
