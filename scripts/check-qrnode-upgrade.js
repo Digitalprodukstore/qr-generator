@@ -17,6 +17,8 @@ for (const marker of ['mailto:', 'https://wa.me/', 'WIFI:T:', 'BEGIN:VCARD', 'BE
 }
 assert(moduleSource.includes('function downloadSvg()'), 'SVG export implementation exists');
 assert(moduleSource.includes('const icsEsc='), 'calendar fields are escaped for iCalendar');
+assert(moduleSource.includes('"SUMMARY:"+icsEsc(g("title"))'), 'calendar event titles escape iCalendar delimiters');
+assert(moduleSource.includes('"LOCATION:"+icsEsc(g("location"))'), 'calendar locations escape iCalendar delimiters');
 assert(moduleSource.includes('Kata sandi Wi-Fi wajib diisi'), 'secured Wi-Fi requires a password');
 assert(moduleSource.includes('n>1200'), 'oversized payloads are rejected before QR rendering');
 assert(moduleSource.includes('png|jpeg|webp'), 'SVG embeds only supported raster logo formats');
