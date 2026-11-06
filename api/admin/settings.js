@@ -92,7 +92,7 @@ module.exports = async function handler(req, res) {
     }
   }
   if (req.method === 'PUT') {
-    if (!hasValidSession(req)) return sendJson(res, 401, { error: 'Sesi admin tidak valid.' });
+    if (!(await hasValidSession(req))) return sendJson(res, 401, { error: 'Sesi admin tidak valid.' });
     const settings = cleanSettings(req.body);
     if (!settings) return sendJson(res, 400, { error: 'Format pengaturan tidak valid. Periksa seluruh kolom dan status 18 jenis QR.' });
     try {
