@@ -263,16 +263,25 @@ jobs:
               if (!link || typeof renderPublicAds !== 'function') {
                 throw new Error('Sponsor banner link or renderer is missing.');
               }
-              const previous = appState.config.sponsorLink;
+              const previous = {
+                sponsorLink: appState.config.sponsorLink,
+                adMode: appState.config.adMode
+              };
+              appState.config.adMode = 'sponsor';
               appState.config.sponsorLink = 'https://example.org/sponsor';
               renderPublicAds();
               const configured = link.getAttribute('href');
               appState.config.sponsorLink = '';
               renderPublicAds();
               const cleared = link.getAttribute('href');
-              appState.config.sponsorLink = previous;
+              appState.config.sponsorLink = 'javascript:alert(document.domain)';
               renderPublicAds();
-              return { configured, cleared };
+              const unsafeBanner = link.getAttribute('href');
+              const unsafeSlot = document.querySelector('#pubSkyscraperSlot a')?.getAttribute('href') || null;
+              appState.config.sponsorLink = previous.sponsorLink;
+              appState.config.adMode = previous.adMode;
+              renderPublicAds();
+              return { configured, cleared, unsafeBanner, unsafeSlot };
             });
             if (sponsorLinkResult.configured !== 'https://example.org/sponsor') {
               throw new Error('Sponsor banner did not apply the configured URL: ' + JSON.stringify(sponsorLinkResult));
@@ -280,7 +289,10 @@ jobs:
             if (sponsorLinkResult.cleared !== '#') {
               throw new Error('Clearing sponsor URL left a stale banner destination: ' + JSON.stringify(sponsorLinkResult));
             }
-            console.log('PASS: sponsor banner link updates and clears without retaining stale URLs.');
+            if (sponsorLinkResult.unsafeBanner !== '#' || sponsorLinkResult.unsafeSlot !== '#') {
+              throw new Error('Unsafe sponsor URL was not neutralized in both public placements: ' + JSON.stringify(sponsorLinkResult));
+            }
+            console.log('PASS: sponsor URLs update, clear stale destinations, and reject javascript: URLs in banner and sponsor slot.');
 
             const pngPromise = page.waitForEvent('download', { timeout: 15000 });
             await page.locator('#qrnodePng2048').click();
