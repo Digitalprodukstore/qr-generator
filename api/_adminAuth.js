@@ -1,4 +1,5 @@
 const crypto = require('node:crypto');
+const { fetchRedisJson } = require('./_redisFetch');
 
 const COOKIE_NAME = 'qr_admin_session';
 const SESSION_TTL_SECONDS = 8 * 60 * 60;
@@ -32,7 +33,7 @@ function redisConfig() {
 async function redisCommand(command) {
   const cfg = redisConfig();
   if (!cfg) throw new Error('SESSION_STORE_NOT_CONFIGURED');
-  const response = await fetch(cfg.url, {
+  const { response, payload } = await fetchRedisJson(cfg.url, {
     method: 'POST',
     headers: {
       Authorization: 'Bearer ' + cfg.token,
@@ -41,7 +42,6 @@ async function redisCommand(command) {
     body: JSON.stringify(command)
   });
   if (!response.ok) throw new Error('SESSION_STORE_UNAVAILABLE');
-  const payload = await response.json();
   if (!payload || payload.error) throw new Error('SESSION_STORE_UNAVAILABLE');
   return payload.result;
 }
