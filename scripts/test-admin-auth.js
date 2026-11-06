@@ -199,6 +199,19 @@ async function test(name, fn) {
     });
     assert.equal(r.statusCode, 403);
   });
+  await test('settings PUT accepts IPv4 localhost same-origin requests', async () => {
+    const r = await call(settingsHandler, 'PUT', validSettings, {
+      host: '127.0.0.1:3000', origin: 'http://127.0.0.1:3000', cookie: validAdminCookie()
+    });
+    assert.equal(r.statusCode, 200);
+  });
+  await test('settings PUT rejects unsafe sponsor URL schemes', async () => {
+    const payload = { ...validSettings, ad: { ...validSettings.ad, sponsorLink: 'javascript:alert(1)' } };
+    const r = await call(settingsHandler, 'PUT', payload, {
+      host: 'qr.example.test', origin: 'https://qr.example.test', cookie: validAdminCookie()
+    });
+    assert.equal(r.statusCode, 400);
+  });
   await test('settings PUT accepts same-origin authenticated requests and persists settings', async () => {
     const r = await call(settingsHandler, 'PUT', validSettings, {
       host: 'qr.example.test', origin: 'https://qr.example.test', cookie: validAdminCookie()
