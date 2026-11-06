@@ -70,6 +70,22 @@ function cleanSettings(input) {
 function publicDefaults() {
   return JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
 }
+function isSameOriginRequest(req) {
+  const origin = req.headers && req.headers.origin;
+  const host = req.headers && req.headers.host;
+  if (typeof origin !== 'string' || !origin || typeof host !== 'string' || !host) return false;
+  try {
+    const parsedOrigin = new URL(origin);
+    if (parsedOrigin.username || parsedOrigin.password || parsedOrigin.pathname !== '/' || parsedOrigin.search || parsedOrigin.hash) return false;
+    const forwardedProto = String(req.headers['x-forwarded-proto'] || '').split(',')[0].trim().toLowerCase();
+    const protocol = forwardedProto || (/^(localhost|127\\.0\\.0\\.1)(:\\d+)?$/i.test(host) ? 'http' : 'https');
+    if (protocol !== 'https' && protocol !== 'http') return false;
+    const expectedOrigin = new URL(protocol + '://' + host).origin;
+    return parsedOrigin.origin === expectedOrigin;
+  } catch {
+    return false;
+  }
+}
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store, max-age=0');
   res.setHeader('Vary', 'Cookie');
@@ -92,6 +108,7 @@ module.exports = async function handler(req, res) {
     }
   }
   if (req.method === 'PUT') {
+    if (!isSameOriginRequest(req)) return sendJson(res, 403, { error: 'Permintaan lintas situs ditolak.' });
     if (!(await hasValidSession(req))) return sendJson(res, 401, { error: 'Sesi admin tidak valid.' });
     const settings = cleanSettings(req.body);
     if (!settings) return sendJson(res, 400, { error: 'Format pengaturan tidak valid. Periksa seluruh kolom dan status 18 jenis QR.' });
