@@ -157,3 +157,23 @@ Still blocked:
 - Owner approval and provisioning of a dedicated Preview PostgreSQL provider.
 - Database-level migration execution and integration tests against a real Preview database.
 - API authentication/ownership model must be selected before implementing QR-link CRUD.
+
+
+## 11. Phase 3B pre-implementation security findings (2026-11-07)
+
+A focused review of the existing Admin API confirms:
+- The current account model is one shared Admin identity configured through server environment variables; there is no per-customer account or authenticated owner identifier in the signed session.
+- The session cookie is HttpOnly, Secure, and SameSite=Strict, but session issuance and validation require the shared Upstash Redis store.
+- Admin settings writes already enforce same-origin Origin/Host validation and require a valid server session.
+- The existing Admin login limiter also fails closed when Upstash is unavailable.
+
+Implementation consequence:
+- Do not assign customer ownership to a fabricated `owner_id` or treat a valid Admin cookie as a customer account.
+- Dynamic QR CRUD must remain Admin-only until an explicit account/workspace ownership model is designed. If the product intentionally uses a single-owner dashboard, document that as a product decision before enabling writes.
+- Added `api/_dynamicQrValidation.js` as a database-independent validation boundary for destination URLs, titles, expirations, and 128-bit random slugs.
+- Added `scripts/check-phase3-validation.js` with negative tests for dangerous URL schemes, credentials, malformed values, whitespace/control characters, and invalid slugs.
+- Extended the Phase 3 schema workflow to run the new validation suite. No API route or redirect endpoint is exposed by this change.
+
+Remaining gate:
+- Choose whether Dynamic QR is single-Admin-owned or requires customer accounts/workspaces.
+- Select and approve a dedicated Preview PostgreSQL provider before implementing persistence and redirect resolution.
