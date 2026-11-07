@@ -1209,14 +1209,29 @@ footer *{color:#e9e0d0!important}
         ink.addColorStop(1, c2);
       }
       ctx.fillStyle = ink;
+      const pattern = window.qrStudioPattern || 'square';
       for (let row = 0; row < count; row++) {
         for (let col = 0; col < count; col++) {
-          if (qr.isDark(row, col)) {
-            const x = Math.round((col + quiet) * cell);
-            const y = Math.round((row + quiet) * cell);
-            const right = Math.round((col + quiet + 1) * cell);
-            const bottom = Math.round((row + quiet + 1) * cell);
-            ctx.fillRect(x, y, right - x, bottom - y);
+          if (!qr.isDark(row, col)) continue;
+          const x = Math.round((col + quiet) * cell);
+          const y = Math.round((row + quiet) * cell);
+          const right = Math.round((col + quiet + 1) * cell);
+          const bottom = Math.round((row + quiet + 1) * cell);
+          const width = right - x;
+          const height = bottom - y;
+          const isFinder = (row < 8 && col < 8) ||
+            (row < 8 && col >= count - 8) ||
+            (row >= count - 8 && col < 8);
+          if (pattern === 'dots' && !isFinder) {
+            ctx.beginPath();
+            ctx.arc((x + right) / 2, (y + bottom) / 2, Math.min(width, height) * 0.42, 0, Math.PI * 2);
+            ctx.fill();
+          } else if (pattern === 'rounded' && !isFinder && typeof ctx.roundRect === 'function') {
+            ctx.beginPath();
+            ctx.roundRect(x, y, width, height, Math.min(width, height) * 0.28);
+            ctx.fill();
+          } else {
+            ctx.fillRect(x, y, width, height);
           }
         }
       }
