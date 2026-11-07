@@ -60,7 +60,7 @@
       let body='<rect width="'+total+'" height="'+total+'" fill="'+bg+'"/>';
       if(gradient)body+='<defs><linearGradient id="qrGradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="'+fg+'"/><stop offset="100%" stop-color="'+g2+'"/></linearGradient></defs>';
       body+='<g fill="'+(gradient?"url(#qrGradient)":fg)+'">';
-      for(let r=0;r<n;r++)for(let c=0;c<n;c++){if(!qr.isDark(r,c))continue;const x=c+q,y=r+q,finder=(r<8&&c<8)||(r<8&&c>=n-8)||(r>=n-8&&c<8);if(shape==="dots"&&!finder)body+='<circle cx="'+(x+.5)+'" cy="'+(y+.5)+'" r=".42"/>';else if(shape==="rounded"&&!finder)body+='<rect x="'+x+'" y="'+y+'" width="1" height="1" rx=".28"/>';else body+='<rect x="'+x+'" y="'+y+'" width="1" height="1"/>';}
+      for(let r=0;r<n;r++)for(let c=0;c<n;c++){if(!qr.isDark(r,c))continue;const x=c+q,y=r+q,finder=(r<8&&c<8)||(r<8&&c>=n-8)||(r>=n-8&&c<8);if(shape==="dots"&&!finder)body+='<circle cx="'+(x+.5)+'" cy="'+(y+.5)+'" r=".495"/>';else if(shape==="rounded"&&!finder)body+='<rect x="'+x+'" y="'+y+'" width="1" height="1" rx=".28"/>';else body+='<rect x="'+x+'" y="'+y+'" width="1" height="1"/>';}
       body+='</g>';
       if(logo&&!logo.classList.contains("hidden")&&/^data:image\/(png|jpeg|webp);base64,/i.test(logo.src)){
         const side=total*.20,x=(total-side)/2,y=(total-side)/2;
