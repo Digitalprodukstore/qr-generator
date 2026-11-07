@@ -24,6 +24,7 @@ assert(html.includes("pattern === 'dots' && !isFinder"), 'dot pattern preserves 
 assert(html.includes("pattern === 'rounded' && !isFinder"), 'rounded pattern preserves square finder zones');
 assert(moduleSource.includes('id=\"qrnodePattern\"'), 'shape selector is available in the design studio');
 assert(moduleSource.includes('pattern:selectedPattern'), 'selected pattern is saved with local projects');
+assert(moduleSource.includes('if(select)select.value=pattern;update()}'), 'pattern changes revalidate the active QR payload before rendering');
 assert(moduleSource.includes('shape===\"dots\"&&!finder') && moduleSource.includes('shape===\"rounded\"&&!finder'), 'SVG export preserves selected module pattern');
 assert(moduleSource.includes('const icsEsc='), 'calendar fields are escaped for iCalendar');
 assert(moduleSource.includes('"SUMMARY:"+icsEsc(g("title"))'), 'calendar event titles escape iCalendar delimiters');
