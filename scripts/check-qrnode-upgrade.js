@@ -16,6 +16,9 @@ for (const marker of ['mailto:', 'https://wa.me/', 'WIFI:T:', 'BEGIN:VCARD', 'BE
   assert(moduleSource.includes(marker), 'standard payload encoding exists: ' + marker);
 }
 assert(moduleSource.includes('function downloadSvg()'), 'SVG export implementation exists');
+assert(html.includes('function renderLiveQR(targetCanvas, outputSize)'), 'QR renderer supports independent output canvases and explicit resolutions');
+assert(moduleSource.includes('window.renderLiveQR?.(out, 2048)'), '2048px PNG export rerenders QR modules at native resolution');
+assert(!moduleSource.includes('x.drawImage(c,0,0,2048,2048)'), '2048px PNG export does not upscale the 1200px preview canvas');
 assert(moduleSource.includes('const icsEsc='), 'calendar fields are escaped for iCalendar');
 assert(moduleSource.includes('"SUMMARY:"+icsEsc(g("title"))'), 'calendar event titles escape iCalendar delimiters');
 assert(moduleSource.includes('"LOCATION:"+icsEsc(g("location"))'), 'calendar locations escape iCalendar delimiters');
