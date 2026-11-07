@@ -129,9 +129,11 @@
     const c=$("qrCanvas");
     if(!c||c.dataset.qrReady!=="true"){window.showToast?.("QR belum siap","Lengkapi data QR terlebih dahulu.");return}
     try {
-      const out=document.createElement("canvas");out.width=2048;out.height=2048;
-      const x=out.getContext("2d");if(!x)throw Error("Browser tidak dapat menyiapkan canvas.");
-      x.imageSmoothingEnabled=false;x.drawImage(c,0,0,2048,2048);
+      const out=document.createElement("canvas");
+      window.renderLiveQR?.(out, 2048);
+      if(out.dataset.qrReady!=="true" || out.dataset.qrPayload!==c.dataset.qrPayload) {
+        throw Error("QR 2048 gagal dirender ulang dari payload terbaru.");
+      }
       const blob=await new Promise((resolve,reject)=>out.toBlob(value=>value?resolve(value):reject(Error("Browser gagal membuat PNG 2048.")),"image/png"));
       const filename=safeName("qr-studio-"+active)+"-2048.png";
       if(typeof window.qrnodeDeliverFile==="function") await window.qrnodeDeliverFile(blob,filename,"QR Studio Pro — PNG 2048");
