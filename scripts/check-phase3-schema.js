@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const source = fs.readFileSync('db/migrations/001_create_dynamic_qr_tables.sql', 'utf8');
 // Ignore full-line SQL comments so privacy guidance is not mistaken for stored columns.
-const sql = source.split('\\n').filter(line => !line.trimStart().startsWith('--')).join('\\n');
+const sql = source.split('\n').filter(line => !line.trimStart().startsWith('--')).join('\n');
 const assert = (condition, message) => {
   if (!condition) { console.error('FAIL:', message); process.exitCode = 1; }
   else console.log('PASS:', message);
