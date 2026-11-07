@@ -19,3 +19,5 @@ jobs:
           node-version: 20
       - name: Validate Phase 3 migration safety and privacy constraints
         run: node scripts/check-phase3-schema.js
+      - name: Validate Dynamic QR input and slug helpers
+        run: node scripts/check-phase3-validation.js
