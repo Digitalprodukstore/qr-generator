@@ -1168,8 +1168,8 @@ footer *{color:#e9e0d0!important}
   }
 
   // Pure Canvas QR Matrix Generator with High Resolution Output
-  function renderLiveQR() {
-    const canvas = document.getElementById('qrCanvas');
+  function renderLiveQR(targetCanvas, outputSize) {
+    const canvas = targetCanvas || document.getElementById('qrCanvas');
     const input = document.getElementById('payloadValue');
     if (!canvas || !input) return;
     const ctx = canvas.getContext('2d');
@@ -1191,7 +1191,13 @@ footer *{color:#e9e0d0!important}
       const count = qr.getModuleCount();
       const quiet = 4;
       const cells = count + quiet * 2;
-      const size = canvas.width;
+      const size = Number.isFinite(Number(outputSize)) && Number(outputSize) > 0
+        ? Math.floor(Number(outputSize))
+        : canvas.width;
+      if (canvas.width !== size || canvas.height !== size) {
+        canvas.width = size;
+        canvas.height = size;
+      }
       const cell = size / cells;
       ctx.clearRect(0, 0, size, size);
       ctx.fillStyle = bg;
