@@ -222,6 +222,11 @@ jobs:
               throw new Error('Changing the QR pattern bypassed invalid-payload validation.');
             }
             console.log('PASS: pattern changes keep invalid QR payloads blocked.');
+            await page.locator('[data-qrfield="url"]').fill('https://example.org/svg-export-test');
+            await page.waitForFunction(() => {
+              const c = document.getElementById('qrCanvas');
+              return c && c.dataset.qrReady === 'true';
+            }, null, { timeout: 10000 });
             const svgPromise = page.waitForEvent('download', { timeout: 10000 });
             await page.locator('#qrSvgButton').click();
             const svgDownload = await svgPromise;
