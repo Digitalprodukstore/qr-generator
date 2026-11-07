@@ -189,6 +189,39 @@ jobs:
             await verifyCategory('multilink', { url: 'https://example.org/links' }, 'https://example.org/links');
             await verifyCategory('form', { url: 'https://example.org/feedback' }, 'https://example.org/feedback');
             await verifyCategory('app', { url: 'https://example.org/app' }, 'https://example.org/app');
+            for (const pattern of ['square', 'rounded', 'dots']) {
+              await page.locator('#qrnodePattern').selectOption(pattern);
+              await page.waitForFunction(() => {
+                const c = document.getElementById('qrCanvas');
+                return c && c.dataset.qrReady === 'true';
+              }, null, { timeout: 10000 });
+              const sample = await page.evaluate(() => {
+                const source = document.getElementById('qrCanvas');
+                const small = document.createElement('canvas');
+                small.width = 600; small.height = 600;
+                const ctx = small.getContext('2d');
+                ctx.drawImage(source, 0, 0, 600, 600);
+                const image = ctx.getImageData(0, 0, 600, 600);
+                return { data: Array.from(image.data), payload: source.dataset.qrPayload };
+              });
+              const decodedPattern = jsQR(new Uint8ClampedArray(sample.data), 600, 600);
+              if (!decodedPattern || decodedPattern.data !== sample.payload) {
+                throw new Error(pattern + ' module pattern failed independent QR decoding.');
+              }
+              console.log('PASS: ' + pattern + ' module pattern independently decodes.');
+            }
+            await page.locator('#qrnodeSelect').selectOption('url');
+            await page.locator('[data-qrfield="url"]').fill('not-a-valid-url');
+            await page.waitForFunction(() => {
+              const c = document.getElementById('qrCanvas');
+              return c && c.dataset.qrReady === 'false';
+            }, null, { timeout: 10000 });
+            await page.locator('#qrnodePattern').selectOption('dots');
+            const invalidStillBlocked = await page.locator('#qrCanvas').getAttribute('data-qr-ready');
+            if (invalidStillBlocked !== 'false') {
+              throw new Error('Changing the QR pattern bypassed invalid-payload validation.');
+            }
+            console.log('PASS: pattern changes keep invalid QR payloads blocked.');
             const svgPromise = page.waitForEvent('download', { timeout: 10000 });
             await page.locator('#qrSvgButton').click();
             const svgDownload = await svgPromise;
