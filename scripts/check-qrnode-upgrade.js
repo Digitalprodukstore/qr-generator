@@ -26,6 +26,7 @@ assert(moduleSource.includes('id=\"qrnodePattern\"'), 'shape selector is availab
 assert(moduleSource.includes('pattern:selectedPattern'), 'selected pattern is saved with local projects');
 assert(moduleSource.includes('if(select)select.value=pattern;update()}'), 'pattern changes revalidate the active QR payload before rendering');
 assert(moduleSource.includes('shape===\"dots\"&&!finder') && moduleSource.includes('shape===\"rounded\"&&!finder'), 'SVG export preserves selected module pattern');
+assert(html.includes('Math.min(width, height) * 0.495') && moduleSource.includes('r=\".495\"'), 'dot pattern keeps dense modules for scan reliability in PNG and SVG');
 assert(moduleSource.includes('const icsEsc='), 'calendar fields are escaped for iCalendar');
 assert(moduleSource.includes('"SUMMARY:"+icsEsc(g("title"))'), 'calendar event titles escape iCalendar delimiters');
 assert(moduleSource.includes('"LOCATION:"+icsEsc(g("location"))'), 'calendar locations escape iCalendar delimiters');
