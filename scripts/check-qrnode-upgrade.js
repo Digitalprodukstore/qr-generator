@@ -19,6 +19,12 @@ assert(moduleSource.includes('function downloadSvg()'), 'SVG export implementati
 assert(html.includes('function renderLiveQR(targetCanvas, outputSize)'), 'QR renderer supports independent output canvases and explicit resolutions');
 assert(moduleSource.includes('window.renderLiveQR?.(out, 2048)'), '2048px PNG export rerenders QR modules at native resolution');
 assert(!moduleSource.includes('x.drawImage(c,0,0,2048,2048)'), '2048px PNG export does not upscale the 1200px preview canvas');
+assert(html.includes("const pattern = window.qrStudioPattern || 'square'"), 'QR renderer reads the selected module pattern');
+assert(html.includes("pattern === 'dots' && !isFinder"), 'dot pattern preserves square finder zones');
+assert(html.includes("pattern === 'rounded' && !isFinder"), 'rounded pattern preserves square finder zones');
+assert(moduleSource.includes('id=\"qrnodePattern\"'), 'shape selector is available in the design studio');
+assert(moduleSource.includes('pattern:selectedPattern'), 'selected pattern is saved with local projects');
+assert(moduleSource.includes('shape===\"dots\"&&!finder') && moduleSource.includes('shape===\"rounded\"&&!finder'), 'SVG export preserves selected module pattern');
 assert(moduleSource.includes('const icsEsc='), 'calendar fields are escaped for iCalendar');
 assert(moduleSource.includes('"SUMMARY:"+icsEsc(g("title"))'), 'calendar event titles escape iCalendar delimiters');
 assert(moduleSource.includes('"LOCATION:"+icsEsc(g("location"))'), 'calendar locations escape iCalendar delimiters');
