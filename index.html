@@ -1224,7 +1224,7 @@ footer *{color:#e9e0d0!important}
             (row >= count - 8 && col < 8);
           if (pattern === 'dots' && !isFinder) {
             ctx.beginPath();
-            ctx.arc((x + right) / 2, (y + bottom) / 2, Math.min(width, height) * 0.42, 0, Math.PI * 2);
+            ctx.arc((x + right) / 2, (y + bottom) / 2, Math.min(width, height) * 0.495, 0, Math.PI * 2);
             ctx.fill();
           } else if (pattern === 'rounded' && !isFinder && typeof ctx.roundRect === 'function') {
             ctx.beginPath();
