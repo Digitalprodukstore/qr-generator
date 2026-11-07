@@ -13,4 +13,12 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://qrnode.boothpro.my.id/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://qrnode.boothpro.my.id/"/>
   </url>
+  <url><loc>https://qrnode.boothpro.my.id/about.html</loc></url>
+  <url><loc>https://qrnode.boothpro.my.id/contact.html</loc></url>
+  <url><loc>https://qrnode.boothpro.my.id/privacy.html</loc></url>
+  <url><loc>https://qrnode.boothpro.my.id/terms.html</loc></url>
+  <url><loc>https://qrnode.boothpro.my.id/disclaimer.html</loc></url>
+  <url><loc>https://qrnode.boothpro.my.id/faq.html</loc></url>
+  <url><loc>https://qrnode.boothpro.my.id/tutorial.html</loc></url>
+  <url><loc>https://qrnode.boothpro.my.id/use-cases.html</loc></url>
 </urlset>

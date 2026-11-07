@@ -3,7 +3,9 @@ const crypto = require('node:crypto');
 const login = require('../api/admin/login');
 const session = require('../api/admin/session');
 const logout = require('../api/admin/logout');
+const settingsHandler = require('../api/admin/settings');
 const { checkAdminLoginRateLimit, MAX_ATTEMPTS, WINDOW_SECONDS } = require('../api/_adminRateLimit');
+const { fetchRedisJson, REDIS_TIMEOUT_MS } = require('../api/_redisFetch');
 
 const testSecrets = {
   ADMIN_EMAIL: ['admin', 'example.test'].join('@'),
@@ -12,8 +14,41 @@ const testSecrets = {
   ADMIN_SESSION_SECRET: 'x'.repeat(40)
 };
 Object.assign(process.env, testSecrets);
-delete process.env.UPSTASH_REDIS_REST_URL;
-delete process.env.UPSTASH_REDIS_REST_TOKEN;
+process.env.UPSTASH_REDIS_REST_URL = 'https://redis.example.test';
+process.env.UPSTASH_REDIS_REST_TOKEN = 'test-token';
+const redis = new Map();
+const rateCounts = new Map();
+global.fetch = async (url, options = {}) => {
+  const commands = JSON.parse(options.body || 'null');
+  if (String(url).endsWith('/pipeline')) {
+    if (commands[0][0] === 'INCR') {
+      const key = commands[0][1];
+      const count = (rateCounts.get(key) || 0) + 1;
+      rateCounts.set(key, count);
+      return { ok: true, json: async () => [{ result: count }, { result: count === 1 ? 1 : 0 }] };
+    }
+    const results = commands.map(([command, key, value]) => {
+      if (command === 'GET') return { result: redis.get(key) ?? null };
+      if (command === 'SET') { redis.set(key, value); return { result: 'OK' }; }
+      return { error: 'unsupported command' };
+    });
+    return { ok: true, json: async () => results };
+  }
+  if (!Array.isArray(commands)) return { ok: false, json: async () => ({ error: 'invalid command' }) };
+  const [command, key, value] = commands;
+  if (command === 'SET') {
+    redis.set(key, value);
+    return { ok: true, json: async () => ({ result: 'OK' }) };
+  }
+  if (command === 'GET') {
+    return { ok: true, json: async () => ({ result: redis.get(key) ?? null }) };
+  }
+  if (command === 'DEL') {
+    const existed = redis.delete(key);
+    return { ok: true, json: async () => ({ result: existed ? 1 : 0 }) };
+  }
+  return { ok: false, json: async () => ({ error: 'unsupported command' }) };
+};
 
 async function call(handler, method, body = {}, headers = {}) {
   const res = {
@@ -30,6 +65,19 @@ async function test(name, fn) {
   catch (e) { console.error('FAIL:', name, e.message); process.exitCode = 1; }
 }
 (async () => {
+  await test('Redis requests have a bounded timeout and abort the request', async () => {
+    const oldFetch = global.fetch;
+    let signal;
+    global.fetch = async (_url, options) => {
+      signal = options.signal;
+      return new Promise(() => {});
+    };
+    try {
+      await assert.rejects(fetchRedisJson('https://redis.example.test', {}, 20), error => error.code === 'REDIS_TIMEOUT');
+      assert.equal(signal.aborted, true);
+      assert.equal(REDIS_TIMEOUT_MS, 5000);
+    } finally { global.fetch = oldFetch; }
+  });
   await test('login rejects wrong HTTP method', async () => assert.equal((await call(login, 'GET')).statusCode, 405));
   await test('login rejects non-JSON request', async () => assert.equal((await call(login, 'POST', {}, { 'content-type': 'text/plain' })).statusCode, 415));
   await test('login rejects JSONP-like content type', async () => assert.equal((await call(login, 'POST', {}, { 'content-type': 'application/jsonp' })).statusCode, 415));
@@ -71,13 +119,22 @@ async function test(name, fn) {
     try { assert.equal((await call(login, 'POST', {})).statusCode, 503); }
     finally { process.env.ADMIN_SESSION_SECRET = previous; }
   });
-  await test('rate limiter remains inactive without its optional backend configured', async () => {
-    assert.deepEqual(await checkAdminLoginRateLimit({ headers: {} }), { configured: false, limited: false });
+  await test('rate limiter fails closed when backend is not configured', async () => {
+    const oldUrl = process.env.UPSTASH_REDIS_REST_URL;
+    const oldToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+    delete process.env.UPSTASH_REDIS_REST_URL;
+    delete process.env.UPSTASH_REDIS_REST_TOKEN;
+    try { assert.deepEqual(await checkAdminLoginRateLimit({ headers: {} }), { configured: false, error: true }); }
+    finally {
+      process.env.UPSTASH_REDIS_REST_URL = oldUrl;
+      process.env.UPSTASH_REDIS_REST_TOKEN = oldToken;
+    }
   });
   await test('rate limiter fails closed on incomplete backend configuration', async () => {
-    process.env.UPSTASH_REDIS_REST_URL = 'https://example.test';
-    try { assert.deepEqual(await checkAdminLoginRateLimit({ headers: {} }), { configured: true, error: true }); }
-    finally { delete process.env.UPSTASH_REDIS_REST_URL; }
+    const oldToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+    delete process.env.UPSTASH_REDIS_REST_TOKEN;
+    try { assert.deepEqual(await checkAdminLoginRateLimit({ headers: {} }), { configured: false, error: true }); }
+    finally { process.env.UPSTASH_REDIS_REST_TOKEN = oldToken; }
   });
   await test('rate limiter blocks requests beyond the configured threshold', async () => {
     const oldFetch = global.fetch;
@@ -105,6 +162,69 @@ async function test(name, fn) {
       if (oldUrl === undefined) delete process.env.UPSTASH_REDIS_REST_URL; else process.env.UPSTASH_REDIS_REST_URL = oldUrl;
       if (oldToken === undefined) delete process.env.UPSTASH_REDIS_REST_TOKEN; else process.env.UPSTASH_REDIS_REST_TOKEN = oldToken;
     }
+  });
+  function validAdminCookie() {
+    const expiry = String(Math.floor(Date.now() / 1000) + 3600);
+    const sessionId = 'a'.repeat(64);
+    const signature = crypto.createHmac('sha256', process.env.ADMIN_SESSION_SECRET)
+      .update(expiry + '.' + sessionId).digest('base64url');
+    redis.set('qr-admin-session:' + sessionId, '1');
+    return 'qr_admin_session=' + expiry + '.' + sessionId + '.' + signature;
+  }
+  const validSettings = {
+    ad: { adMode: 'sponsor', autoAds: false, pubId: '', slotId: '', sponsorName: 'Sponsor', sponsorLink: 'https://example.org', sponsorTagline: 'Info' },
+    enabledTypes: Object.fromEntries(['url','text','wifi','wa','email','tel','sms','vcard','review','social','menu','geo','pdf','multilink','form','event','invitation','app'].map(id => [id, true]))
+  };
+  await test('public settings GET returns defaults without an Admin session', async () => {
+    const r = await call(settingsHandler, 'GET', {}, { host: 'qr.example.test' });
+    assert.equal(r.statusCode, 200);
+    assert.equal(r.json().configured, false);
+    assert.equal(r.json().settings.enabledTypes.url, true);
+  });
+  await test('settings PUT rejects unauthenticated requests', async () => {
+    const r = await call(settingsHandler, 'PUT', validSettings, {
+      host: 'qr.example.test', origin: 'https://qr.example.test'
+    });
+    assert.equal(r.statusCode, 401);
+  });
+  await test('settings PUT rejects cross-origin requests even with a valid session', async () => {
+    const r = await call(settingsHandler, 'PUT', validSettings, {
+      host: 'qr.example.test', origin: 'https://attacker.example', cookie: validAdminCookie()
+    });
+    assert.equal(r.statusCode, 403);
+  });
+  await test('settings PUT rejects requests with a missing Origin header', async () => {
+    const r = await call(settingsHandler, 'PUT', validSettings, {
+      host: 'qr.example.test', cookie: validAdminCookie()
+    });
+    assert.equal(r.statusCode, 403);
+  });
+  await test('settings PUT accepts IPv4 localhost same-origin requests', async () => {
+    const r = await call(settingsHandler, 'PUT', validSettings, {
+      host: '127.0.0.1:3000', origin: 'http://127.0.0.1:3000', cookie: validAdminCookie()
+    });
+    assert.equal(r.statusCode, 200);
+  });
+  await test('settings PUT rejects unsafe sponsor URL schemes', async () => {
+    const payload = { ...validSettings, ad: { ...validSettings.ad, sponsorLink: 'javascript:alert(1)' } };
+    const r = await call(settingsHandler, 'PUT', payload, {
+      host: 'qr.example.test', origin: 'https://qr.example.test', cookie: validAdminCookie()
+    });
+    assert.equal(r.statusCode, 400);
+  });
+  await test('settings PUT accepts same-origin authenticated requests and persists settings', async () => {
+    const r = await call(settingsHandler, 'PUT', validSettings, {
+      host: 'qr.example.test', origin: 'https://qr.example.test', cookie: validAdminCookie()
+    });
+    assert.equal(r.statusCode, 200);
+    assert.equal(r.json().saved, true);
+    assert.equal(r.json().settings.enabledTypes.url, true);
+  });
+  await test('settings PUT rejects malformed settings after authentication', async () => {
+    const r = await call(settingsHandler, 'PUT', { ad: {}, enabledTypes: {} }, {
+      host: 'qr.example.test', origin: 'https://qr.example.test', cookie: validAdminCookie()
+    });
+    assert.equal(r.statusCode, 400);
   });
   if (process.exitCode) process.exit(process.exitCode);
 })().catch(error => { console.error(error); process.exit(1); });
