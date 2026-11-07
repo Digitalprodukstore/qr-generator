@@ -21,6 +21,7 @@ assert(moduleSource.includes('qrstudio.projects'), 'project storage namespace ex
 assert(moduleSource.includes('function saveProject()'), 'save project action exists');
 assert(moduleSource.includes('function loadProject('), 'load project action exists');
 assert(moduleSource.includes('function deleteProject('), 'delete project action exists');
+assert(moduleSource.includes('contrast(c1,bg)'), 'contrast ratio is calculated from foreground/background');
 
 // These controls are injected at runtime, so validate the DOM construction source
 // rather than expecting the IDs to exist in the static index.html.
