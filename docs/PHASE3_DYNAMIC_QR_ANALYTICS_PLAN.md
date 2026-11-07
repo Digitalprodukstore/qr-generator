@@ -177,3 +177,9 @@ Implementation consequence:
 Remaining gate:
 - Choose whether Dynamic QR is single-Admin-owned or requires customer accounts/workspaces.
 - Select and approve a dedicated Preview PostgreSQL provider before implementing persistence and redirect resolution.
+
+
+Validation update (2026-11-07):
+- Executed `node scripts/check-phase3-validation.js` locally against the committed helper logic: 8/8 validation groups passed.
+- Vercel Preview for commit `c7ce5d40f96882cbe7a1d5a570fd67db1e635fff` reached READY and the Vercel commit status is SUCCESS.
+- GitHub Actions execution for the latest commit has not been independently confirmed; do not treat the workflow as passed until its run result is visible.
