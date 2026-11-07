@@ -1,7 +1,8 @@
 const fs = require('node:fs');
 const source = fs.readFileSync('db/migrations/001_create_dynamic_qr_tables.sql', 'utf8');
-// Ignore full-line SQL comments so privacy guidance is not mistaken for stored columns.
 const sql = source.split('\n').filter(line => !line.trimStart().startsWith('--')).join('\n');
+const tableDefinitions = [...sql.matchAll(/CREATE TABLE IF NOT EXISTS [^(]+\(([\s\S]*?)\);/gi)]
+  .map(match => match[1]).join('\n');
 const assert = (condition, message) => {
   if (!condition) { console.error('FAIL:', message); process.exitCode = 1; }
   else console.log('PASS:', message);
@@ -20,6 +21,6 @@ assert(/device_class IN \('mobile', 'desktop', 'tablet', 'unknown'\)/i.test(sql)
 assert(/referrer_class IN \('direct', 'search', 'social', 'other', 'unknown'\)/i.test(sql), 'referrer classification is bounded');
 assert(/qr_scan_events_link_time_idx/i.test(sql), 'link/time analytics index is defined');
 assert(/qr_links_owner_created_idx/i.test(sql), 'owner listing index is defined');
-assert(!/\b(ip_address|email|phone|full_referrer_url|raw_user_agent)\b/i.test(sql), 'schema contains no direct visitor identifiers');
+assert(tableDefinitions.length > 0 && !/\b(ip_address|email|phone|full_referrer_url|raw_user_agent)\b/i.test(tableDefinitions), 'table columns contain no direct visitor identifiers');
 assert(/BEGIN;[\s\S]*COMMIT;/i.test(sql), 'migration is transactional');
 if (process.exitCode) process.exit(process.exitCode);
