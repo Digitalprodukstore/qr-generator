@@ -138,3 +138,22 @@ Indexes:
 ## 9. Acceptance rule
 
 Phase 3 is complete only when a QR printed from Preview continues to resolve after a deployment, its destination can be changed without reprinting, analytics are persisted server-side, and authorization/security tests pass. A static QR, a localStorage-only demo, or a UI mockup does not satisfy acceptance.
+
+
+## 10. Phase 3A preflight work (2026-11-07)
+
+Prepared on the Preview feature branch only:
+- `db/migrations/001_create_dynamic_qr_tables.sql` defines `qr_links` and privacy-minimized `qr_scan_events`, with slug, URL scheme, lifecycle, expiry, foreign-key, and analytics indexes.
+- `scripts/check-phase3-schema.js` statically checks the migration structure and confirms visitor-identifying columns are not present.
+- `.github/workflows/qr-generator-phase3-schema.yml` runs the schema guard on feature-branch pushes and pull requests.
+
+Validation:
+- The schema guard was executed locally with Node.js and all 15 assertions passed.
+- Vercel Preview deployment for commit `2358a58ac2580e7df295cf975f20ccf27f0f7ab4` reached READY.
+- The migration has NOT been applied to any database.
+- No database, environment variable, credential, Production deployment, or merge was created/changed.
+
+Still blocked:
+- Owner approval and provisioning of a dedicated Preview PostgreSQL provider.
+- Database-level migration execution and integration tests against a real Preview database.
+- API authentication/ownership model must be selected before implementing QR-link CRUD.
