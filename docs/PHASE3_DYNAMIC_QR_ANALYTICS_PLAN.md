@@ -183,3 +183,9 @@ Validation update (2026-11-07):
 - Executed `node scripts/check-phase3-validation.js` locally against the committed helper logic: 8/8 validation groups passed.
 - Vercel Preview for commit `c7ce5d40f96882cbe7a1d5a570fd67db1e635fff` reached READY and the Vercel commit status is SUCCESS.
 - GitHub Actions execution for the latest commit has not been independently confirmed; do not treat the workflow as passed until its run result is visible.
+
+
+Validation update (2026-11-08):
+- The extracted shared same-origin helper passed 7/7 test groups in a local Node.js run.
+- The Admin settings endpoint now imports the shared helper; its existing PUT path still checks Origin/Host before validating the Admin session.
+- Preview deployment and GitHub Actions for the security refactor must be checked separately; local tests do not establish remote CI status.
