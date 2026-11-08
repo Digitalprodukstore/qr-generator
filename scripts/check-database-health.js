@@ -16,7 +16,7 @@ Module._load = function(request, parent, isMain) {
         connectionUsed = connectionString;
         return async (strings, ...values) => {
           const statement = strings.reduce((out, part, index) => out + part + (values[index] ?? ''), '');
-          queryCalls.push(statement.replace(/\s+/g, ' ').trim());
+          queryCalls.push(statement.replace(/\\s+/g, ' ').trim());
           if (databaseRows instanceof Error) throw databaseRows;
           return databaseRows;
         };
@@ -61,7 +61,7 @@ async function run() {
   async function test(name, fn) {
     await fn();
     passed += 1;
-    process.stdout.write('PASS ' + name + '\n');
+    process.stdout.write('PASS ' + name + '\\n');
   }
 
   const originalDatabaseUrl = process.env.DATABASE_URL;
@@ -113,6 +113,16 @@ async function run() {
       assert.equal(JSON.stringify(result.payload).includes('neon.tech'), false);
     });
 
+    await test('rejects empty or malformed health-query results', async () => {
+      for (const invalidRows of [[], [{}], [{ health_check: 0 }], null]) {
+        databaseRows = invalidRows;
+        const result = await invoke();
+        assert.equal(result.statusCode, 503);
+        assert.equal(result.payload.connected, false);
+        assert.equal(JSON.stringify(result.payload).includes('health_check'), false);
+      }
+    });
+
     await test('returns a generic error when the database query fails', async () => {
       databaseRows = new Error('sensitive database details');
       const result = await invoke();
@@ -125,7 +135,7 @@ async function run() {
     else process.env.DATABASE_URL = originalDatabaseUrl;
   }
 
-  process.stdout.write('\n' + passed + '/6 database health test groups passed.\n');
+  process.stdout.write('\\n' + passed + '/7 database health test groups passed.\\n');
 }
 
 run().catch(error => {
