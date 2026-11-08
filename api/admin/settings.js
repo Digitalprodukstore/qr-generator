@@ -1,5 +1,6 @@
 const { sendJson, hasValidSession } = require('../_adminAuth');
 const { fetchRedisJson } = require('../_redisFetch');
+const { isSameOriginRequest } = require('../_sameOrigin');
 
 const KEY = 'qr-studio-pro:global-settings:v1';
 const DEFAULT_SETTINGS = Object.freeze({
@@ -70,22 +71,7 @@ function cleanSettings(input) {
 function publicDefaults() {
   return JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
 }
-function isSameOriginRequest(req) {
-  const origin = req.headers && req.headers.origin;
-  const host = req.headers && req.headers.host;
-  if (typeof origin !== 'string' || !origin || typeof host !== 'string' || !host) return false;
-  try {
-    const parsedOrigin = new URL(origin);
-    if (parsedOrigin.username || parsedOrigin.password || parsedOrigin.pathname !== '/' || parsedOrigin.search || parsedOrigin.hash) return false;
-    const forwardedProto = String(req.headers['x-forwarded-proto'] || '').split(',')[0].trim().toLowerCase();
-    const protocol = forwardedProto || (/^(localhost|127\.0\.0\.1)(:\d+)?$/i.test(host) ? 'http' : 'https');
-    if (protocol !== 'https' && protocol !== 'http') return false;
-    const expectedOrigin = new URL(protocol + '://' + host).origin;
-    return parsedOrigin.origin === expectedOrigin;
-  } catch {
-    return false;
-  }
-}
+
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store, max-age=0');
   res.setHeader('Vary', 'Cookie');
