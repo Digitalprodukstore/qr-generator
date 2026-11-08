@@ -16,7 +16,7 @@ Module._load = function(request, parent, isMain) {
         connectionUsed = connectionString;
         return async (strings, ...values) => {
           const statement = strings.reduce((out, part, index) => out + part + (values[index] ?? ''), '');
-          queryCalls.push(statement.replace(/\\s+/g, ' ').trim());
+          queryCalls.push(statement.replace(/\s+/g, ' ').trim());
           if (databaseRows instanceof Error) throw databaseRows;
           return databaseRows;
         };
@@ -61,7 +61,7 @@ async function run() {
   async function test(name, fn) {
     await fn();
     passed += 1;
-    process.stdout.write('PASS ' + name + '\\n');
+    process.stdout.write('PASS ' + name + '\n');
   }
 
   const originalDatabaseUrl = process.env.DATABASE_URL;
@@ -125,7 +125,7 @@ async function run() {
     else process.env.DATABASE_URL = originalDatabaseUrl;
   }
 
-  process.stdout.write('\\n' + passed + '/6 database health test groups passed.\\n');
+  process.stdout.write('\n' + passed + '/6 database health test groups passed.\n');
 }
 
 run().catch(error => {
