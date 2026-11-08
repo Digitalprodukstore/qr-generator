@@ -21,3 +21,5 @@ jobs:
         run: node scripts/check-phase3-schema.js
       - name: Validate Dynamic QR input and slug helpers
         run: node scripts/check-phase3-validation.js
+      - name: Validate same-origin and CSRF guard
+        run: node scripts/check-same-origin.js
