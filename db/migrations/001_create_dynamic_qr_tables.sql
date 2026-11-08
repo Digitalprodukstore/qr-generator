@@ -6,7 +6,6 @@ BEGIN;
 
 CREATE TABLE IF NOT EXISTS qr_links (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  owner_id UUID NULL,
   slug VARCHAR(64) NOT NULL UNIQUE,
   title VARCHAR(120) NULL,
   destination_url VARCHAR(2048) NOT NULL,
@@ -30,8 +29,8 @@ CREATE TABLE IF NOT EXISTS qr_links (
            (status <> 'deleted' AND deleted_at IS NULL))
 );
 
-CREATE INDEX IF NOT EXISTS qr_links_owner_created_idx
-  ON qr_links (owner_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS qr_links_created_idx
+  ON qr_links (created_at DESC);
 CREATE INDEX IF NOT EXISTS qr_links_status_expiry_idx
   ON qr_links (status, expires_at);
 
