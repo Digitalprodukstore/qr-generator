@@ -24,14 +24,11 @@ Deliver a real, durable Dynamic QR service:
 
 A client-only implementation or localStorage counter is not Dynamic QR and must not be labelled as such.
 
-## 3. Required infrastructure decision (blocking)
+## 3. Infrastructure decision
 
-Before implementing production-capable CRUD and redirect behavior, choose and provision one persistent PostgreSQL-compatible database for Preview. Candidate options:
-- Supabase Postgres (reuse only if the owner explicitly selects the existing Supabase project for this QR product).
-- Neon Postgres.
-- Another managed PostgreSQL service with TLS, backups, and connection pooling.
+**Selected: Neon Postgres for the QR Generator Preview environment.** The owner approved Neon on 2026-11-08. Provisioning and account authorization are still pending; no Neon database or credentials have been created/connected by this change.
 
-Do not assume that BoothPro's Supabase project, credentials, or data should be reused for QR Studio Pro. Do not copy database credentials into Git, browser JavaScript, ZIP files, issues, or chat. Use Preview-only environment variables first. Production credentials and domain remain untouched until explicit approval.
+Use a dedicated Neon project/database for QR Generator, with TLS and pooled serverless connections. Do not reuse BoothPro's Supabase project, credentials, or data. Do not copy database credentials into Git, browser JavaScript, ZIP files, issues, or chat. Use Preview-only environment variables first. Production credentials and domain remain untouched until separate explicit approval.
 
 Required server environment configuration after provider selection:
 - `DATABASE_URL` (server-only pooled connection string).
@@ -43,7 +40,7 @@ Required server environment configuration after provider selection:
 
 ### `qr_links`
 - `id` UUID primary key.
-- `owner_id` nullable until account/workspace ownership is implemented.
+- No `owner_id`: this product uses one primary Admin and does not support customer accounts/workspaces.
 - `slug` unique, random, URL-safe identifier (at least 128 bits of entropy; never sequential).
 - `title` nullable, bounded length.
 - `destination_url` validated HTTP/HTTPS URL.
@@ -64,21 +61,21 @@ Required server environment configuration after provider selection:
 
 Indexes:
 - unique index on `qr_links.slug`.
-- index on `qr_links.owner_id, created_at`.
+- index on `qr_links.created_at` for the single-Admin dashboard listing.
 - index on `qr_scan_events.qr_link_id, occurred_at`.
 - time partitioning/retention can be added only after measured volume justifies it.
 
 ## 5. API contract
 
 ### Create link — `POST /api/qr-links`
-- Requires authenticated owner session once account/workspace auth is selected.
+- Requires the existing authenticated primary Admin session; reject requests without a valid server-side Admin session.
 - Accepts `destinationUrl`, optional `title`, optional `expiresAt`.
 - Validates URL scheme strictly: HTTP/HTTPS only; reject credentials in URLs, malformed hostnames, control characters, and oversized fields.
 - Creates a cryptographically random slug and persists it.
 - Returns the short URL, status, and timestamps. Never returns database internals.
 
 ### Update link — `PATCH /api/qr-links/:id`
-- Requires owner authorization; ownership check occurs in the database query.
+- Requires the existing authenticated primary Admin session. No client-supplied owner ID or customer ownership check exists.
 - Supports destination, title, status, and expiry changes.
 - Uses optimistic concurrency or updated-at checks to avoid silent overwrites.
 - Never allows a user to change the slug after printing.
@@ -93,7 +90,7 @@ Indexes:
 - Apply per-link and per-IP abuse controls without storing raw IPs in analytics.
 
 ### Analytics — `GET /api/qr-links/:id/analytics`
-- Requires authenticated owner and ownership verification.
+- Requires the existing authenticated primary Admin session.
 - Supports bounded date ranges and pagination/aggregation.
 - Returns aggregate counts, not raw visitor records.
 - Enforce query limits and indexes to prevent expensive unbounded scans.
@@ -118,7 +115,7 @@ Indexes:
 3. Unknown, malformed, paused, expired, and deleted slugs return the correct safe response.
 4. Redirect destination cannot be overridden using query parameters or headers.
 5. Reject `javascript:`, `data:`, `file:`, protocol-relative, malformed, credential-bearing, and control-character URLs.
-6. User A cannot read, update, or delete User B's QR or analytics.
+6. Requests without a valid Admin session cannot read, create, update, or delete QR links or analytics.
 7. SQL injection payloads are treated as data.
 8. Rate limits and CSRF/origin protections fail closed.
 9. Analytics aggregation is correct across time zones and date boundaries.
@@ -128,7 +125,7 @@ Indexes:
 
 ## 8. Rollout sequence
 
-- **3A — Infrastructure:** owner selects database provider; provision Preview database and secrets; apply migration.
+- **3A — Infrastructure:** Neon selected by owner; complete Neon account authorization/provision a dedicated Preview database, add Preview-only secrets, then apply migration.
 - **3B — Server API:** implement repository layer, CRUD, redirect resolver, validation, auth, rate limits, and audit trail.
 - **3C — Analytics:** implement privacy-minimized event collection and aggregate queries.
 - **3D — UI:** add Dynamic QR controls and analytics dashboard only after API tests pass.
@@ -175,8 +172,8 @@ Implementation consequence:
 - Extended the Phase 3 schema workflow to run the new validation suite. No API route or redirect endpoint is exposed by this change.
 
 Remaining gate:
-- Choose whether Dynamic QR is single-Admin-owned or requires customer accounts/workspaces.
-- Select and approve a dedicated Preview PostgreSQL provider before implementing persistence and redirect resolution.
+- Product ownership model and provider were explicitly decided on 2026-11-08: one primary Admin; Neon Postgres for Preview.
+- Remaining: complete Neon provisioning/authorization and configure Preview-only connection secrets before implementing persistence and redirect resolution.
 
 
 Validation update (2026-11-07):
@@ -189,3 +186,14 @@ Validation update (2026-11-08):
 - The extracted shared same-origin helper passed 7/7 test groups in a local Node.js run.
 - The Admin settings endpoint now imports the shared helper; its existing PUT path still checks Origin/Host before validating the Admin session.
 - Preview deployment and GitHub Actions for the security refactor must be checked separately; local tests do not establish remote CI status.
+
+
+## 12. Owner decisions confirmed (2026-11-08)
+
+- Ownership: **single primary Admin only**. No customer login, tenant/workspace model, or per-customer `owner_id` is in scope.
+- Authorization: all Dynamic QR management and analytics endpoints require the existing valid server-side Admin session. Requests without that session fail closed.
+- Database: **Neon Postgres approved for Preview**. This approval authorizes using Neon as the selected provider, but does not imply that a Neon account/project has been provisioned or that credentials are available.
+- Production remains locked: no Production database, environment variables, deployment, custom domain, or release action is authorized.
+- CI verification for commit `70c18945113c5554b29ea33d74561c8a291e6df2`: Phase 3 schema/security workflow run `42434158811` completed SUCCESS; Phase 2 premium static checks run `42434158805` completed SUCCESS. Vercel Preview status for the same commit is SUCCESS.
+
+Next implementation gate: provision the dedicated Neon Preview database through the authorized Vercel/Neon account flow. Only after the real Preview connection variables are present should the migration be applied and database-backed integration tests begin.
