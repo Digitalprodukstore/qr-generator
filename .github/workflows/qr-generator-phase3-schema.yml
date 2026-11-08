@@ -23,3 +23,5 @@ jobs:
         run: node scripts/check-phase3-validation.js
       - name: Validate same-origin and CSRF guard
         run: node scripts/check-same-origin.js
+      - name: Validate Admin-only read-only Neon health endpoint
+        run: node scripts/check-database-health.js
