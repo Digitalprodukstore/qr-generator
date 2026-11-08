@@ -20,7 +20,8 @@ assert(/country_code ~ '\^\[A-Z\]\{2\}\$'/i.test(sql), 'country data is limited 
 assert(/device_class IN \('mobile', 'desktop', 'tablet', 'unknown'\)/i.test(sql), 'device classification is bounded');
 assert(/referrer_class IN \('direct', 'search', 'social', 'other', 'unknown'\)/i.test(sql), 'referrer classification is bounded');
 assert(/qr_scan_events_link_time_idx/i.test(sql), 'link/time analytics index is defined');
-assert(/qr_links_owner_created_idx/i.test(sql), 'owner listing index is defined');
+assert(/qr_links_created_idx/i.test(sql), 'single-admin QR listing index is defined');
+assert(!/\\bowner_id\\b/i.test(tableDefinitions), 'single-primary-Admin schema has no per-owner identifier');
 assert(tableDefinitions.length > 0 && !/\b(ip_address|email|phone|full_referrer_url|raw_user_agent)\b/i.test(tableDefinitions), 'table columns contain no direct visitor identifiers');
 assert(/BEGIN;[\s\S]*COMMIT;/i.test(sql), 'migration is transactional');
 if (process.exitCode) process.exit(process.exitCode);
