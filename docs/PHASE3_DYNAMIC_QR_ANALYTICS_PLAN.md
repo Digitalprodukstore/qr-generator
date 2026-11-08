@@ -197,3 +197,10 @@ Validation update (2026-11-08):
 - CI verification for commit `70c18945113c5554b29ea33d74561c8a291e6df2`: Phase 3 schema/security workflow run `42434158811` completed SUCCESS; Phase 2 premium static checks run `42434158805` completed SUCCESS. Vercel Preview status for the same commit is SUCCESS.
 
 Next implementation gate: provision the dedicated Neon Preview database through the authorized Vercel/Neon account flow. Only after the real Preview connection variables are present should the migration be applied and database-backed integration tests begin.
+
+
+## 13. Full-ownership sale readiness (2026-11-08)
+
+The owner intends to sell QR Generator in the future as a full-ownership handover. The runtime product remains single-primary-Admin; multi-user/workspace functionality is not required. A future buyer must be able to establish new Admin credentials and take control of all agreed assets, while the seller's sessions and credentials are revoked/rotated. The complete asset inventory, secure handover workflow, data portability, exclusions, and acceptance criteria are documented in [`docs/OWNERSHIP_TRANSFER_PLAN.md`](./OWNERSHIP_TRANSFER_PLAN.md).
+
+This is a documented future requirement only. No ownership-transfer endpoint, credential reset UI, export/import workflow, or provider-account transfer has been implemented. The current Admin credentials remain environment-variable based, so a real handover must include a coordinated provider-level secret rotation and transfer/migration of GitHub, Vercel, domain, Neon, Upstash, and other included services. Production remains untouched.
