@@ -216,3 +216,15 @@ Next implementation gate: provision the dedicated Neon Preview database through 
 The owner intends to sell QR Generator in the future as a full-ownership handover. The runtime product remains single-primary-Admin; multi-user/workspace functionality is not required. A future buyer must be able to establish new Admin credentials and take control of all agreed assets, while the seller's sessions and credentials are revoked/rotated. The complete asset inventory, secure handover workflow, data portability, exclusions, and acceptance criteria are documented in [`docs/OWNERSHIP_TRANSFER_PLAN.md`](./OWNERSHIP_TRANSFER_PLAN.md).
 
 This is a documented future requirement only. No ownership-transfer endpoint, credential reset UI, export/import workflow, or provider-account transfer has been implemented. The current Admin credentials remain environment-variable based, so a real handover must include a coordinated provider-level secret rotation and transfer/migration of GitHub, Vercel, domain, Neon, Upstash, and other included services. Production remains untouched.
+
+
+## 14. Current implementation status (2026-11-08, after Neon probe tests)
+
+- Added `api/admin/database-health.js`: Admin-session-only, GET-only, reads only `DATABASE_URL`, verifies a Neon hostname, and executes only `SELECT 1 AS health_check`. It does not write data or run migrations.
+- Added `scripts/check-database-health.js` and wired it into the Phase 3 schema/security workflow. The six mocked test groups cover method restriction, Admin-session enforcement, missing configuration, non-Neon host rejection, the exact read-only query and credential-safe response, and sanitized database errors.
+- GitHub Actions Phase 3 schema/security workflow run `42468356952` completed SUCCESS; all seven workflow steps, including the new endpoint test, passed. Phase 2 workflow run `42468356957` also completed SUCCESS.
+- Vercel Preview deployment for commit `16987b5b8a29f7c656fb25bdce8dffb99125f025` reached READY: `https://qr-generator-5rb8l22el-risakil.vercel.app`. This is a Preview deployment only.
+- **Live Neon connectivity is still NOT VERIFIED.** Automated endpoint tests use a mocked Neon client; they do not connect to the real database. A deployment-protection redirect prevented the external verification fetch from reaching the function, and no authenticated Admin browser session was available to call it.
+- Next gate: while signed in to the Preview Admin dashboard, call `GET /api/admin/database-health` from the same Preview origin and confirm `connected: true`. Do not expose or paste `DATABASE_URL` into chat or client-side code.
+- The SQL migration remains unapplied. Do not create tables or begin Dynamic QR persistence until the real read-only query succeeds and the owner separately authorizes applying the migration.
+- Production environment variables, Production deployment, custom domain, locked baseline, and PR #5 remain untouched.
