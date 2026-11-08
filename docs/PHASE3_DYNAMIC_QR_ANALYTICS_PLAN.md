@@ -40,6 +40,14 @@ Required server environment configuration after provider selection:
 - A cryptographically random `QR_LINK_HASH_SECRET` (server-only, at least 32 bytes) if identifiers or event data require keyed hashing.
 - Optional analytics/geolocation provider keys only if the owner approves an external provider; do not make them required for core redirects.
 
+## 3A. Preview connectivity probe (read-only)
+
+- Added `@neondatabase/serverless` as a server-side dependency and `GET /api/admin/database-health` as an Admin-only connectivity probe.
+- The endpoint requires the existing valid Admin session, reads only `DATABASE_URL`, checks that its protocol is PostgreSQL and its host is under `.neon.tech`, then executes only `SELECT 1 AS health_check`.
+- The response contains only connection success/failure and elapsed milliseconds; it never returns the connection string, host, database name, role, or query error details.
+- The endpoint is read-only. It does not inspect or use `STORAGE_DATABASE_URL`, run migrations, create tables, or write records.
+- The endpoint has not yet been invoked successfully against Neon. A deployment build and authenticated runtime check are still required before declaring connectivity verified.
+
 ## 4. Proposed data model
 
 ### `qr_links`
