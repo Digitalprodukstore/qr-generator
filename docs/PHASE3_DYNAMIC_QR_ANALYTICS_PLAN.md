@@ -26,7 +26,11 @@ A client-only implementation or localStorage counter is not Dynamic QR and must 
 
 ## 3. Infrastructure decision
 
-**Selected: Neon Postgres for the QR Generator Preview environment.** The owner approved Neon on 2026-11-08. Provisioning and account authorization are still pending; no Neon database or credentials have been created/connected by this change.
+**Selected: Neon Postgres for the QR Generator Preview environment.** The owner approved Neon on 2026-11-08. Vercel project integration currently exposes two Neon stores; the owner designated `neon-champagne-door` as the primary store. Its 18 generated connection environment variables were verified as Preview-only on 2026-11-08. The second store (`neon-claret-cushion`) remains present and was not modified; its `STORAGE_` variables remain untouched and must not be used by this application.
+
+**Connection status: NOT YET VERIFIED FROM APPLICATION CODE.** Repository inspection on 2026-11-08 found no root `package.json`, no `DATABASE_URL` references, no Postgres/Neon driver dependency, and no Dynamic QR API or resolver. The Vercel integration and Preview-scoped variables therefore do not prove that application code can query Neon. Do not apply the migration until a server-side read-only connectivity check succeeds and the owner separately authorizes the schema write.
+
+Operational evidence: Preview homepage and `GET /api/admin/settings` returned HTTP 200 on 2026-11-08. The latter confirms the existing Upstash-backed Admin settings path only; it is not a Neon connectivity test.
 
 Use a dedicated Neon project/database for QR Generator, with TLS and pooled serverless connections. Do not reuse BoothPro's Supabase project, credentials, or data. Do not copy database credentials into Git, browser JavaScript, ZIP files, issues, or chat. Use Preview-only environment variables first. Production credentials and domain remain untouched until separate explicit approval.
 
