@@ -228,3 +228,15 @@ This is a documented future requirement only. No ownership-transfer endpoint, cr
 - Next gate: while signed in to the Preview Admin dashboard, call `GET /api/admin/database-health` from the same Preview origin and confirm `connected: true`. Do not expose or paste `DATABASE_URL` into chat or client-side code.
 - The SQL migration remains unapplied. Do not create tables or begin Dynamic QR persistence until the real read-only query succeeds and the owner separately authorizes applying the migration.
 - Production environment variables, Production deployment, custom domain, locked baseline, and PR #5 remain untouched.
+
+
+## 15. Validation update (2026-11-09)
+
+- Expanded `scripts/check-database-health.js` from six to seven mocked test groups. The additional group rejects empty, malformed, zero-valued, and null query results; a malformed result must never be reported as a successful connection.
+- GitHub Actions Phase 2 run `42494902916` completed SUCCESS. Phase 3 schema/security run `42494902923` completed SUCCESS; its seven workflow steps passed, including the Admin-only read-only Neon probe test.
+- Preview deployment for commit `b62d0b618da6a2a4978b3a6dd02f873b879c1078` initially encountered a Vercel resource-provisioning timeout. A redeployment of the same commit completed READY at `https://qr-generator-raa06f5ed-risakil.vercel.app`. Build logs confirm the intended branch and commit were cloned, dependencies installed, build completed, and outputs deployed.
+- This is a Preview deployment; no Production target, promotion, merge, or Production environment change was performed.
+- Attempted protected deployment fetch could not pass Vercel deployment authentication. Therefore the application endpoint has not been verified with an authenticated Admin browser session and **live Neon connectivity remains NOT VERIFIED**.
+- The endpoint implementation now also validates that the query returns an array containing `health_check = 1`; invalid results return a generic 503 response.
+- The SQL migration remains unapplied. Dynamic QR persistence, CRUD, resolver, and analytics remain gated on (1) a successful real read-only Neon health check and (2) separate explicit owner authorization to apply the migration.
+- PR #5 remains Draft. The locked baseline, Production deployment, custom domain, and Production environment variables remain untouched.
