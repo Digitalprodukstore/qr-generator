@@ -111,7 +111,7 @@ Status: **PREPARATION COMPLETE; REAL LIVE NEON CONNECTION IS NOT VERIFIED.**
 
 ## 4. Progress estimate
 
-**Estimated overall completion: approximately 70% (reasonable range 68–72%).**
+**Estimated overall completion: approximately 73% (reasonable range 70–75%).**
 
 This is a weighted engineering-readiness estimate, not a percentage of code lines:
 - Static QR core and user-facing generator: 100% of this module, weighted 45%.
@@ -122,7 +122,7 @@ This is a weighted engineering-readiness estimate, not a percentage of code line
 - Analytics: approximately 0%, weighted 5%.
 - Final public/commercial QA and release readiness: approximately 40%, weighted 3%.
 
-Recalculate this estimate only when acceptance evidence changes. Do not call the product 100% merely because CI is green or Vercel reports READY.
+Weighted subtotal: 45 + 13.5 + 8 + 5 + 0.6 + 0 + 1.2 = 73.3%, rounded to approximately 73%. Recalculate this estimate only when acceptance evidence changes. Do not call the product 100% merely because CI is green or Vercel reports READY.
 
 ## 5. Strict implementation sequence
 
@@ -222,3 +222,14 @@ Your goal is to bring the product to verified 100% public/commercial readiness w
 
 ### Definition of done
 Do not report 100% until every acceptance criterion in Section 6 is PASS with evidence and the owner has accepted the Preview. A green build alone is not completion. Production release remains a separate owner-controlled action.
+
+
+## 8. Update after audit document commit (2026-11-10)
+
+- Master audit/megaprompt committed as `cfb4f6e4dfc5f416a9a7c2489f96cce142e1f379` on the Preview feature branch.
+- Vercel created a new Preview deployment for that exact commit: `https://qr-generator-lbnuz83d4-risakil.vercel.app`, state READY.
+- GitHub Phase 2 run `42750670302` completed its `premium-static-checks` job successfully.
+- GitHub Phase 3 run `42750670341` completed its `schema-static-guard` job successfully, including migration safety, Dynamic QR validation, same-origin/CSRF, and mocked Admin-only Neon health endpoint checks.
+- The Preview homepage returned HTTP 200 through the deployment fetch route. This confirms the deployed static page can be fetched through the authorized Preview access mechanism; it does not by itself prove anonymous public access for all testers.
+- The live database health endpoint remains blocked by Vercel deployment authentication when fetched without an authenticated Admin browser session. Real Neon connectivity remains NOT VERIFIED.
+- No application feature code was changed in this documentation commit. No migration was applied, no Production target was deployed, and PR #5 remains Draft.
