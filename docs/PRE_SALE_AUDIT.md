@@ -17,9 +17,9 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 
 - PR #5 documents the 18-category Static QR feature set, exports, customization, bilingual UI, Admin/global settings, public information pages and previous QA.
 - `package.json` declares `@neondatabase/serverless` at `^1.0.2`; the application has Vercel serverless API architecture.
-- Fresh GitHub Actions on branch HEAD `3ab42bf3d7431816927909d53d42f6530c5e0f43` passed the QR Generator checks (run 43745119519), Phase 2 checks (run 43745121826), and Phase 3 schema guard (run 43745121798).
+- Fresh GitHub Actions on branch HEAD `e0462fc207a2f3ce5fe82a401507f47fe41436b1` passed the QR Generator checks (run 43745503176), Phase 2 checks (run 43745505591), and Phase 3 schema guard (run 43745505589).
 - Prior CI evidence and owner-reported manual QA are documented in PR #5 and the master audit. They are not fresh live QA performed in this audit session.
-- Latest Vercel Preview deployment `dpl_ECw1iJH5AJaDmRJXDzpZokbG3MHR` is READY for the exact branch HEAD; anonymous access for intended buyers/testers is still not conclusively established.
+- Latest Vercel Preview deployment `dpl_Hfz6cxaC7BXVand9VLjQh6sRLqnb` is READY for the exact branch HEAD; anonymous access for intended buyers/testers is still not conclusively established.
 - The live Admin-authenticated Neon health probe has not been verified; the unauthenticated request was blocked by deployment protection.
 - Dynamic QR migration is present but unapplied; Dynamic QR persistence/resolver/analytics are not complete.
 
