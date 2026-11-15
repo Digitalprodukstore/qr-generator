@@ -87,14 +87,19 @@ jobs:
 
   browser-qr-scan:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Install browser test dependencies
-        run: |
-          npm install --no-save playwright jsqr pngjs http-server
+      - name: Generate deterministic dependency lockfile
+        run: npm install --package-lock-only --ignore-scripts
+      - name: Install browser and build dependencies
+        run: npm install --no-save playwright jsqr pngjs http-server
+      - name: Compile local Tailwind stylesheet
+        run: npm run build:css
           npx playwright install --with-deps chromium
       - name: Serve page
         run: |
@@ -366,6 +371,17 @@ jobs:
           })().catch(error => { console.error(error); process.exit(1); });
           NODE
 
+
+      - name: Commit generated CSS and dependency lockfile to the development branch
+        if: success() && github.ref == 'refs/heads/fix/qrnode-phase1-adoption-2026-11-02'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json assets/tailwind.generated.css
+          if ! git diff --cached --quiet; then
+            git commit -m "build: compile Tailwind CSS and lock dependencies"
+            git push origin HEAD:$GITHUB_REF_NAME
+          fi
 
       - name: Verify responsive layouts on phone and tablet viewports
         run: |
