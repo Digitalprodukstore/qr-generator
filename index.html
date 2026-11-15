@@ -1210,6 +1210,50 @@ footer *{color:#e9e0d0!important}
       }
       ctx.fillStyle = ink;
       const pattern = window.qrStudioPattern || 'square';
+      const functionModules = new Set();
+            const markFunctionModule = (r, c) => {
+              if (r >= 0 && r < count && c >= 0 && c < count) functionModules.add(r * count + c);
+            };
+            // Preserve QR finder, timing, format, version and alignment structures as square modules.
+            for (let i = 0; i < count; i++) {
+              if (i >= 8 && i < count - 8) {
+                markFunctionModule(6, i);
+                markFunctionModule(i, 6);
+              }
+              markFunctionModule(8, i);
+              markFunctionModule(i, 8);
+              if (count >= 45) {
+                for (let j = count - 11; j <= count - 9; j++) {
+                  markFunctionModule(i, j);
+                  markFunctionModule(j, i);
+                }
+              }
+            }
+            // Alignment patterns are unmasked 5x5 targets: dark outer ring and dark center.
+            for (let centerRow = 2; centerRow < count - 2; centerRow++) {
+              for (let centerCol = 2; centerCol < count - 2; centerCol++) {
+                const overlapsFinder = (centerRow < 8 && centerCol < 8) ||
+                  (centerRow < 8 && centerCol >= count - 8) ||
+                  (centerRow >= count - 8 && centerCol < 8);
+                if (overlapsFinder || !qr.isDark(centerRow, centerCol)) continue;
+                let alignment = true;
+                for (let dy = -2; dy <= 2 && alignment; dy++) {
+                  for (let dx = -2; dx <= 2; dx++) {
+                    const edge = Math.max(Math.abs(dx), Math.abs(dy)) === 2;
+                    const expectedDark = edge || (dx === 0 && dy === 0);
+                    if (qr.isDark(centerRow + dy, centerCol + dx) !== expectedDark) {
+                      alignment = false;
+                      break;
+                    }
+                  }
+                }
+                if (alignment) {
+                  for (let dy = -2; dy <= 2; dy++) {
+                    for (let dx = -2; dx <= 2; dx++) markFunctionModule(centerRow + dy, centerCol + dx);
+                  }
+                }
+              }
+            }
       for (let row = 0; row < count; row++) {
         for (let col = 0; col < count; col++) {
           if (!qr.isDark(row, col)) continue;
@@ -1222,10 +1266,11 @@ footer *{color:#e9e0d0!important}
           const isFinder = (row < 8 && col < 8) ||
             (row < 8 && col >= count - 8) ||
             (row >= count - 8 && col < 8);
-          if (pattern === 'dots' && !isFinder) {
+          const isFunction = isFinder || functionModules.has(row * count + col);
+          if (pattern === 'dots' && !isFunction) {
             ctx.beginPath();
             // Keep a wider inter-module gap so dense QR payloads remain reliably scannable.
-            ctx.arc((x + right) / 2, (y + bottom) / 2, Math.min(width, height) * 0.49, 0, Math.PI * 2);
+            ctx.arc((x + right) / 2, (y + bottom) / 2, Math.min(width, height) * 0.5, 0, Math.PI * 2);
             ctx.fill();
           } else if (pattern === 'rounded' && !isFinder && typeof ctx.roundRect === 'function') {
             ctx.beginPath();
