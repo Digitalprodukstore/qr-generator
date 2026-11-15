@@ -372,17 +372,6 @@ jobs:
           NODE
 
 
-      - name: Commit generated CSS and dependency lockfile to the development branch
-        if: success() && github.ref == 'refs/heads/fix/qrnode-phase1-adoption-2026-11-02'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package-lock.json assets/tailwind.generated.css
-          if ! git diff --cached --quiet; then
-            git commit -m "build: compile Tailwind CSS and lock dependencies"
-            git push origin HEAD:$GITHUB_REF_NAME
-          fi
-
       - name: Verify responsive layouts on phone and tablet viewports
         run: |
           node <<'NODE'
@@ -459,6 +448,17 @@ jobs:
           })().catch(error => { console.error(error); process.exit(1); });
           NODE
 
+
+      - name: Commit generated CSS and dependency lockfile to the development branch
+        if: success() && github.ref == 'refs/heads/fix/qrnode-phase1-adoption-2026-11-02'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json assets/tailwind.generated.css
+          if ! git diff --cached --quiet; then
+            git commit -m "build: compile Tailwind CSS and lock dependencies"
+            git push origin HEAD:$GITHUB_REF_NAME
+          fi
 
   admin-auth-tests:
     runs-on: ubuntu-latest
