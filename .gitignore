@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+
+# Vercel local project state
+.vercel/
+
+# Test and build artifacts
+coverage/
+dist/
+*.log
+
+# Operating system files
+.DS_Store
+Thumbs.db
