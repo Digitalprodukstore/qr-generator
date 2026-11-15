@@ -17,9 +17,9 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 
 - PR #5 documents the 18-category Static QR feature set, exports, customization, bilingual UI, Admin/global settings, public information pages and previous QA.
 - `package.json` declares `@neondatabase/serverless` at `^1.0.2`; the application has Vercel serverless API architecture.
-- Fresh GitHub Actions on branch HEAD `e0462fc207a2f3ce5fe82a401507f47fe41436b1` passed the QR Generator checks (run 43745503176), Phase 2 checks (run 43745505591), and Phase 3 schema guard (run 43745505589).
+- Fresh GitHub Actions on branch HEAD `2ab51f4a332a8957cdf022124e380d3ca7adaff7` passed the QR Generator checks (run 43746731692), Phase 2 checks (run 43746736830), and Phase 3 schema guard (run 43746736899). That browser run compiled and tested the local Tailwind CSS before its generated CSS/lockfile commit `85b8cc660d692cf1cc32abbca21584f0ec112781`.
 - Prior CI evidence and owner-reported manual QA are documented in PR #5 and the master audit. They are not fresh live QA performed in this audit session.
-- Latest Vercel Preview deployment `dpl_Hfz6cxaC7BXVand9VLjQh6sRLqnb` is READY for the exact branch HEAD; anonymous access for intended buyers/testers is still not conclusively established.
+- Latest Vercel Preview for the generated CSS/lockfile commit is not yet confirmed; create/verify a Preview for the current branch head before sharing it. Anonymous access for intended buyers/testers also remains unverified.
 - The live Admin-authenticated Neon health probe has not been verified; the unauthenticated request was blocked by deployment protection.
 - Dynamic QR migration is present but unapplied; Dynamic QR persistence/resolver/analytics are not complete.
 
@@ -35,7 +35,7 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 | Dynamic QR and analytics | NOT INCLUDED / INCOMPLETE | Explicitly exclude from Static QR Edition sale scope. |
 | Public Preview buyer access | NOT VERIFIED | Owner must approve any access-setting changes; do not weaken protection. |
 | Legal/policy/owner disclosures | OWNER REVIEW REQUIRED | Confirm legal entity, contact, privacy/terms, domain and transfer rights. |
-| Third-party dependency/licence review | PARTIAL | Direct asset/licence inventory added in `docs/THIRD_PARTY_ASSET_INVENTORY.md`; full transitive SBOM and privacy review remain open. Tailwind Play CDN is officially development-only and must be replaced with compiled CSS before turnkey production. |
+| Third-party dependency/licence review | PARTIAL | Direct asset/licence inventory added in `docs/THIRD_PARTY_ASSET_INVENTORY.md`; full transitive SBOM and privacy review remain open. Tailwind CSS 3.4.17 is now compiled locally; npm lockfile is committed. Full transitive SBOM and privacy review remain open. |
 | Secret and environment handover | DOCUMENTATION REQUIRED | `.gitignore` now excludes local env files; complete Git-history secret scan and inventory variable NAMES only. Buyer recreates/rotates values in buyer-owned accounts. |
 | Domain and vendor asset ownership | CONTRACT REQUIRED | Explicitly list domain, Vercel, Upstash, Neon and account-transfer exclusions/inclusions. |
 | Production release | LOCKED / NOT AUTHORIZED | No production release under this audit. |
@@ -52,7 +52,7 @@ Do not claim “100% safe”, “penetration tested”, “fully production-read
 
 1. Complete real phone-camera scanning and physical-device export/share acceptance on the current Preview.
 2. Complete live authenticated Admin login/logout/session expiry, Upstash persistence and Neon health acceptance; record any unavailable services.
-3. Generate and commit a verified dependency lockfile; complete transitive SBOM/licence/privacy review and replace Tailwind Play CDN with compiled local CSS before turnkey production.
+3. Verify the committed dependency lockfile with a clean `npm ci`; complete transitive SBOM/licence/privacy review.
 4. Complete Git-history secret scanning and review CSP strategy without exposing secret values.
 5. Review all public pages and confirm legal owner/contact/domain details with the seller.
 6. Finalize the exact sale asset schedule and written transfer agreement.

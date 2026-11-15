@@ -5,13 +5,13 @@
 This status block supersedes older CI/deployment/test snapshots elsewhere in this document.
 
 - **Repository / branch:** `Digitalprodukstore/qr-generator` / `fix/qrnode-phase1-adoption-2026-11-02`
-- **Latest branch HEAD at this audit:** `e0462fc207a2f3ce5fe82a401507f47fe41436b1`
-- **Latest Preview:** https://qr-generator-1g87ljo62-risakil.vercel.app — Vercel deployment `dpl_Hfz6cxaC7BXVand9VLjQh6sRLqnb`, state **READY**, exact HEAD SHA matched.
+- **Latest branch HEAD at this audit:** `85b8cc660d692cf1cc32abbca21584f0ec112781`
+- **Latest Preview:** Vercel Preview for the generated CSS/lockfile commit is pending verification; do not share an older deployment as the current version.
 - **CI:** QR Generator checks run `43745503176`, Phase 2 run `43745505591`, and Phase 3 schema guard run `43745505589` all **SUCCESS**.
 - **Browser regression:** all 18 QR payload categories independently decoded; square, rounded and dots patterns decoded; all three 2048×2048 PNG exports decoded; SVG export shape checks passed; Premium Design Studio, presets, local project round-trip, sponsor URL safety and five responsive viewports passed.
 - **Admin auth regression:** mocked tests passed for invalid requests, incorrect credentials, session signing/tampering/expiry, rate-limit fail-closed behavior, same-origin checks and settings persistence. This is not a live production security certification.
-- **Security changes on the Preview branch:** HSTS and Permissions-Policy headers are configured; `.gitignore` now excludes local environment files and generated artifacts. CSP remains pending a nonce/hash and CDN compatibility plan.
-- **Still open before a turnkey sale claim:** physical-device camera scanning/share acceptance; live authenticated Admin/Upstash/Neon checks; verified dependency lockfile and full transitive SBOM; replace Tailwind Play CDN (officially development-only) with compiled CSS; Git-history secret scan; CSP strategy; buyer public-access, legal and transfer acceptance. A partial direct/runtime asset licence inventory is documented in `docs/THIRD_PARTY_ASSET_INVENTORY.md`.
+- **Security/build changes on the branch:** HSTS and Permissions-Policy headers are configured; `.gitignore` excludes local environment files and generated artifacts; Tailwind CSS 3.4.17 is compiled locally and its CSS plus npm lockfile are committed. CSP remains pending a nonce/hash strategy.
+- **Still open before a turnkey sale claim:** physical-device camera scanning/share acceptance; live authenticated Admin/Upstash/Neon checks; full transitive SBOM/licence review; clean `npm ci` reproducibility check; Git-history secret scan; CSP strategy; buyer public-access, legal and transfer acceptance. A partial direct/runtime asset licence inventory is documented in `docs/THIRD_PARTY_ASSET_INVENTORY.md`.
 - **Explicit exclusions:** Dynamic QR, persistence/resolver and analytics remain incomplete and are not included in the Static QR Edition sale scope.
 - **Protection rules remain unchanged:** PR #5 stays Draft; locked baseline remains untouched; no merge, Production deployment, Production environment/domain changes or database migration is authorized.
 

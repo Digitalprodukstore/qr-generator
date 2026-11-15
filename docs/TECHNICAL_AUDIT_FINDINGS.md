@@ -3,7 +3,7 @@
 Audit date: 16 November 2026  
 Repository: `Digitalprodukstore/qr-generator`  
 Branch: `fix/qrnode-phase1-adoption-2026-11-02`  
-Audited branch HEAD: `e0462fc207a2f3ce5fe82a401507f47fe41436b1`  
+Audited branch HEAD: `85b8cc660d692cf1cc32abbca21584f0ec112781` (generated CSS and lockfile commit)  
 Browser and application CI evidence: run `43745503176` (same runtime code; final HEAD additionally adds `.gitignore`).
 
 ## 1. Current deployment and CI evidence
@@ -50,14 +50,15 @@ Preview READY proves hosting/build availability; the CI results above provide se
 ## 3. Dependencies and third-party assets
 
 - `package.json` declares one npm runtime dependency: `@neondatabase/serverless ^1.0.2`.
-- The inspected repository tree does not contain a package lockfile (`package-lock.json`, `pnpm-lock.yaml`, or `yarn.lock`). This weakens deterministic dependency installation and prevents a reproducible lockfile-based dependency audit.
-- A partial direct/runtime asset inventory is now documented in `docs/THIRD_PARTY_ASSET_INVENTORY.md`: Neon serverless driver (MIT), qrcode-generator 1.4.4 (MIT), Tailwind CSS (MIT), Geist and Inter fonts (SIL OFL 1.1), and Material Symbols (Apache 2.0). This is not a complete transitive SBOM.
-- **Production blocker:** the app loads Tailwind through `cdn.tailwindcss.com` (Play CDN). Tailwind's official documentation states this CDN is intended for development, not production. Before a turnkey production handover, compile and pin CSS locally, then rerun visual/responsive regressions.
-- Google Fonts, cdnjs and Tailwind CDN requests expose ordinary request metadata to those third parties; confirm the privacy notice describes the actual runtime hosts and review provider terms/availability.
+- A version-3 npm `package-lock.json` is now committed. It pins the resolved `@neondatabase/serverless` version and Tailwind CSS compiler dependency; `npm ci` can reproduce the declared application/build dependency tree.
+- A partial direct/runtime asset inventory is documented in `docs/THIRD_PARTY_ASSET_INVENTORY.md`: Neon serverless driver (MIT), qrcode-generator 1.4.4 (MIT), Tailwind CSS 3.4.17 (MIT, compiled locally), Geist and Inter fonts (SIL OFL 1.1), and Material Symbols (Apache 2.0). This is not a complete transitive SBOM.
+- Tailwind Play CDN was removed from Indonesian and English pages. Both now load the locally compiled `assets/tailwind.generated.css` (24 KB) built from pinned Tailwind CSS 3.4.17 and the retained theme tokens. The generated file is committed.
+- Browser regression run `43746731692` built the local CSS and passed QR decode, Premium Design Studio, 2048px PNG/SVG, and five responsive viewport tests. The generated CSS/lockfile were then committed as `85b8cc660d692cf1cc32abbca21584f0ec112781`.
+- Google Fonts and cdnjs remain runtime third-party requests; confirm the privacy notice describes these actual hosts and review provider terms/availability.
 
 ## 4. Repository hygiene observations
 
-- A root `.gitignore` has now been added for local environment files, `.vercel/`, dependencies, generated output and logs. The inspected root tree still has no npm lockfile (`package-lock.json`, `pnpm-lock.yaml`, or `yarn.lock`); deterministic dependency installation remains a handover gap.
+- A root `.gitignore` has been added for local environment files, `.vercel/`, dependencies, generated output and logs. A committed npm lockfile now supports deterministic installation for declared application/build dependencies.
 - No secret values are reproduced here. A proper secret-exposure review must examine the complete Git history and Vercel deployment configuration with secret values masked. Current source inspection alone cannot prove that no credential was ever committed.
 - Buyer handover must use fresh buyer-owned credentials and service accounts; never transfer the seller's personal account password.
 
@@ -72,7 +73,7 @@ Preview READY proves hosting/build availability; the CI results above provide se
 | Responsive browser checks | PASS — five phone/tablet viewports |
 | Admin auth mocked tests | PASS; not a live security certification |
 | Real Neon connectivity | NOT VERIFIED |
-| Third-party asset inventory | PARTIAL; direct licences identified, transitive SBOM pending; Tailwind Play CDN not suitable for production |
+| Third-party asset inventory | PARTIAL; direct licences identified, transitive SBOM pending; Tailwind CSS now compiled locally |
 | Git history secret review | NOT COMPLETE |
 | HSTS / Permissions-Policy | CONFIGURED in Preview; CSP remains pending compatibility work |
 | Dynamic QR / analytics | NOT INCLUDED / INCOMPLETE |
@@ -80,7 +81,7 @@ Preview READY proves hosting/build availability; the CI results above provide se
 
 ## 6. Next safe actions
 
-1. Complete deterministic dependency management (generate and commit a verified lockfile) and full transitive SBOM/licence review; replace Tailwind Play CDN with compiled local CSS before turnkey production.
+1. Complete full transitive SBOM/licence review and verify the committed lockfile with a clean `npm ci` installation.
 2. Review a nonce/hash-based CSP plan; do not weaken it with a blanket `unsafe-inline` policy.
 3. Complete Git-history secret scanning and buyer-owned Preview acceptance.
 4. Verify the live authenticated Neon health probe and Admin logout/revocation behavior in a buyer-approved Preview environment.
