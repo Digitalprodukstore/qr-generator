@@ -40,6 +40,13 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 | Domain and vendor asset ownership | CONTRACT REQUIRED | Explicitly list domain, Vercel, Upstash, Neon and account-transfer exclusions/inclusions. |
 | Production release | LOCKED / NOT AUTHORIZED | No production release under this audit. |
 
+## Local CSS and dependency build verification
+
+- Tailwind Play CDN was removed from both language pages; both load `/assets/tailwind.generated.css`.
+- Tailwind CSS is pinned at `3.4.17`; the generated CSS artifact and version-3 npm lockfile are committed.
+- Latest full browser workflow on branch HEAD `5e3e3914660cfa1bc7cca4569390fb44ee0fdc64` passed: `npm ci --ignore-scripts`, local CSS compilation/output assertions, all 18 QR payload categories, square/rounded/dots decode, all three 2048×2048 PNG exports, SVG shape checks, Premium Design Studio, and five responsive viewports.
+- The test workflow regenerates the CSS and verifies key selectors and absence of the Tailwind Play CDN URL before serving the app. The generated CSS/lockfile commit was created by the prior successful browser run and is now part of the tested branch.
+
 ## Safe sale positioning
 
 Recommended label: **QR Studio Pro — Static QR Generator Commercial Edition (AS-IS)**.
