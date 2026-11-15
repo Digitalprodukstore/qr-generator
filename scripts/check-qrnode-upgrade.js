@@ -2,6 +2,9 @@ const fs = require('node:fs');
 const { spawnSync } = require('node:child_process');
 const html = fs.readFileSync('index.html', 'utf8');
 const moduleSource = fs.readFileSync('qrnode-upgrade.js', 'utf8');
+const vercelConfig = JSON.parse(fs.readFileSync('vercel.json', 'utf8'));
+const securityHeaders = vercelConfig.headers?.flatMap(entry => entry.headers || []) || [];
+const headerValue = name => securityHeaders.find(item => item.key.toLowerCase() === name.toLowerCase())?.value || '';
 const assert = (condition, message) => {
   if (!condition) { console.error('FAIL:', message); process.exitCode = 1; }
   else console.log('PASS:', message);
@@ -38,4 +41,8 @@ assert(moduleSource.includes('png|jpeg|webp'), 'SVG embeds only supported raster
 assert(moduleSource.includes('dataset.qrReady!=="true"'), 'SVG export refuses invalid/unready QR');
 assert(!moduleSource.includes('MENU:') && !moduleSource.includes('UNDANGAN:'), 'menu and invitation do not use proprietary non-scannable pseudo schemes');
 assert(html.includes('qrcode-generator/1.4.4/qrcode.min.js'), 'standards-compliant QR encoder remains loaded');
+assert(headerValue('X-Content-Type-Options') === 'nosniff', 'security headers disable MIME sniffing');
+assert(headerValue('X-Frame-Options') === 'DENY', 'security headers prevent clickjacking');
+assert(headerValue('Strict-Transport-Security') === 'max-age=31536000', 'Preview enforces HTTPS transport for one year');
+assert(headerValue('Permissions-Policy') === 'camera=(), microphone=(), geolocation=()', 'unused camera, microphone and geolocation capabilities are disabled');
 if (process.exitCode) process.exit(process.exitCode);
