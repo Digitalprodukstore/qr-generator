@@ -20,12 +20,14 @@ assert(html.includes('function renderLiveQR(targetCanvas, outputSize)'), 'QR ren
 assert(moduleSource.includes('window.renderLiveQR?.(out, 2048)'), '2048px PNG export rerenders QR modules at native resolution');
 assert(!moduleSource.includes('x.drawImage(c,0,0,2048,2048)'), '2048px PNG export does not upscale the 1200px preview canvas');
 assert(html.includes("const pattern = window.qrStudioPattern || 'square'"), 'QR renderer reads the selected module pattern');
-assert(html.includes("pattern === 'dots' && !isFinder"), 'dot pattern preserves square finder zones');
+assert(html.includes("pattern === 'dots' && !isFunction"), 'dot pattern preserves QR function modules in canvas output');
+assert(html.includes('functionModules.has(row * count + col)'), 'canvas renderer protects QR timing, format, version and alignment modules');
+assert(moduleSource.includes('functionModules.has(r*n+c)'), 'SVG renderer protects QR timing, format, version and alignment modules');
 assert(html.includes("pattern === 'rounded' && !isFinder"), 'rounded pattern preserves square finder zones');
 assert(moduleSource.includes('id=\"qrnodePattern\"'), 'shape selector is available in the design studio');
 assert(moduleSource.includes('pattern:selectedPattern'), 'selected pattern is saved with local projects');
 assert(moduleSource.includes('if(select)select.value=pattern;update()}'), 'pattern changes revalidate the active QR payload before rendering');
-assert(moduleSource.includes('shape===\"dots\"&&!finder') && moduleSource.includes('shape===\"rounded\"&&!finder'), 'SVG export preserves selected module pattern');
+assert(moduleSource.includes('shape===\"dots\"&&!finder&&!functionModules.has') && moduleSource.includes('shape===\"rounded\"&&!finder'), 'SVG export preserves selected module pattern');
 assert(html.includes('Math.min(width, height) * 0.5') && moduleSource.includes('r=\".5\"'), 'dot pattern uses full-coverage modules in PNG and SVG');
 assert(moduleSource.includes('const icsEsc='), 'calendar fields are escaped for iCalendar');
 assert(moduleSource.includes('"SUMMARY:"+icsEsc(g("title"))'), 'calendar event titles escape iCalendar delimiters');
