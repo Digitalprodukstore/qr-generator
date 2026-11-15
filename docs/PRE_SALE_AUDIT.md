@@ -35,7 +35,7 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 | Dynamic QR and analytics | NOT INCLUDED / INCOMPLETE | Explicitly exclude from Static QR Edition sale scope. |
 | Public Preview buyer access | NOT VERIFIED | Owner must approve any access-setting changes; do not weaken protection. |
 | Legal/policy/owner disclosures | OWNER REVIEW REQUIRED | Confirm legal entity, contact, privacy/terms, domain and transfer rights. |
-| Third-party dependency/licence review | NOT YET VERIFIED | No complete licence/SBOM review; runtime CDN assets require version, licence and privacy review. |
+| Third-party dependency/licence review | PARTIAL | Direct asset/licence inventory added in `docs/THIRD_PARTY_ASSET_INVENTORY.md`; full transitive SBOM and privacy review remain open. Tailwind Play CDN is officially development-only and must be replaced with compiled CSS before turnkey production. |
 | Secret and environment handover | DOCUMENTATION REQUIRED | `.gitignore` now excludes local env files; complete Git-history secret scan and inventory variable NAMES only. Buyer recreates/rotates values in buyer-owned accounts. |
 | Domain and vendor asset ownership | CONTRACT REQUIRED | Explicitly list domain, Vercel, Upstash, Neon and account-transfer exclusions/inclusions. |
 | Production release | LOCKED / NOT AUTHORIZED | No production release under this audit. |
@@ -52,7 +52,7 @@ Do not claim “100% safe”, “penetration tested”, “fully production-read
 
 1. Complete real phone-camera scanning and physical-device export/share acceptance on the current Preview.
 2. Complete live authenticated Admin login/logout/session expiry, Upstash persistence and Neon health acceptance; record any unavailable services.
-3. Generate and commit a verified dependency lockfile; review npm and CDN asset licences/versions/privacy.
+3. Generate and commit a verified dependency lockfile; complete transitive SBOM/licence/privacy review and replace Tailwind Play CDN with compiled local CSS before turnkey production.
 4. Complete Git-history secret scanning and review CSP strategy without exposing secret values.
 5. Review all public pages and confirm legal owner/contact/domain details with the seller.
 6. Finalize the exact sale asset schedule and written transfer agreement.
