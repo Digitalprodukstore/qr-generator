@@ -1222,10 +1222,12 @@ footer *{color:#e9e0d0!important}
               }
               markFunctionModule(8, i);
               markFunctionModule(i, 8);
-              if (count >= 45) {
-                for (let j = count - 11; j <= count - 9; j++) {
-                  markFunctionModule(i, j);
-                  markFunctionModule(j, i);
+            }
+            if (count >= 45) {
+              for (let r = 0; r < 6; r++) {
+                for (let c = count - 11; c <= count - 9; c++) {
+                  markFunctionModule(r, c);
+                  markFunctionModule(c, r);
                 }
               }
             }
