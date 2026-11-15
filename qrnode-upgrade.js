@@ -60,7 +60,24 @@
       let body='<rect width="'+total+'" height="'+total+'" fill="'+bg+'"/>';
       if(gradient)body+='<defs><linearGradient id="qrGradient" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="'+fg+'"/><stop offset="100%" stop-color="'+g2+'"/></linearGradient></defs>';
       body+='<g fill="'+(gradient?"url(#qrGradient)":fg)+'">';
-      for(let r=0;r<n;r++)for(let c=0;c<n;c++){if(!qr.isDark(r,c))continue;const x=c+q,y=r+q,finder=(r<8&&c<8)||(r<8&&c>=n-8)||(r>=n-8&&c<8);if(shape==="dots"&&!finder)body+='<circle cx="'+(x+.5)+'" cy="'+(y+.5)+'" r=".49"/>';else if(shape==="rounded"&&!finder)body+='<rect x="'+x+'" y="'+y+'" width="1" height="1" rx=".28"/>';else body+='<rect x="'+x+'" y="'+y+'" width="1" height="1"/>';}
+      const functionModules = new Set();
+      const markFunctionModule = (r,c) => { if(r>=0&&r<n&&c>=0&&c<n)functionModules.add(r*n+c); };
+      for(let i=0;i<n;i++){
+        if(i>=8&&i<n-8){markFunctionModule(6,i);markFunctionModule(i,6)}
+        markFunctionModule(8,i);markFunctionModule(i,8);
+        if(n>=45)for(let j=n-11;j<=n-9;j++){markFunctionModule(i,j);markFunctionModule(j,i)}
+      }
+      for(let centerRow=2;centerRow<n-2;centerRow++)for(let centerCol=2;centerCol<n-2;centerCol++){
+        const overlapsFinder=(centerRow<8&&centerCol<8)||(centerRow<8&&centerCol>=n-8)||(centerRow>=n-8&&centerCol<8);
+        if(overlapsFinder||!qr.isDark(centerRow,centerCol))continue;
+        let alignment=true;
+        for(let dy=-2;dy<=2&&alignment;dy++)for(let dx=-2;dx<=2;dx++){
+          const edge=Math.max(Math.abs(dx),Math.abs(dy))===2,expectedDark=edge||(dx===0&&dy===0);
+          if(qr.isDark(centerRow+dy,centerCol+dx)!==expectedDark){alignment=false;break}
+        }
+        if(alignment)for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++)markFunctionModule(centerRow+dy,centerCol+dx);
+      }
+      for(let r=0;r<n;r++)for(let c=0;c<n;c++){if(!qr.isDark(r,c))continue;const x=c+q,y=r+q,finder=(r<8&&c<8)||(r<8&&c>=n-8)||(r>=n-8&&c<8);if(shape==="dots"&&!finder&&!functionModules.has(r*n+c))body+='<circle cx="'+(x+.5)+'" cy="'+(y+.5)+'" r=".5"/>';else if(shape==="rounded"&&!finder)body+='<rect x="'+x+'" y="'+y+'" width="1" height="1" rx=".28"/>';else body+='<rect x="'+x+'" y="'+y+'" width="1" height="1"/>';}
       body+='</g>';
       if(logo&&!logo.classList.contains("hidden")&&/^data:image\/(png|jpeg|webp);base64,/i.test(logo.src)){
         const side=total*.20,x=(total-side)/2,y=(total-side)/2;
