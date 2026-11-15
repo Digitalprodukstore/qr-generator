@@ -1225,7 +1225,7 @@ footer *{color:#e9e0d0!important}
           if (pattern === 'dots' && !isFinder) {
             ctx.beginPath();
             // Keep a wider inter-module gap so dense QR payloads remain reliably scannable.
-            ctx.arc((x + right) / 2, (y + bottom) / 2, Math.min(width, height) * 0.45, 0, Math.PI * 2);
+            ctx.arc((x + right) / 2, (y + bottom) / 2, Math.min(width, height) * 0.49, 0, Math.PI * 2);
             ctx.fill();
           } else if (pattern === 'rounded' && !isFinder && typeof ctx.roundRect === 'function') {
             ctx.beginPath();
