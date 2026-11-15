@@ -3,19 +3,19 @@
 Audit date: 16 November 2026  
 Repository: `Digitalprodukstore/qr-generator`  
 Branch: `fix/qrnode-phase1-adoption-2026-11-02`  
-Audited branch HEAD: `3ab42bf3d7431816927909d53d42f6530c5e0f43`  
-Browser and application CI evidence: run `43745119519` (same runtime code; final HEAD additionally adds `.gitignore`).
+Audited branch HEAD: `e0462fc207a2f3ce5fe82a401507f47fe41436b1`  
+Browser and application CI evidence: run `43745503176` (same runtime code; final HEAD additionally adds `.gitignore`).
 
 ## 1. Current deployment and CI evidence
 
 - Latest Vercel Preview deployment: **READY**.
-- Preview URL: https://qr-generator-5ohzynxg5-risakil.vercel.app
-- Deployment ID: `dpl_ECw1iJH5AJaDmRJXDzpZokbG3MHR`.
-- Deployment Git metadata matches branch `fix/qrnode-phase1-adoption-2026-11-02` and HEAD `3ab42bf3d7431816927909d53d42f6530c5e0f43`.
+- Preview URL: https://qr-generator-1g87ljo62-risakil.vercel.app
+- Deployment ID: `dpl_Hfz6cxaC7BXVand9VLjQh6sRLqnb`.
+- Deployment Git metadata matches branch `fix/qrnode-phase1-adoption-2026-11-02` and HEAD `e0462fc207a2f3ce5fe82a401507f47fe41436b1`.
 - GitHub Actions on the final branch HEAD:
-  - QR Generator checks: **SUCCESS** (run 43745119519).
-  - QR Studio Pro Phase 2 checks: **SUCCESS** (run 43745121826).
-  - QR Studio Pro Phase 3 schema guard: **SUCCESS** (run 43745121798).
+  - QR Generator checks: **SUCCESS** (run 43745503176).
+  - QR Studio Pro Phase 2 checks: **SUCCESS** (run 43745505591).
+  - QR Studio Pro Phase 3 schema guard: **SUCCESS** (run 43745505589).
 - The browser job independently decoded all 18 QR payload categories: URL, text, WhatsApp, email, telephone, SMS, Wi-Fi, vCard, geo, event, menu, invitation, review, social, PDF, multi-link, form, and app.
 - Square, rounded and dots module patterns independently decoded. All three 2048 × 2048 PNG exports independently decoded to the expected payload; SVG exports were valid and retained their selected shape.
 - Premium Design Studio checks passed: five presets, manual contrast refresh, local save/load/delete, sponsor URL update/clear, and rejection of unsafe `javascript:` URLs.
@@ -68,7 +68,7 @@ Preview READY proves hosting/build availability; the CI results above provide se
 | Preview deployment | READY on audited SHA |
 | Phase 2 CI | PASS |
 | Phase 3 schema guard CI | PASS |
-| Main browser/static CI workflow | PASS — run 43745119519 |
+| Main browser/static CI workflow | PASS — run 43745503176 |
 | Responsive browser checks | PASS — five phone/tablet viewports |
 | Admin auth mocked tests | PASS; not a live security certification |
 | Real Neon connectivity | NOT VERIFIED |
