@@ -51,8 +51,9 @@ Preview READY proves hosting/build availability; the CI results above provide se
 
 - `package.json` declares one npm runtime dependency: `@neondatabase/serverless ^1.0.2`.
 - The inspected repository tree does not contain a package lockfile (`package-lock.json`, `pnpm-lock.yaml`, or `yarn.lock`). This weakens deterministic dependency installation and prevents a reproducible lockfile-based dependency audit.
-- The public HTML loads third-party assets at runtime, including Google Fonts, Tailwind CSS via `cdn.tailwindcss.com`, Material Symbols fonts, and `qrcode-generator 1.4.4` via cdnjs. These runtime CDN assets are not represented in the npm dependency manifest and need separate licence, version-pinning, availability, and privacy review.
-- No complete third-party licence/SBOM review is claimed in this audit.
+- A partial direct/runtime asset inventory is now documented in `docs/THIRD_PARTY_ASSET_INVENTORY.md`: Neon serverless driver (MIT), qrcode-generator 1.4.4 (MIT), Tailwind CSS (MIT), Geist and Inter fonts (SIL OFL 1.1), and Material Symbols (Apache 2.0). This is not a complete transitive SBOM.
+- **Production blocker:** the app loads Tailwind through `cdn.tailwindcss.com` (Play CDN). Tailwind's official documentation states this CDN is intended for development, not production. Before a turnkey production handover, compile and pin CSS locally, then rerun visual/responsive regressions.
+- Google Fonts, cdnjs and Tailwind CDN requests expose ordinary request metadata to those third parties; confirm the privacy notice describes the actual runtime hosts and review provider terms/availability.
 
 ## 4. Repository hygiene observations
 
@@ -71,7 +72,7 @@ Preview READY proves hosting/build availability; the CI results above provide se
 | Responsive browser checks | PASS — five phone/tablet viewports |
 | Admin auth mocked tests | PASS; not a live security certification |
 | Real Neon connectivity | NOT VERIFIED |
-| Dependency licence/SBOM review | NOT COMPLETE |
+| Third-party asset inventory | PARTIAL; direct licences identified, transitive SBOM pending; Tailwind Play CDN not suitable for production |
 | Git history secret review | NOT COMPLETE |
 | HSTS / Permissions-Policy | CONFIGURED in Preview; CSP remains pending compatibility work |
 | Dynamic QR / analytics | NOT INCLUDED / INCOMPLETE |
@@ -79,7 +80,7 @@ Preview READY proves hosting/build availability; the CI results above provide se
 
 ## 6. Next safe actions
 
-1. Complete deterministic dependency management (generate and commit a verified lockfile) and document third-party asset versions/licences/privacy implications.
+1. Complete deterministic dependency management (generate and commit a verified lockfile) and full transitive SBOM/licence review; replace Tailwind Play CDN with compiled local CSS before turnkey production.
 2. Review a nonce/hash-based CSP plan; do not weaken it with a blanket `unsafe-inline` policy.
 3. Complete Git-history secret scanning and buyer-owned Preview acceptance.
 4. Verify the live authenticated Neon health probe and Admin logout/revocation behavior in a buyer-approved Preview environment.
