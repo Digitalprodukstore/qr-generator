@@ -101,7 +101,8 @@ jobs:
         run: npm install --no-save playwright jsqr pngjs http-server
       - name: Compile local Tailwind stylesheet
         run: npm run build:css
-          npx playwright install --with-deps chromium
+      - name: Install Chromium browser
+        run: npx playwright install --with-deps chromium
       - name: Serve page
         run: |
           npx http-server . -p 4173 -c-1 > /tmp/qr-http.log 2>&1 &
