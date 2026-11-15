@@ -1,6 +1,6 @@
 # QR Studio Pro — Pre-Sale Audit
 
-Audit date: 15 November 2026  
+Audit date: 16 November 2026  
 Scope: prepare the existing QR Generator for a transparent AS-IS source/product sale. Preserve working features. No application feature changes are authorized by this document.
 
 ## Guardrails
@@ -17,9 +17,9 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 
 - PR #5 documents the 18-category Static QR feature set, exports, customization, bilingual UI, Admin/global settings, public information pages and previous QA.
 - `package.json` declares `@neondatabase/serverless` at `^1.0.2`; the application has Vercel serverless API architecture.
-- The latest audit document on the feature branch records an estimated engineering-readiness score of approximately 73%, not a commercial certification.
+- Fresh GitHub Actions on branch HEAD `3ab42bf3d7431816927909d53d42f6530c5e0f43` passed the QR Generator checks (run 43745119519), Phase 2 checks (run 43745121826), and Phase 3 schema guard (run 43745121798).
 - Prior CI evidence and owner-reported manual QA are documented in PR #5 and the master audit. They are not fresh live QA performed in this audit session.
-- The latest recorded Vercel Preview was READY, but public anonymous access for intended buyers/testers was not conclusively established.
+- Latest Vercel Preview deployment `dpl_ECw1iJH5AJaDmRJXDzpZokbG3MHR` is READY for the exact branch HEAD; anonymous access for intended buyers/testers is still not conclusively established.
 - The live Admin-authenticated Neon health probe has not been verified; the unauthenticated request was blocked by deployment protection.
 - Dynamic QR migration is present but unapplied; Dynamic QR persistence/resolver/analytics are not complete.
 
@@ -28,15 +28,15 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 | Gate | Status | Evidence / next action |
 |---|---|---|
 | Static QR feature inventory | DOCUMENTED | 18 categories and supporting capabilities described in PR #5. |
-| Fresh 18-category decode regression | BLOCKED / NOT RE-RUN | Run on latest Preview with real scans and preserve results. |
-| PNG/SVG, logo, presets, sharing | PRIOR EVIDENCE ONLY | Repeat on current Preview and representative mobile/desktop browsers. |
-| Admin authentication and global settings | PARTIALLY DOCUMENTED | Prior owner-reported QA exists; fresh live login/logout/expiry/sync and fail-closed checks required. |
+| Fresh 18-category decode regression | PASS (CI) | All 18 payload categories and square/rounded/dots patterns independently decoded in browser CI; real phone-camera scans remain a separate acceptance step. |
+| PNG/SVG, presets and exports | PASS (CI) | 2048px PNG for all three patterns independently decoded; SVG shape checks, five presets, local projects and sponsor URL safety passed. Manual logo/share QA across physical devices remains required. |
+| Admin authentication and global settings | MOCKED CI PASS / LIVE PARTIAL | Auth/session/rate-limit/same-origin tests passed in mocked CI. Live Admin login/logout, Redis persistence and buyer-owned session acceptance remain required. |
 | Neon real connectivity | BLOCKED / NOT VERIFIED | Requires owner to test from authenticated Admin Preview session; do not share secrets. |
 | Dynamic QR and analytics | NOT INCLUDED / INCOMPLETE | Explicitly exclude from Static QR Edition sale scope. |
 | Public Preview buyer access | NOT VERIFIED | Owner must approve any access-setting changes; do not weaken protection. |
 | Legal/policy/owner disclosures | OWNER REVIEW REQUIRED | Confirm legal entity, contact, privacy/terms, domain and transfer rights. |
-| Third-party dependency/licence review | NOT YET VERIFIED | Generate a complete dependency and licence inventory from the actual source and review notices/terms. |
-| Secret and environment handover | DOCUMENTATION REQUIRED | Inventory variable NAMES only; buyer recreates/rotates values in buyer-owned accounts. |
+| Third-party dependency/licence review | NOT YET VERIFIED | No complete licence/SBOM review; runtime CDN assets require version, licence and privacy review. |
+| Secret and environment handover | DOCUMENTATION REQUIRED | `.gitignore` now excludes local env files; complete Git-history secret scan and inventory variable NAMES only. Buyer recreates/rotates values in buyer-owned accounts. |
 | Domain and vendor asset ownership | CONTRACT REQUIRED | Explicitly list domain, Vercel, Upstash, Neon and account-transfer exclusions/inclusions. |
 | Production release | LOCKED / NOT AUTHORIZED | No production release under this audit. |
 
@@ -50,10 +50,10 @@ Do not claim “100% safe”, “penetration tested”, “fully production-read
 
 ## Remaining work sequence
 
-1. Confirm latest feature-branch HEAD and exact Preview deployment SHA.
-2. Perform fresh static-generator regression without changing application behavior.
-3. Perform authenticated Admin acceptance tests; record blocked checks honestly.
-4. Review dependency licences, third-party CDN usage, security headers and secret names without exposing values.
+1. Complete real phone-camera scanning and physical-device export/share acceptance on the current Preview.
+2. Complete live authenticated Admin login/logout/session expiry, Upstash persistence and Neon health acceptance; record any unavailable services.
+3. Generate and commit a verified dependency lockfile; review npm and CDN asset licences/versions/privacy.
+4. Complete Git-history secret scanning and review CSP strategy without exposing secret values.
 5. Review all public pages and confirm legal owner/contact/domain details with the seller.
 6. Finalize the exact sale asset schedule and written transfer agreement.
 7. Provide buyer with source, setup guide, environment variable names, known limitations, and a controlled acceptance checklist.
