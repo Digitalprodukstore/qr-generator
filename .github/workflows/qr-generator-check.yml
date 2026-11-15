@@ -100,7 +100,7 @@ jobs:
       - name: Install browser and build dependencies
         run: npm install --no-save playwright jsqr pngjs http-server
       - name: Compile local Tailwind stylesheet
-        run: npm run build:css
+        run: mkdir -p assets && npm run build:css
       - name: Install Chromium browser
         run: npx playwright install --with-deps chromium
       - name: Serve page
