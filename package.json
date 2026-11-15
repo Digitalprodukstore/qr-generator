@@ -5,5 +5,11 @@
   "description": "QR Generator static application with Vercel serverless APIs",
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2"
+  },
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.cjs -i ./styles/tailwind.input.css -o ./assets/tailwind.generated.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
   }
 }
