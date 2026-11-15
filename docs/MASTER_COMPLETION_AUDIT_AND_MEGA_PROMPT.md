@@ -5,9 +5,9 @@
 This status block supersedes older CI/deployment/test snapshots elsewhere in this document.
 
 - **Repository / branch:** `Digitalprodukstore/qr-generator` / `fix/qrnode-phase1-adoption-2026-11-02`
-- **Latest branch HEAD at this audit:** `3ab42bf3d7431816927909d53d42f6530c5e0f43`
-- **Latest Preview:** https://qr-generator-5ohzynxg5-risakil.vercel.app — Vercel deployment `dpl_ECw1iJH5AJaDmRJXDzpZokbG3MHR`, state **READY**, exact HEAD SHA matched.
-- **CI:** QR Generator checks run `43745119519`, Phase 2 run `43745121826`, and Phase 3 schema guard run `43745121798` all **SUCCESS**.
+- **Latest branch HEAD at this audit:** `e0462fc207a2f3ce5fe82a401507f47fe41436b1`
+- **Latest Preview:** https://qr-generator-1g87ljo62-risakil.vercel.app — Vercel deployment `dpl_Hfz6cxaC7BXVand9VLjQh6sRLqnb`, state **READY**, exact HEAD SHA matched.
+- **CI:** QR Generator checks run `43745503176`, Phase 2 run `43745505591`, and Phase 3 schema guard run `43745505589` all **SUCCESS**.
 - **Browser regression:** all 18 QR payload categories independently decoded; square, rounded and dots patterns decoded; all three 2048×2048 PNG exports decoded; SVG export shape checks passed; Premium Design Studio, presets, local project round-trip, sponsor URL safety and five responsive viewports passed.
 - **Admin auth regression:** mocked tests passed for invalid requests, incorrect credentials, session signing/tampering/expiry, rate-limit fail-closed behavior, same-origin checks and settings persistence. This is not a live production security certification.
 - **Security changes on the Preview branch:** HSTS and Permissions-Policy headers are configured; `.gitignore` now excludes local environment files and generated artifacts. CSP remains pending a nonce/hash and CDN compatibility plan.
