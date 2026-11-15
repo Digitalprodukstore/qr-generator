@@ -65,8 +65,8 @@
       for(let i=0;i<n;i++){
         if(i>=8&&i<n-8){markFunctionModule(6,i);markFunctionModule(i,6)}
         markFunctionModule(8,i);markFunctionModule(i,8);
-        if(n>=45)for(let j=n-11;j<=n-9;j++){markFunctionModule(i,j);markFunctionModule(j,i)}
       }
+      if(n>=45)for(let r=0;r<6;r++)for(let c=n-11;c<=n-9;c++){markFunctionModule(r,c);markFunctionModule(c,r)}
       for(let centerRow=2;centerRow<n-2;centerRow++)for(let centerCol=2;centerCol<n-2;centerCol++){
         const overlapsFinder=(centerRow<8&&centerCol<8)||(centerRow<8&&centerCol>=n-8)||(centerRow>=n-8&&centerCol<8);
         if(overlapsFinder||!qr.isDark(centerRow,centerCol))continue;
