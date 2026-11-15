@@ -17,9 +17,9 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 
 - PR #5 documents the 18-category Static QR feature set, exports, customization, bilingual UI, Admin/global settings, public information pages and previous QA.
 - `package.json` declares `@neondatabase/serverless` at `^1.0.2`; the application has Vercel serverless API architecture.
-- Fresh GitHub Actions on branch HEAD `2ab51f4a332a8957cdf022124e380d3ca7adaff7` passed the QR Generator checks (run 43746731692), Phase 2 checks (run 43746736830), and Phase 3 schema guard (run 43746736899). That browser run compiled and tested the local Tailwind CSS before its generated CSS/lockfile commit `85b8cc660d692cf1cc32abbca21584f0ec112781`.
+- Fresh GitHub Actions on branch HEAD `301edbb512ae69a2f404dfe9e6eda103f63654e1` passed the QR Generator checks (run 43748007911), Phase 2 checks (run 43748012830), and Phase 3 schema guard (run 43748012880). The run performed `npm ci`, `npm audit --audit-level=high` (0 vulnerabilities), local Tailwind CSS compilation/output checks, all 18 QR payload decode tests, three pattern checks, 2048×2048 PNG/SVG export checks, Premium Design Studio tests, and five responsive viewports.
 - Prior CI evidence and owner-reported manual QA are documented in PR #5 and the master audit. They are not fresh live QA performed in this audit session.
-- Latest Vercel Preview for the generated CSS/lockfile commit is not yet confirmed; create/verify a Preview for the current branch head before sharing it. Anonymous access for intended buyers/testers also remains unverified.
+- Latest Vercel Preview deployment `dpl_7LU6xwp7ZfAeoo2z5bTpUDmAp19u` is READY at `https://qr-generator-hthunbjg8-risakil.vercel.app` for exact branch HEAD `301edbb512ae69a2f404dfe9e6eda103f63654e1`. Anonymous access for intended buyers/testers remains unverified because deployment protection could not be independently bypassed for this audit.
 - The live Admin-authenticated Neon health probe has not been verified; the unauthenticated request was blocked by deployment protection.
 - Dynamic QR migration is present but unapplied; Dynamic QR persistence/resolver/analytics are not complete.
 
