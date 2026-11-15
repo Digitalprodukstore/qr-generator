@@ -1,5 +1,22 @@
 # QR Studio Pro / QR Generator — Audit & Master Completion Prompt
 
+## Latest verified status — 16 November 2026
+
+This status block supersedes older CI/deployment/test snapshots elsewhere in this document.
+
+- **Repository / branch:** `Digitalprodukstore/qr-generator` / `fix/qrnode-phase1-adoption-2026-11-02`
+- **Latest branch HEAD at this audit:** `3ab42bf3d7431816927909d53d42f6530c5e0f43`
+- **Latest Preview:** https://qr-generator-5ohzynxg5-risakil.vercel.app — Vercel deployment `dpl_ECw1iJH5AJaDmRJXDzpZokbG3MHR`, state **READY**, exact HEAD SHA matched.
+- **CI:** QR Generator checks run `43745119519`, Phase 2 run `43745121826`, and Phase 3 schema guard run `43745121798` all **SUCCESS**.
+- **Browser regression:** all 18 QR payload categories independently decoded; square, rounded and dots patterns decoded; all three 2048×2048 PNG exports decoded; SVG export shape checks passed; Premium Design Studio, presets, local project round-trip, sponsor URL safety and five responsive viewports passed.
+- **Admin auth regression:** mocked tests passed for invalid requests, incorrect credentials, session signing/tampering/expiry, rate-limit fail-closed behavior, same-origin checks and settings persistence. This is not a live production security certification.
+- **Security changes on the Preview branch:** HSTS and Permissions-Policy headers are configured; `.gitignore` now excludes local environment files and generated artifacts. CSP remains pending a nonce/hash and CDN compatibility plan.
+- **Still open before a turnkey sale claim:** physical-device camera scanning/share acceptance; live authenticated Admin/Upstash/Neon checks; verified dependency lockfile; CDN/npm licence and privacy inventory; Git-history secret scan; CSP strategy; buyer public-access, legal and transfer acceptance.
+- **Explicit exclusions:** Dynamic QR, persistence/resolver and analytics remain incomplete and are not included in the Static QR Edition sale scope.
+- **Protection rules remain unchanged:** PR #5 stays Draft; locked baseline remains untouched; no merge, Production deployment, Production environment/domain changes or database migration is authorized.
+
+The older approximately 73% estimate later in this document is historical and must not be presented as a current measured completion percentage without recalculating against the latest acceptance evidence.
+
 Audit basis: repository branch `fix/qrnode-phase1-adoption-2026-11-02`, latest reviewed commit `be2666ab8856655e6ecc0eadc4ddc8875561b549`, and associated Vercel Preview deployment `qr-generator-hosgffl5i-risakil.vercel.app` (READY). This is a code/repository and CI review, not a claim that every live browser flow has just been re-tested.
 
 ## 1. Non-negotiable protection rule
