@@ -10,6 +10,7 @@
 ## Source and installation
 
 - [ ] Run a clean `npm ci` from the committed lockfile.
+- [ ] Resolve or explicitly document the current high-severity transitive `picomatch` advisory in the Tailwind CSS build toolchain; do not use a forced Tailwind major upgrade without migration and regression testing.
 - [ ] Run `npm run build:css` and verify generated CSS output.
 - [ ] Test the documented `vercel dev` workflow.
 - [ ] Deploy Preview under a buyer-owned Vercel account.
