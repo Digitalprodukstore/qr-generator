@@ -567,7 +567,7 @@ footer *{color:#e9e0d0!important}
 <div class="relative p-6 rounded-2xl bg-surface-container-low transition-all duration-300 flex flex-col items-center max-w-sm w-full" id="qrFrameWrapper">
 <div class="hidden w-full pb-3 text-center border-b border-outline-variant/30 mb-3" id="frameHeaderZone">
 <span class="font-headline-sm text-headline-sm text-on-surface">SCAN TO SAVE</span>
-<p class="font-label-sm text-label-sm text-secondary">BOOTHPRO SOFT FILES</p>
+<p class="font-label-sm text-label-sm text-secondary">YOUR BRAND</p>
 </div>
 <div class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center bg-surface-container-lowest rounded-xl overflow-hidden shadow-inner">
 <canvas class="w-full h-full object-contain" height="1200" id="qrCanvas" width="1200"></canvas>
@@ -1174,7 +1174,7 @@ footer *{color:#e9e0d0!important}
     const input = document.getElementById('payloadValue');
     if (!canvas || !input) return;
     const ctx = canvas.getContext('2d');
-    const text = input.value || 'https://boothpro.id';
+    const text = input.value || 'https://example.com';
     const c1 = document.getElementById('qrColor1')?.value || '#111827';
     const c2 = document.getElementById('qrColor2')?.value || c1;
     const bg = document.getElementById('qrBgColor')?.value || '#ffffff';
