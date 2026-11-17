@@ -2,23 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://qrnode.boothpro.my.id/</loc>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://qrnode.boothpro.my.id/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://qrnode.boothpro.my.id/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://qrnode.boothpro.my.id/"/>
+    <loc>https://YOUR-DOMAIN.example/</loc>
+    <xhtml:link rel="alternate" hreflang="id-ID" href="https://YOUR-DOMAIN.example/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://YOUR-DOMAIN.example/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://YOUR-DOMAIN.example/"/>
   </url>
   <url>
-    <loc>https://qrnode.boothpro.my.id/en/</loc>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://qrnode.boothpro.my.id/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://qrnode.boothpro.my.id/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://qrnode.boothpro.my.id/"/>
+    <loc>https://YOUR-DOMAIN.example/en/</loc>
+    <xhtml:link rel="alternate" hreflang="id-ID" href="https://YOUR-DOMAIN.example/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://YOUR-DOMAIN.example/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://YOUR-DOMAIN.example/"/>
   </url>
-  <url><loc>https://qrnode.boothpro.my.id/about.html</loc></url>
-  <url><loc>https://qrnode.boothpro.my.id/contact.html</loc></url>
-  <url><loc>https://qrnode.boothpro.my.id/privacy.html</loc></url>
-  <url><loc>https://qrnode.boothpro.my.id/terms.html</loc></url>
-  <url><loc>https://qrnode.boothpro.my.id/disclaimer.html</loc></url>
-  <url><loc>https://qrnode.boothpro.my.id/faq.html</loc></url>
-  <url><loc>https://qrnode.boothpro.my.id/tutorial.html</loc></url>
-  <url><loc>https://qrnode.boothpro.my.id/use-cases.html</loc></url>
+  <url><loc>https://YOUR-DOMAIN.example/about.html</loc></url>
+  <url><loc>https://YOUR-DOMAIN.example/contact.html</loc></url>
+  <url><loc>https://YOUR-DOMAIN.example/privacy.html</loc></url>
+  <url><loc>https://YOUR-DOMAIN.example/terms.html</loc></url>
+  <url><loc>https://YOUR-DOMAIN.example/disclaimer.html</loc></url>
+  <url><loc>https://YOUR-DOMAIN.example/faq.html</loc></url>
+  <url><loc>https://YOUR-DOMAIN.example/tutorial.html</loc></url>
+  <url><loc>https://YOUR-DOMAIN.example/use-cases.html</loc></url>
 </urlset>
