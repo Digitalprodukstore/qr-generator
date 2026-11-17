@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://qrnode.boothpro.my.id/sitemap.xml
+Sitemap: https://YOUR-DOMAIN.example/sitemap.xml
