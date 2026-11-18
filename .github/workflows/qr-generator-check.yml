@@ -482,7 +482,7 @@ jobs:
               const c = document.getElementById('qrCanvas');
               return c && c.dataset.qrReady === 'true' && document.getElementById('qrnodeStudio');
             }, null, { timeout: 30000 });
-            await desktop.locator('[data-qrfield="url"]').fill('https://example.com/qr-studio-pro-demo');
+            await desktop.locator('[data-qrfield="url"]').fill('https://example.com/qrnode-demo');
             await desktop.waitForFunction(() => document.getElementById('qrCanvas')?.dataset.qrReady === 'true');
             await desktop.screenshot({ path: 'codester-screenshots/01-desktop-generator.png', fullPage: true });
             await desktop.locator('#qrnodeStudio').scrollIntoViewIfNeeded();
@@ -490,12 +490,12 @@ jobs:
             const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 });
             await mobile.goto('http://127.0.0.1:4173/', { waitUntil: 'networkidle', timeout: 60000 });
             await mobile.waitForFunction(() => document.getElementById('qrCanvas')?.dataset.qrReady === 'true');
-            await mobile.locator('[data-qrfield="url"]').fill('https://example.com/qr-studio-pro-demo');
+            await mobile.locator('[data-qrfield="url"]').fill('https://example.com/qrnode-demo');
             await mobile.screenshot({ path: 'codester-screenshots/03-mobile-generator.png', fullPage: true });
             const english = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
             await english.goto('http://127.0.0.1:4173/en/', { waitUntil: 'networkidle', timeout: 60000 });
             await english.waitForFunction(() => document.getElementById('qrCanvas')?.dataset.qrReady === 'true');
-            await english.locator('[data-qrfield="url"]').fill('https://example.com/qr-studio-pro-demo');
+            await english.locator('[data-qrfield="url"]').fill('https://example.com/qrnode-demo');
             await english.screenshot({ path: 'codester-screenshots/04-english-interface.png', fullPage: true });
             await browser.close();
           })().catch(error => { console.error(error); process.exit(1); });
@@ -503,7 +503,7 @@ jobs:
       - name: Upload Codester gallery screenshots
         uses: actions/upload-artifact@v4
         with:
-          name: qr-studio-pro-codester-screenshots
+          name: qrnode-codester-screenshots
           path: codester-screenshots/*.png
           if-no-files-found: error
           retention-days: 14
@@ -532,7 +532,7 @@ jobs:
       - name: Build and clean-room test Codester buyer package
         run: |
           set -euo pipefail
-          DIST="$RUNNER_TEMP/qr-studio-pro-buyer"
+          DIST="$RUNNER_TEMP/qrnode-buyer"
           rm -rf "$DIST"
           mkdir -p "$DIST"
           FILES=(
@@ -565,28 +565,28 @@ jobs:
           test ! -e .git
           rm -rf node_modules
           cd "$RUNNER_TEMP"
-          zip -qr "$GITHUB_WORKSPACE/QR-Studio-Pro-Commercial-Edition.zip" qr-studio-pro-buyer
-          unzip -t "$GITHUB_WORKSPACE/QR-Studio-Pro-Commercial-Edition.zip"
+          zip -qr "$GITHUB_WORKSPACE/QRnode-Commercial-Edition.zip" qrnode-buyer
+          unzip -t "$GITHUB_WORKSPACE/QRnode-Commercial-Edition.zip"
           cd "$GITHUB_WORKSPACE"
           python - <<'PY'
           import zipfile
-          p='QR-Studio-Pro-Commercial-Edition.zip'
+          p='QRnode-Commercial-Edition.zip'
           with zipfile.ZipFile(p) as z:
               names=z.namelist()
               forbidden=('.git/','node_modules/','.env','tailwind.config.cjs','styles/tailwind.input.css','api/_dynamicQrValidation.js','PRE_SALE_AUDIT.md','CODESTER_LISTING_DRAFT.md')
               bad=[n for n in names if any(x in n for x in forbidden)]
-              required=['qr-studio-pro-buyer/README.md','qr-studio-pro-buyer/index.html','qr-studio-pro-buyer/en/index.html','qr-studio-pro-buyer/qrnode-upgrade.js','qr-studio-pro-buyer/api/admin/login.js','qr-studio-pro-buyer/docs/BUYER_INSTALLATION_GUIDE.md','qr-studio-pro-buyer/SBOM.cdx.json']
+              required=['qrnode-buyer/README.md','qrnode-buyer/index.html','qrnode-buyer/en/index.html','qrnode-buyer/qrnode-upgrade.js','qrnode-buyer/api/admin/login.js','qrnode-buyer/docs/BUYER_INSTALLATION_GUIDE.md','qrnode-buyer/SBOM.cdx.json']
               missing=[n for n in required if n not in names]
               if bad or missing:
                   raise SystemExit(f'Package validation failed. forbidden={bad}, missing={missing}')
               print(f'PASS: buyer archive contains {len(names)} entries and no forbidden paths.')
           PY
-          sha256sum "$GITHUB_WORKSPACE/QR-Studio-Pro-Commercial-Edition.zip"
+          sha256sum "$GITHUB_WORKSPACE/QRnode-Commercial-Edition.zip"
       - name: Upload clean-room tested Codester buyer package
         uses: actions/upload-artifact@v4
         with:
-          name: qr-studio-pro-codester-buyer-package
-          path: QR-Studio-Pro-Commercial-Edition.zip
+          name: qrnode-codester-buyer-package
+          path: QRnode-Commercial-Edition.zip
           if-no-files-found: error
           retention-days: 14
 
