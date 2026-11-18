@@ -470,10 +470,16 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git stash push --include-untracked -m "generated production-only package lock"
+          STASHED=0
+          if ! git diff --quiet || ! git diff --cached --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
+            git stash push --include-untracked -m "generated production-only package lock"
+            STASHED=1
+          fi
           git fetch origin "$GITHUB_REF_NAME"
           git rebase "origin/$GITHUB_REF_NAME"
-          git stash pop
+          if [ "$STASHED" -eq 1 ]; then
+            git stash pop
+          fi
           git add package-lock.json
           if ! git diff --cached --quiet; then
             git commit -m "build: remove unused Tailwind build dependency tree"
