@@ -75,8 +75,10 @@ The download includes a buyer installation guide covering deployment, Admin cred
 - Buyer Handover Checklist.
 - Third-party notices and licence texts.
 - AS-IS Feature Matrix.
-- Security & Distribution Audit.
-- Third-party Asset & Licence Inventory.
+- `README.md` buyer setup guide.
+- `THIRD_PARTY_NOTICES.txt`, `THIRD_PARTY_NPM_NOTICES.txt`, and `SBOM.cdx.json`.
+
+Seller-only audit reports and internal inventory documents are not included in the buyer package.
 
 ## Requirements
 
