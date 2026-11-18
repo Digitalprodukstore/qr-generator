@@ -25,6 +25,9 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 
 ## 18 November follow-up — buyer-neutral package and dependency security
 
+- Pattern-based scan of 35 selected current source/configuration/documentation files found no common token, private-key, credential-assignment, or credential-bearing Redis URL patterns. This is not a full repository-wide historical scan.
+- Added `docs/DISTRIBUTION_PACKAGE_MANIFEST.md` with candidate include/exclude lists and explicit release gates. No final ZIP has been built or issued.
+
 - Buyer-facing Indonesian/English pages, contact/legal pages, `sitemap.xml`, and `robots.txt` were neutralized on the sale branch. Seller domain, direct contact, and BoothPro-specific sample/sponsor defaults were replaced with buyer placeholders. Production was not changed.
 - `package-lock.json` contains 74 dependency entries with licence metadata: 64 MIT, 7 ISC, 2 Apache-2.0, and 1 BSD-3-Clause; none are missing a declared licence field. This is not a full SBOM/legal review.
 - Static common-secret-pattern scan covered all 56 tracked text/code/config/documentation files in the reviewed tree and a sample of 28 recent commit patches; no tested token/private-key/credential-literal patterns were found. A dedicated complete all-branches/tags Git-history secret scan remains outstanding.
