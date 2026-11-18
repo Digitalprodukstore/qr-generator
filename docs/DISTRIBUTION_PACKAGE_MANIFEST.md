@@ -30,7 +30,8 @@ Include application files required for the buyer to build and deploy the current
 Exclude from the buyer ZIP unless a documented technical reason requires otherwise:
 
 - `.git/`, GitHub PR metadata, branches, commit history, and repository internals.
-- `.github/workflows/` (CI configuration is seller development infrastructure, not needed to run the app).\n- `scripts/`, `db/migrations/`, and `api/_dynamicQrValidation.js` (seller QA tooling and incomplete Dynamic QR groundwork are not part of the Static QR sale scope).
+- `.github/workflows/` (CI configuration is seller development infrastructure, not needed to run the app).
+- `scripts/`, `db/migrations/`, and `api/_dynamicQrValidation.js` (seller QA tooling and incomplete Dynamic QR groundwork are not part of the Static QR sale scope).
 - `node_modules/`, npm caches, build caches, test output, browser binaries, temporary files, and logs.
 - `.env`, `.env.*`, local environment files, secrets, API tokens, private keys, certificates, database dumps, and any credential-bearing files.
 - Seller Vercel project metadata, seller-only environment configuration, account identifiers, deployment logs, and private operational records.
