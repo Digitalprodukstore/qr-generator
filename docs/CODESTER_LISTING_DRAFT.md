@@ -8,7 +8,7 @@ QR Studio Pro — 18-Type Static QR Code Generator with PNG/SVG Export
 
 ## Short description
 
-A responsive, bilingual static QR code generator with 18 QR categories, customizable designs, and high-quality PNG/SVG export. Includes an optional server-protected Admin area for shared QR-type settings.
+18-type static QR generator with custom designs and PNG/SVG export. Bilingual and responsive.
 
 ## Product category
 
