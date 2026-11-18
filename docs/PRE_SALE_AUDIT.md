@@ -125,3 +125,14 @@ The product may be offered as an AS-IS Static QR Edition with the above disclosu
 - Four additional package.json entries from test fixtures were not part of the CycloneDX SBOM and were excluded from the real dependency notice count.
 - The CDN-hosted QR encoder, Google Fonts and Material Symbols remain outside the npm SBOM and still require a separate rights/notice/privacy review.
 - Sale gate: actual npm dependency notice review is PARTIAL, with one missing MIT notice and external assets still open. No final ZIP is authorized yet.
+
+
+## 18 November 2026 — isolated removal of Tailwind build chain and refreshed SBOM
+
+- Isolated branch: `experiment/remove-tailwind-build-chain-2026-11-18`; no merge to the locked baseline and no Production deployment were performed.
+- QR Generator workflow run `44241396960`: SUCCESS. Static checks, Admin auth tests, QRNode static checks, browser QR decoding, Premium Design Studio, responsive viewport tests, high/critical npm audit gate, and automatic production-only lockfile commit all completed successfully.
+- The production-only lockfile declares only `@neondatabase/serverless@^1.0.2`, resolved to `1.2.1` (MIT). The installed dependency set no longer includes `picomatch`, `tinyglobby`, `sucrase`, `tailwindcss`, or `dlv`.
+- SBOM workflow run `44241396975`: SUCCESS. CycloneDX 1.5 contains exactly one installed npm component, `@neondatabase/serverless@1.2.1`, with MIT metadata. The workflow collected the actual package MIT LICENSE text; 1/1 SBOM packages had licence/NOTICE text.
+- The buyer app uses committed `assets/tailwind.generated.css`; no Tailwind CLI or CSS compilation step is required.
+- This is branch-scoped CI evidence, not a security certification. The full-history Gitleaks scan must run after final changes. The final buyer ZIP, clean extraction test, final demo/screenshots, live Admin logout/session-expiry acceptance, and seller ownership/licence confirmation remain outstanding.
+- The npm SBOM excludes CDN assets. Separate notices cover qrcode-generator, Geist, Inter, and Material Symbols; exact Google Fonts response versions remain unpinned.
