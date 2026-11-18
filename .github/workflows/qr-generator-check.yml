@@ -62,6 +62,7 @@ jobs:
           assert(unsafeBlankLinks.length === 0, 'external new-tab links use rel=noopener');
           assert(/canvas\.dataset\.qrReady !== 'true'/.test(html), 'export checks QR readiness');
           assert(!/BOOTHPRO|Photobooth Enterprise Kiosk|Cetak Foto Kilat 4K|ADMIN-BOOTHPRO/i.test(html + english), 'buyer-facing generator pages contain no BoothPro or seller-specific sample campaign branding');
+          assert(!/booth terminals|integrated sponsor management|Authenticated Kiosk Session|Sesi Kios Terotentikasi|Lihat Kios Publik/i.test(html + english), 'buyer-facing copy is generic and does not overstate sponsor synchronization');
           const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
           let count = 0;
           for (const [, attrs, code] of scripts) {
