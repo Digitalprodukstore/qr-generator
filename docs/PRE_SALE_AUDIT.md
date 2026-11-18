@@ -114,3 +114,14 @@ The product may be offered as an AS-IS Static QR Edition with the above disclosu
 - The secondary 4.0.8 remediation claim is not enough to justify an override. The v2 copy also needs a fix, so a 4.x-only override would not clear the full tree.
 - Decision: retain the current Tailwind 3.4.17 lockfile, keep npm audit failure visible, and do not run `npm audit fix --force`, force a major Tailwind upgrade, or suppress the audit. Revisit only after an official compatible upstream release or independently validated mitigation; rerun full browser/CSS tests.
 - This remains a release blocker. SBOM evidence classifies the dependency chain as build/development tooling, not a direct runtime dependency, but build-time risk remains.
+
+
+## 18 November 2026 follow-up — actual dependency licence notices
+
+- The SBOM workflow now collects actual package-root licence/NOTICE texts for package identities present in the CycloneDX dependency inventory.
+- Latest run `44239324540` passed on commit `165a776f72c9260175520f265b128e2efbe24030`. Internal artifact ID `14397943745`; SHA-256 `97ce030e1465a9ae8b9c64550c1b743228b3896453c59acf71a011a1c33618dd`; 14-day retention.
+- The CycloneDX report lists 73 components / 72 unique package name-version pairs, with all declared licence metadata present. Actual text collection found notices for 71 of 72 unique packages.
+- Unresolved: `dlv@1.1.3` declares MIT and identifies Jason Miller as author, but no LICENSE/NOTICE text file was found in the installed package or upstream repository root. Do not invent a copyright year. Obtain authoritative notice text or written clarification before redistributing.
+- Four additional package.json entries from test fixtures were not part of the CycloneDX SBOM and were excluded from the real dependency notice count.
+- The CDN-hosted QR encoder, Google Fonts and Material Symbols remain outside the npm SBOM and still require a separate rights/notice/privacy review.
+- Sale gate: actual npm dependency notice review is PARTIAL, with one missing MIT notice and external assets still open. No final ZIP is authorized yet.
