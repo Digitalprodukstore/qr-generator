@@ -1,4 +1,4 @@
-QR STUDIO PRO — THIRD-PARTY NOTICES
+QRNODE — THIRD-PARTY NOTICES
 ===================================
 
 This file records third-party software and font/icon licence notices relevant to the delivered application. The application loads these resources from external CDNs/services; font/icon binaries are not bundled in this package. The exact Google Fonts response versions are not pinned by the current HTML requests. Review provider terms and privacy implications before deployment.
