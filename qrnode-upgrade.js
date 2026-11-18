@@ -1,4 +1,4 @@
-/* QR Studio Pro — QRNode integration and Premium Design Studio. */
+/* QRnode — QRNode integration and Premium Design Studio. */
 (() => {
   "use strict";
   const $ = id => document.getElementById(id);
@@ -32,7 +32,7 @@
     case"wifi":return"WIFI:T:"+g("security")+";S:"+wifiEsc(g("ssid"))+";P:"+wifiEsc(g("password"))+";;";
     case"vcard":return["BEGIN:VCARD","VERSION:3.0","FN:"+esc(g("name")),g("org")?"ORG:"+esc(g("org")):"",g("phone")?"TEL;TYPE=CELL:"+esc(g("phone")):"",g("email")?"EMAIL:"+esc(g("email")):"","END:VCARD"].filter(Boolean).join("\r\n");
     case"geo":return"geo:"+g("lat")+","+g("lng")+(g("address")?"?q="+enc(g("address")):"");
-    case"event":return["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//QR Studio Pro//ID","BEGIN:VEVENT","SUMMARY:"+icsEsc(g("title")),g("start")?"DTSTART:"+icsDate(g("start")):"",g("end")?"DTEND:"+icsDate(g("end")):"",g("location")?"LOCATION:"+icsEsc(g("location")):"","END:VEVENT","END:VCALENDAR"].filter(Boolean).join("\r\n");
+    case"event":return["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//QRnode//ID","BEGIN:VEVENT","SUMMARY:"+icsEsc(g("title")),g("start")?"DTSTART:"+icsDate(g("start")):"",g("end")?"DTEND:"+icsDate(g("end")):"",g("location")?"LOCATION:"+icsEsc(g("location")):"","END:VEVENT","END:VCALENDAR"].filter(Boolean).join("\r\n");
     default:return"";}}
   function validate(c,f){const g=k=>String(f[k]??"").trim();
     if(["url","menu","invitation","review","social","pdf","multilink","form","app"].includes(c)){try{const u=new URL(g("url"));if(!["http:","https:"].includes(u.protocol))throw 0}catch{return"Masukkan tautan valid yang diawali https:// atau http://."}}
@@ -86,7 +86,7 @@
       const svg='<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 '+total+' '+total+'" role="img" aria-label="QR Code">'+body+"</svg>";
       const blob=new Blob([svg],{type:"image/svg+xml;charset=utf-8"});
       const filename=safeName("qr-studio-"+active)+"-"+Date.now()+".svg";
-      if(typeof window.qrnodeDeliverFile==="function") await window.qrnodeDeliverFile(blob,filename,"QR Studio Pro — SVG");
+      if(typeof window.qrnodeDeliverFile==="function") await window.qrnodeDeliverFile(blob,filename,"QRnode — SVG");
       else {
         const url=URL.createObjectURL(blob),a=document.createElement("a");
         a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();
@@ -120,7 +120,7 @@
       ctx.imageSmoothingEnabled=false;ctx.drawImage(source,x,y,side,side);
       const blob=await new Promise((resolve,reject)=>out.toBlob(value=>value?resolve(value):reject(Error("Browser gagal membuat file PNG.")),"image/png"));
       const filename=safeName("qr-studio-"+active+"-"+size.id+"-"+size.width+"x"+size.height)+".png";
-      if(typeof window.qrnodeDeliverFile==="function")await window.qrnodeDeliverFile(blob,filename,"QR Studio Pro — "+size.ratio);
+      if(typeof window.qrnodeDeliverFile==="function")await window.qrnodeDeliverFile(blob,filename,"QRnode — "+size.ratio);
       else{
         const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();
         setTimeout(()=>URL.revokeObjectURL(url),60000);
@@ -154,7 +154,7 @@
       }
       const blob=await new Promise((resolve,reject)=>out.toBlob(value=>value?resolve(value):reject(Error("Browser gagal membuat PNG 2048.")),"image/png"));
       const filename=safeName("qr-studio-"+active)+"-2048.png";
-      if(typeof window.qrnodeDeliverFile==="function") await window.qrnodeDeliverFile(blob,filename,"QR Studio Pro — PNG 2048");
+      if(typeof window.qrnodeDeliverFile==="function") await window.qrnodeDeliverFile(blob,filename,"QRnode — PNG 2048");
       else {
         const url=URL.createObjectURL(blob),a=document.createElement("a");
         a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();
@@ -258,7 +258,7 @@
     if (footer && !$("qspInfoFooter")) {
       const nav = document.createElement("nav");
       nav.id = "qspInfoFooter";
-      nav.setAttribute("aria-label", "Informasi QR Studio Pro");
+      nav.setAttribute("aria-label", "Informasi QRnode");
       nav.className = "qsp-info-footer";
       const links = [
         ["about.html","About Us"],["contact.html","Contact"],["privacy.html","Privacy Policy"],
