@@ -1,6 +1,6 @@
 # QR Studio Pro — Pre-Sale Audit
 
-Audit date: 16 November 2026  
+Audit date: 18 November 2026  
 Scope: prepare the existing QR Generator for a transparent AS-IS source/product sale. Preserve working features. No application feature changes are authorized by this document.
 
 ## Guardrails
@@ -20,7 +20,7 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 - Fresh GitHub Actions on branch HEAD `301edbb512ae69a2f404dfe9e6eda103f63654e1` passed the QR Generator checks (run 43748007911), Phase 2 checks (run 43748012830), and Phase 3 schema guard (run 43748012880). The run performed `npm ci`, `npm audit --audit-level=high` (0 vulnerabilities), local Tailwind CSS compilation/output checks, all 18 QR payload decode tests, three pattern checks, 2048×2048 PNG/SVG export checks, Premium Design Studio tests, and five responsive viewports.
 - Prior CI evidence and owner-reported manual QA are documented in PR #5 and the master audit. They are not fresh live QA performed in this audit session.
 - Latest Vercel Preview deployment `dpl_7LU6xwp7ZfAeoo2z5bTpUDmAp19u` is READY at `https://qr-generator-hthunbjg8-risakil.vercel.app` for exact branch HEAD `301edbb512ae69a2f404dfe9e6eda103f63654e1`. Anonymous access for intended buyers/testers remains unverified because deployment protection could not be independently bypassed for this audit.
-- The live Admin-authenticated Neon health probe has not been verified; the unauthenticated request was blocked by deployment protection.
+- Owner-reported live Preview acceptance on 18 November 2026: Admin login succeeded; global QR type settings were saved, persisted after refresh, and synchronized in another browser; the Admin database health check also succeeded. This is owner-reported manual evidence, not an independently captured API trace. The exact Neon probe output/latency and logout/session-expiry behavior were not supplied.
 - Dynamic QR migration is present but unapplied; Dynamic QR persistence/resolver/analytics are not complete.
 
 ## Current pre-sale gate matrix
@@ -30,8 +30,8 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 | Static QR feature inventory | DOCUMENTED | 18 categories and supporting capabilities described in PR #5. |
 | Fresh 18-category decode regression | PASS (CI) | All 18 payload categories and square/rounded/dots patterns independently decoded in browser CI; real phone-camera scans remain a separate acceptance step. |
 | PNG/SVG, presets and exports | PASS (CI) | 2048px PNG for all three patterns independently decoded; SVG shape checks, five presets, local projects and sponsor URL safety passed. Manual logo/share QA across physical devices remains required. |
-| Admin authentication and global settings | MOCKED CI PASS / LIVE PARTIAL | Auth/session/rate-limit/same-origin tests passed in mocked CI. Live Admin login/logout, Redis persistence and buyer-owned session acceptance remain required. |
-| Neon real connectivity | BLOCKED / NOT VERIFIED | Requires owner to test from authenticated Admin Preview session; do not share secrets. |
+| Admin authentication and global settings | MOCKED CI PASS / LIVE PARTIAL — OWNER-REPORTED PASS | Owner confirmed Preview Admin login, saving global QR type settings, persistence after refresh, and cross-browser synchronization on 18 Nov 2026. Logout, expiry, failure-mode, and buyer-owned credential acceptance remain untested. |
+| Neon real connectivity | OWNER-REPORTED PASS (Preview) | Owner confirmed Admin database health check succeeded on 18 Nov 2026. Exact query output/latency and independent verification were not provided; do not infer that Dynamic QR persistence is implemented. |
 | Dynamic QR and analytics | NOT INCLUDED / INCOMPLETE | Explicitly exclude from Static QR Edition sale scope. |
 | Public Preview buyer access | NOT VERIFIED | Owner must approve any access-setting changes; do not weaken protection. |
 | Legal/policy/owner disclosures | OWNER REVIEW REQUIRED | Confirm legal entity, contact, privacy/terms, domain and transfer rights. |
@@ -51,14 +51,14 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 
 Recommended label: **QR Studio Pro — Static QR Generator Commercial Edition (AS-IS)**.
 
-Include only capabilities that are present and documented in `AS_IS_FEATURE_MATRIX.md`. Attach the buyer handover checklist. State that Dynamic QR, analytics, cloud-synced saved projects, active AdSense and live Neon database connectivity are not included/verified.
+Include only capabilities that are present and documented in `AS_IS_FEATURE_MATRIX.md`. Attach the buyer handover checklist. State that Dynamic QR, analytics, cloud-synced saved projects and active AdSense are not included. Neon health check has been owner-reported successful on Preview, but database-backed Dynamic QR features remain incomplete.
 
 Do not claim “100% safe”, “penetration tested”, “fully production-ready”, “guaranteed revenue”, “AdSense approved”, or “all modules complete”.
 
 ## Remaining work sequence
 
 1. Complete real phone-camera scanning and physical-device export/share acceptance on the current Preview.
-2. Complete live authenticated Admin login/logout/session expiry, Upstash persistence and Neon health acceptance; record any unavailable services.
+2. Complete Admin logout/session-expiry and fail-closed acceptance; retain the owner-reported Preview evidence for Upstash persistence/cross-browser sync and Neon health check.
 3. Verify the committed dependency lockfile with a clean `npm ci`; complete transitive SBOM/licence/privacy review.
 4. Complete Git-history secret scanning and review CSP strategy without exposing secret values.
 5. Review all public pages and confirm legal owner/contact/domain details with the seller.
