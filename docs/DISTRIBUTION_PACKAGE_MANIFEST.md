@@ -6,7 +6,7 @@ Status: preparation manifest only. Do not publish or deliver the archive until a
 
 - Product: QR Studio Pro — Static QR Generator Commercial Edition
 - Sale model: non-exclusive licence through Codester; seller retains ownership of original application IP.
-- Source branch: `fix/qrnode-phase1-adoption-2026-11-02`
+- Source branch: `experiment/remove-tailwind-build-chain-2026-11-18` (isolated QA branch; not merged to locked baseline)
 - Package version/commit: set only after security, dependency, licence, and buyer-install QA gates pass.
 - Deployment: buyer-owned Vercel project; Preview only for seller QA. No seller production resources are transferred.
 
@@ -21,7 +21,10 @@ Include application files required for the buyer to build and deploy the current
 - `assets/tailwind.generated.css`.
 - `package.json`, `package-lock.json`.
 - `vercel.json`, `.gitignore`.
-- `THIRD_PARTY_NOTICES.txt` (verified notices for the QR encoder, Geist, Inter, and Material Symbols; the font/icon binaries themselves are not bundled).
+- `THIRD_PARTY_NOTICES.txt` (CDN asset notices for the QR encoder, Geist, Inter, and Material Symbols; font/icon binaries are not bundled).
+- `THIRD_PARTY_NPM_NOTICES.txt` (actual MIT licence text for the sole installed npm dependency).
+- `SBOM.cdx.json` (CycloneDX 1.5 inventory for installed npm dependencies; external CDN assets are documented separately).
+- `robots.txt` and `sitemap.xml` (buyer-neutral public-site metadata; buyer must replace canonical domain placeholders).
 - Buyer-facing documentation: use `docs/BUYER_README.md` as the root `README.md` in the ZIP, plus `docs/AS_IS_FEATURE_MATRIX.md`, `docs/BUYER_INSTALLATION_GUIDE.md`, `docs/BUYER_HANDOVER_CHECKLIST.md`, and `docs/GLOBAL_ADMIN_SETTINGS_SETUP.md`.
 
 
@@ -50,18 +53,24 @@ Before the release archive is created, verify that buyer-facing placeholders rem
 
 ## Packaging validation steps
 
-1. Resolve the high-severity transitive `picomatch` advisory or document an approved risk disposition and ensure the full browser workflow has an acceptable result.
+1. Confirm the production-only dependency lockfile and full browser workflow remain green; this isolated experiment removes Tailwind build tooling and its flagged transitive dependency chain.
 2. Complete full Git-history secret scan and current-tree scan; remediate historical exposed credentials by rotation/revocation if any are found. Never copy secret values into the report.
-3. Complete transitive SBOM and licence-notice review, including CDN-hosted QR encoder, Google Fonts, and cdnjs assets.
+3. Review the committed CycloneDX SBOM and npm licence notice text, plus CDN-hosted QR encoder, Google Fonts, and Material Symbols notices/privacy disclosures.
 4. Confirm seller rights for all original code, copy, graphics, logos, fonts, icons, and included assets.
 5. Finalize the non-exclusive application licence and Codester Regular/Extended scope; do not promise copyright transfer or rights beyond Codester terms.
 6. Reconcile the buyer ZIP allowlist against all HTML script/style/navigation references; in particular, retain `qrnode-upgrade.js`, which is required by both generator pages, and `assets/tailwind.generated.css`, the precompiled stylesheet used by both languages. Include only the five Admin API endpoints and shared helpers listed above; do not ship the unused Dynamic QR validation helper, Tailwind build sources, or unapplied migration. Copy `docs/BUYER_README.md` to the archive root as `README.md`; do not include the repository's seller-working README.
 7. Confirm every link in the buyer-edition README resolves to a file included in the archive; do not ship seller-only audit, PR, pricing, or roadmap working documents.
 8. Build the ZIP from an explicit allowlist, not by zipping the repository root.
 9. Inspect archive listing for forbidden paths/patterns and scan archive contents for secrets.
-10. Extract into a clean directory, run the documented install/build process, and deploy to a buyer-owned Vercel Preview with buyer-owned Upstash.
+10. Extract into a clean directory, run `npm ci`, validate required files/routes, and deploy to a buyer-owned Vercel Preview with buyer-owned Upstash.
 11. Complete the buyer acceptance checklist on desktop and mobile, including Admin login, session logout, rate limiting, settings persistence, PNG/SVG export, and all 18 QR types.
 12. Record final package commit SHA, archive checksum, tested Node/npm versions, and test results.
+
+## Current evidence — 18 November 2026
+
+- QR Generator workflow run `44241396960` on commit `9f7109f60c2fe05cf22d3476650175313c22be05`: SUCCESS. Static checks, Admin auth tests, QRNode static checks, browser QR decode, Premium Design Studio, responsive viewport checks, high/critical npm audit gate, and production-only lockfile commit all completed successfully.
+- SBOM workflow run `44241396975`: SUCCESS. CycloneDX 1.5 lists one installed npm dependency: `@neondatabase/serverless@1.2.1` (MIT). Actual package licence text was collected; no missing npm package notice text. The earlier `picomatch`/Tailwind/`dlv` dependency chain is absent from the installed application dependency set on this experiment branch.
+- This evidence is branch-specific and does not authorize merging, Production deployment, or sale publication. The full-history secret scan, final buyer ZIP, clean extraction test, final demo/screenshots, and seller ownership/licence confirmation remain release gates.
 
 ## Important limitations
 
