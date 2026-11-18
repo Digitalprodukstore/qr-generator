@@ -1,4 +1,4 @@
-# QR Studio Pro — AS-IS Commercial Feature Matrix
+# QRnode — AS-IS Commercial Feature Matrix
 
 Status basis: repository audit and owner-reported Preview checks updated 18 November 2026. This is a disclosure matrix, not a certification that every live workflow has been re-tested. This is a disclosure matrix, not a certification that every live workflow has been re-tested.
 
@@ -35,6 +35,6 @@ Status basis: repository audit and owner-reported Preview checks updated 18 Nove
 
 ## Recommended product label
 
-**QR Studio Pro — Static QR Generator Commercial Edition (AS-IS)**
+**QRnode — Static QR Generator Commercial Edition (AS-IS)**
 
 Describe the included capabilities above and attach this matrix to any offer. Do not advertise it as a complete Dynamic QR / analytics platform or as 100% security-certified software.
