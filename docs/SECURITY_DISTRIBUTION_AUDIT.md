@@ -147,3 +147,12 @@ This review did not run a full Git-history secret scanner, a dependency SBOM/lic
 - [ ] Review third-party runtime/CDN assets and bundled fonts/icons independently.
 - [ ] Resolve or formally document the picomatch build-tool advisory; do not force a Tailwind major upgrade.
 - [ ] Finalize application licence wording, then build and scan the allowlist ZIP and complete buyer-owned clean-room QA.
+
+
+## Upstream picomatch remediation status — 18 November 2026
+
+- Rechecked the official GitHub Advisory and upstream repository. GHSA-fc5q-39xc-vjpf / CVE-2026-112366 is still published as High; the advisory page lists affected and patched versions as Unknown, while npm audit flags the installed released versions through `4.0.7` and the current lockfile's picomatch copies.
+- Upstream issue `micromatch/picomatch#247` remains open. Candidate fix PR `#238` for the master/4.x line remains open and unmerged; candidate PR `#246` for the v2 line remains open and unmerged. The official release list still shows `4.0.7` as latest; no official `4.0.8` release was confirmed.
+- A secondary aggregator recommends `4.0.8`, but that version is not corroborated by the official release list or the GitHub advisory. Do not force an npm override to 4.0.8, do not use `npm audit fix --force`, and do not suppress the audit. The v2 copy also needs a fix, so a 4.x-only override would not clear the full tree.
+- The SBOM and lockfile classify the vulnerable chain as development/build tooling. This lowers normal browser-runtime exposure but leaves CI/build-time risk and does not justify calling the dependency tree clean.
+- Decision: retain the current locked Tailwind 3.4.17 toolchain, keep the high-severity audit visible, and defer dependency remediation until upstream ships a reviewed release for both affected major lines or an independently tested compatible mitigation is available. Re-run npm audit and all browser/CSS regression checks after any later remediation.
