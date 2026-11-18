@@ -63,6 +63,7 @@ jobs:
           assert(/canvas\.dataset\.qrReady !== 'true'/.test(html), 'export checks QR readiness');
           assert(!/BOOTHPRO|Photobooth Enterprise Kiosk|Cetak Foto Kilat 4K|ADMIN-BOOTHPRO/i.test(html + english), 'buyer-facing generator pages contain no BoothPro or seller-specific sample campaign branding');
           assert(!/booth terminals|integrated sponsor management|Authenticated Kiosk Session|Sesi Kios Terotentikasi|Lihat Kios Publik/i.test(html + english), 'buyer-facing copy is generic and does not overstate sponsor synchronization');
+          assert(!/SYNC ACTIVE|CORE ENGINE v4\.2|v4\.2 PRO ENGINE|PHASE 2/i.test(html + english + fs.readFileSync('qrnode-upgrade.js', 'utf8')), 'public UI contains no internal phase/version or false sync labels');
           const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
           let count = 0;
           for (const [, attrs, code] of scripts) {
