@@ -1383,7 +1383,7 @@ footer *{color:#e9e0d0!important}
     const syncPill = document.getElementById('syncModePill');
 
     if (badge) badge.innerText = cfg.adMode.toUpperCase();
-    if (syncPill) syncPill.innerText = cfg.adMode.toUpperCase() + ' SYNC';
+    if (syncPill) syncPill.innerText = cfg.adMode.toUpperCase() + ' MODE';
     if (topText) topText.innerHTML = '<strong></strong> &bull; ';
     if (topText) {
       const strong = topText.querySelector('strong');
@@ -1404,7 +1404,7 @@ footer *{color:#e9e0d0!important}
       const strong = document.createElement('strong');
       strong.textContent = cfg.sponsorName || 'QR Studio Pro';
       topText.appendChild(strong);
-      topText.appendChild(document.createTextNode(' • ' + (cfg.sponsorTagline || '')));
+      if (cfg.sponsorTagline) topText.appendChild(document.createTextNode(' • ' + cfg.sponsorTagline));
     }
     if (topLink && cfg.sponsorLink) {
       try {
