@@ -1,6 +1,6 @@
 # QRnode — AS-IS Commercial Feature Matrix
 
-Status basis: repository audit and owner-reported Preview checks updated 18 November 2026. This is a disclosure matrix, not a certification that every live workflow has been re-tested. This is a disclosure matrix, not a certification that every live workflow has been re-tested.
+Status basis: repository audit and owner-reported Preview checks updated 18 November 2026. This is a disclosure matrix, not a certification that every live workflow has been re-tested.
 
 ## Included in the current Static QR Edition scope
 
@@ -27,7 +27,7 @@ Status basis: repository audit and owner-reported Preview checks updated 18 Nove
 
 ## Deployment and transfer status
 
-- Development work branch: `fix/qrnode-phase1-adoption-2026-11-02`.
+- Development / sale-preparation branch: `experiment/remove-tailwind-build-chain-2026-11-18`.
 - Locked baseline: `baseline/qr-generator-v1-locked`.
 - PR #5 remains Draft; it must not be represented as merged or released.
 - Production domain `qrnode.boothpro.my.id` is locked/untouched and is not automatically included in a source-code sale.
