@@ -69,7 +69,7 @@ Configure values in the buyer's own Vercel project. Never reuse seller credentia
 
 After configuring environment variables, create a new Vercel Preview deployment. Start with Preview only; configure Production separately only after the buyer completes acceptance and explicitly chooses to release.
 
-Detailed Admin setup: [docs/GLOBAL_ADMIN_SETTINGS_SETUP.md](docs/GLOBAL_ADMIN_SETTINGS_SETUP.md) and [ADMIN_AUTH_SETUP.md](ADMIN_AUTH_SETUP.md).
+Detailed Admin setup: [docs/GLOBAL_ADMIN_SETTINGS_SETUP.md](docs/GLOBAL_ADMIN_SETTINGS_SETUP.md) and [ADMIN_AUTH_SETUP.md](ADMIN_AUTH_SETUP.md). For a complete buyer-owned installation, credential setup, and custom-domain walkthrough, see the [Buyer Installation Guide](docs/BUYER_INSTALLATION_GUIDE.md).
 
 ## Admin behavior and security notes
 
@@ -106,6 +106,7 @@ See [docs/AS_IS_FEATURE_MATRIX.md](docs/AS_IS_FEATURE_MATRIX.md) for the complet
 
 ## Documentation
 
+- [Buyer Installation Guide](docs/BUYER_INSTALLATION_GUIDE.md)
 - [AS-IS Feature Matrix](docs/AS_IS_FEATURE_MATRIX.md)
 - [Pre-Sale Audit](docs/PRE_SALE_AUDIT.md)
 - [Buyer Handover Checklist](docs/BUYER_HANDOVER_CHECKLIST.md)
@@ -122,4 +123,3 @@ This repository contains third-party dependencies and references external font/i
 ## Sale and handover
 
 The recommended listing scope is **QR Studio Pro — Static QR Generator Commercial Edition (AS-IS)**. Agree in writing on the exact commit/version, source rights, exclusivity, resale/sublicensing, support, excluded services/accounts, and acceptance window. Use the buyer handover checklist and obtain appropriate legal review.
-
