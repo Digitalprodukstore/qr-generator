@@ -81,10 +81,14 @@ jobs:
           import json
           import re
 
+          with open("qr-studio-pro.cdx.json", encoding="utf-8") as source:
+              bom = json.load(source)
+          sbom_keys = {(item.get("name"), item.get("version")) for item in bom.get("components", [])}
           root = Path("node_modules")
           pattern = re.compile(r"^(license|licence|copying|notice)([-_.].*)?$", re.IGNORECASE)
           packages = []
           missing = []
+          seen = set()
           for package_json in sorted(root.rglob("package.json")):
               try:
                   metadata = json.loads(package_json.read_text(encoding="utf-8"))
@@ -92,8 +96,10 @@ jobs:
                   continue
               name = metadata.get("name")
               version = metadata.get("version")
-              if not name or not version:
+              key = (name, version)
+              if not name or not version or key not in sbom_keys or key in seen:
                   continue
+              seen.add(key)
               package_dir = package_json.parent
               candidates = []
               for item in package_dir.iterdir():
@@ -105,16 +111,16 @@ jobs:
               candidates = sorted(set(candidates))
               declared = metadata.get("license", "NOT DECLARED")
               if not candidates:
-                  missing.append((name, version, declared))
-              packages.append((name, version, declared, candidates))
+                  missing.append((name, version, declared, package_dir))
+              packages.append((name, version, declared, candidates, package_dir))
 
           with open("THIRD_PARTY_NOTICES.txt", "w", encoding="utf-8") as output:
               output.write("QR Studio Pro — third-party package licence and NOTICE texts\n")
-              output.write("Generated from a clean npm ci installation. Review before redistribution.\n")
-              output.write(f"Packages inspected: {len(packages)}\n")
+              output.write("Generated from a clean npm ci installation and filtered to CycloneDX components. Review before redistribution.\n")
+              output.write(f"Unique SBOM packages inspected: {len(packages)}\n")
               output.write(f"Packages with licence/NOTICE files: {len(packages) - len(missing)}\n")
-              output.write(f"Packages with no matching text file: {len(missing)}\n\n")
-              for name, version, declared, candidates in packages:
+              output.write(f"SBOM packages with no matching text file: {len(missing)}\n\n")
+              for name, version, declared, candidates, package_dir in packages:
                   output.write("=" * 78 + "\n")
                   output.write(f"{name}@{version}\nDeclared licence metadata: {declared}\n")
                   if not candidates:
@@ -132,11 +138,11 @@ jobs:
                           output.write("\n[TRUNCATED AFTER 200 KB]\n")
                       output.write("\n\n")
 
-          print("Packages inspected:", len(packages))
+          print("Unique SBOM packages inspected:", len(packages))
           print("Packages with licence/NOTICE files:", len(packages) - len(missing))
-          print("Packages missing matching text file:", len(missing))
-          for name, version, declared in missing:
-              print(f"MISSING: {name}@{version} — {declared}")
+          print("SBOM packages missing matching text file:", len(missing))
+          for name, version, declared, package_dir in missing:
+              print(f"MISSING: {name}@{version} — {declared} — {package_dir}")
           PY
 
       - name: Upload SBOM for manual legal review
