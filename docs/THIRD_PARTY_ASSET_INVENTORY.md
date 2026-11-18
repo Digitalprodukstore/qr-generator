@@ -1,6 +1,6 @@
 # QR Studio Pro — Third-Party Asset & Licence Inventory
 
-Audit date: 16 November 2026  
+Audit date: 18 November 2026  
 Scope: source-visible direct dependencies and runtime assets. This is a partial inventory, not a complete SBOM or legal opinion.
 
 ## Direct application dependency
@@ -21,7 +21,7 @@ Scope: source-visible direct dependencies and runtime assets. This is a partial 
 
 ## Lockfile metadata review (18 November 2026)
 
-A programmatic read of the committed `package-lock.json` at the current sale branch found 74 installed package entries with a declared `license` metadata field:
+A programmatic read of the committed `package-lock.json` at the current sale branch found 74 package entries with a declared `license` metadata field:
 
 | Declared SPDX/license identifier | Package count |
 |---|---:|
@@ -35,35 +35,43 @@ This is a metadata inventory, not a legal determination. It does not replace rev
 
 ## Required follow-up before turnkey sale
 
-1. Run a clean `npm ci` from the committed lockfile and independently generate/review a full transitive dependency licence/SBOM report before each commercial release. The 74-package metadata count above is only an initial static inventory.
+1. Review the generated CycloneDX SBOM and actual third-party licence/NOTICE texts; refresh them from the exact release archive before each commercial release.
 2. Decide whether to self-host fonts/icons. If bundled, include the relevant OFL 1.1 / Apache 2.0 copyright and licence notices in the distribution.
 3. Review the privacy notice for requests to Google Fonts, cdnjs and other third-party hosts; these providers receive ordinary network request metadata. Tailwind CSS is now local and no longer makes a runtime CDN request.
-4. Complete a full transitive dependency and Git-history secret scan. This file does not claim either is complete.
+4. Resolve the remaining `dlv@1.1.3` copyright/notice evidence and the `picomatch` advisory before release. The Git-history Gitleaks scan has passed for fetched origin refs at branch HEAD `850f337`; this does not cover local clones, unfetched forks/unreachable objects, or external accounts.
 5. The repository has no root `LICENSE` file for the application's own code. The owner must choose and approve the application's source licence / sale-transfer terms; do not infer or invent one.
 
 ## Current decision
 
-The known direct/runtime assets reviewed here have permissive licences compatible with ordinary commercial software distribution when their respective terms and notices are followed. This does **not** mean the full project is licence-cleared: the transitive packages, full asset notices, remaining CDN terms/privacy and the application's own source ownership/licence still need review.
-
+The reviewed direct/runtime assets have permissive licence identifiers, but the full project is **not licence-cleared**. The `dlv` notice evidence, external CDN terms/privacy and exact served asset versions, and the application's own source ownership/licence still require review.
 
 ## CycloneDX verification — 18 November 2026
 
 A clean Linux CI installation (`npm ci --ignore-scripts`) generated a validated CycloneDX 1.5 SBOM from the committed npm lockfile:
 
-- Workflow run: `44238774223` (PASS), source commit `3f83389f386d92d79a7c5a8ce990f804a3cf852f`.
+- Latest SBOM workflow on branch HEAD `850f337af031e7296b5e5725ce15a69d033ddb5d`: PASS (PR run 44239453403 and push run 44239447775).
 - Installed components: 73. Declared licence metadata present for all 73.
 - SBOM licence identifiers: MIT 63, ISC 7, Apache-2.0 2, BSD-3-Clause 1.
 - The lockfile contains 74 node_modules entries because optional `fsevents@2.3.3` is not installed on the Linux runner. The lockfile flags one production dependency (`@neondatabase/serverless@1.2.1`, MIT), 72 development dependencies, and that one optional development dependency.
-- Internal CI artifact: `qr-studio-pro-cyclonedx-sbom.zip`, artifact ID `14398816802`, SHA-256 `6c3ed59fa542403b41069bb817c09e66aa8c3c7b6cc0aac96297146be640bb2f`; retained for 14 days. It is evidence for review, not part of the buyer ZIP.
+- The earlier SBOM artifact run `44238774223` produced artifact ID `14398816802`, SHA-256 `6c3ed59fa542403b41069bb817c09e66aa8c3c7b6cc0aac96297146be640bb2f`; retained for 14 days. It is evidence for review, not part of the buyer ZIP.
 
-The CycloneDX document contains declared licence identifiers and dependency metadata, not the complete licence texts. The original lockfile metadata table above counts 74 package entries, while the generated SBOM counts 73 installed Linux components; these are different scopes, not contradictory counts. The separate runtime CDN assets in the table above are not represented in the npm SBOM. Final legal review still requires the actual licence/NOTICE files for all 73 installed packages and separate confirmation of CDN-hosted assets, exact font versions, attribution and privacy disclosures.
-
+The CycloneDX document contains declared licence identifiers and dependency metadata, not the complete licence texts. The original lockfile metadata table counts 74 package entries, while the generated SBOM counts 73 installed Linux components; these are different scopes, not contradictory counts. Runtime CDN assets are not represented in the npm SBOM.
 
 ## Actual package notice-text review — 18 November 2026
 
-- The CycloneDX workflow now gathers actual package-root licence/NOTICE files for SBOM component identities, excluding package.json files from non-dependency test fixtures.
-- Latest run `44239324540` passed on commit `165a776f72c9260175520f265b128e2efbe24030`. Internal review artifact ID `14397943745`, SHA-256 `97ce030e1465a9ae8b9c64550c1b743228b3896453c59acf71a011a1c33618dd` (14-day retention).
+- The CycloneDX workflow gathers actual package-root licence/NOTICE files for SBOM component identities, excluding package.json files from non-dependency test fixtures.
+- Latest notice collection run `44239324540` passed on commit `165a776f72c9260175520f265b128e2efbe24030`. Internal review artifact ID `14397943745`, SHA-256 `97ce030e1465a9ae8b9c64550c1b743228b3896453c59acf71a011a1c33618dd` (14-day retention).
 - The CycloneDX SBOM lists 73 components representing 72 unique package name/version pairs; all declare licence metadata. Licence IDs: MIT 63, ISC 7, Apache-2.0 2, BSD-3-Clause 1.
-- Actual text collection found licence/NOTICE files for 71 of 72 unique SBOM packages. The single unresolved package is `dlv@1.1.3`: package metadata declares MIT and identifies Jason Miller as author, but neither the installed npm package nor the upstream repository root includes a matching LICENSE file. The final buyer archive must not invent a copyright year or claim this notice is complete; obtain an authoritative notice or written clarification before release.
-- The other four missing-text entries from the initial broad scan were test-fixture package.json files not present in the CycloneDX dependency component set; they are excluded from the 72-package count.
-- This review does not cover the external CDN/font/icon/QR encoder assets listed above. Their upstream terms, exact served versions, notices and privacy implications remain open.
+- Actual text collection found licence/NOTICE files for 71 of 72 unique SBOM packages. The one package without a matching file in the installed package or upstream repository root is `dlv@1.1.3`.
+- npm's package page/metadata declares MIT and lists Jason Miller as author/publisher. Public third-party attribution inventories are inconsistent: some identify © 2019 Jason Miller, while another identifies © 2019 Chase West and contributors; other inventories leave the holder blank. These are secondary notices, not the upstream package's own licence file or a written rights-holder clarification. Do not select a copyright holder/year or reconstruct a definitive notice from these conflicting sources. Keep `dlv@1.1.3` as an unresolved redistribution-notice gate until authoritative evidence is obtained or the dependency is safely removed/replaced and the resulting tree is re-audited.
+- The four other missing-text entries from the initial broad scan were test-fixture package.json files not present in the CycloneDX dependency component set; they are excluded from the 72-package count.
+- The CDN-hosted QR encoder, Google Fonts and Material Symbols remain outside the npm SBOM and still require a separate rights/notice/privacy review.
+
+## Picomatch advisory recheck — 18 November 2026
+
+- GitHub Advisory `GHSA-fc5q-39xc-vjpf` / `CVE-2026-112366` remains High severity. The advisory still reports affected and patched versions as Unknown; npm audit continues to flag the locked dependency tree.
+- The upstream repository's latest published release remains `4.0.7`; no official patched release was verified.
+- The upstream remediation PR `micromatch/picomatch#235` was closed without merge on 21 October 2026. It is not a released fix and must not be treated as remediation.
+- The dependency is in the development/build tooling chain (Tailwind/tinyglobby), not the application's declared runtime dependency. That narrows normal end-user exposure but does not remove build-time supply-chain risk.
+- Decision: retain the locked Tailwind 3.4.17 tree; do not force a major Tailwind upgrade, invent an npm override, suppress the audit, or claim zero vulnerabilities. Revisit only after an official compatible upstream fix or a separately reviewed mitigation passes the complete browser/CSS suite.
+- Latest QR Generator workflow on exact branch HEAD `850f337af031e7296b5e5725ce15a69d033ddb5d` failed only at `npm audit --audit-level=high`; the browser tests after that gate were skipped. Static checks, QRNode static checks, Admin auth tests, Phase 2, Phase 3, Gitleaks and SBOM workflows passed. The full browser regression is therefore not green on this HEAD.
