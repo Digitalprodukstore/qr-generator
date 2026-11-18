@@ -73,6 +73,7 @@ The download includes a buyer installation guide covering deployment, Admin cred
 - Package manifest and lockfile.
 - Buyer Installation Guide.
 - Buyer Handover Checklist.
+- Third-party notices and licence texts.
 - AS-IS Feature Matrix.
 - Security & Distribution Audit.
 - Third-party Asset & Licence Inventory.
