@@ -203,3 +203,13 @@ Preview deployment: `https://qr-generator-ho2xuq7y1-risakil.vercel.app` — Verc
 - Buyer-facing README, Codester draft, installation guide, handover checklist, distribution manifest, and feature matrix were aligned to the QRnode product name in the latest documentation commits.
 - PR #5 remains Draft, open, and unmerged. Production domain `https://qrnode.boothpro.my.id/` remains locked and untouched.
 - The current Preview is a documentation/branding update and does not establish final browser QA or commercial release readiness.
+
+
+## Follow-up review — picomatch advisory verification (19 November 2026)
+
+- Isolated investigation branch: `audit/picomatch-remediation-research-2026-11-19`, created from QRnode sale-branch HEAD `c8e08cfd53ddce4844993675659b8b2950c906e1`. No application code, dependency manifest, lockfile, PR base, or Production configuration was changed in this research step.
+- The official GitHub Advisory Database entry for GHSA-fc5q-39xc-vjpf / CVE-2026-112366 still reports affected versions as Unknown and patched versions as Unknown. Its description identifies picomatch versions through 4.0.7 as vulnerable to a ReDoS condition involving single-branch repeated extglob patterns.
+- The npm package registry currently identifies 4.0.7 as the latest published picomatch version; no 4.0.8 release is listed in the registry version history at this review. A secondary vulnerability aggregator's 4.0.8 recommendation is therefore not independently confirmed by the registry or the official GitHub advisory and must not be treated as an available verified fix.
+- The inspected upstream picomatch pull request #194 is about parsing a leading `?` in an extglob body; it is not evidence of a fix for CVE-2026-112366.
+- Decision: do not add an npm override, fabricate a 4.0.8 lockfile resolution, suppress the audit, or force a Tailwind major upgrade. Keep the existing high-severity audit gate visible until an upstream patch/release or a separately validated dependency-path change is available.
+- Next validation must use a real published package version, a clean `npm ci`, `npm audit --audit-level=high`, the Tailwind CSS build and output checks, static checks, and the full Chromium QR/Design Studio test suite. No Codester-ready or zero-vulnerability claim is authorized by this research.
