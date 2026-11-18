@@ -70,6 +70,18 @@ The release archive must exclude at minimum:
 
 Do not exclude `package-lock.json`, application source, API routes, required assets, migrations/documentation that accurately describe the product, or third-party licence notices.
 
+## Cleanup completed on the development/sale branch
+
+The following buyer-facing defaults have now been neutralized on this branch only:
+
+- Canonical and hreflang references in both language home pages use the reserved `example.com` placeholder.
+- `sitemap.xml` and `robots.txt` use the same placeholder pending buyer domain configuration.
+- Sample QR payloads and sponsor/social defaults no longer point to BoothPro-owned destinations.
+- Contact, privacy, terms, FAQ, tutorial, and about pages no longer contain the seller's direct email/phone/operator identity; buyer replacement placeholders are used.
+- A follow-up scan of the public-facing HTML/SEO files found no remaining matches for the checked seller email, phone, BoothPro domains, QRNode production domain, live-session sample token, or BoothPro brand string.
+
+These are development-branch edits only. No Production domain, account, environment variable, or deployment was changed. The final buyer must replace `example.com`, `support@example.com`, and other clearly marked placeholders before public launch.
+
 ## Required release gates
 
 - [ ] Complete secret scan of the current source tree and full Git history.
