@@ -1,4 +1,4 @@
-# QR Studio Pro — Third-Party Asset & Licence Inventory
+# QRnode — Third-Party Asset & Licence Inventory
 
 Audit date: 18 November 2026  
 Scope: source-visible direct dependencies and runtime assets. This is a partial inventory, not a complete SBOM or legal opinion.
