@@ -1,4 +1,4 @@
-# QR Studio Pro — Static QR Generator Commercial Edition
+# QRnode — Static QR Generator Commercial Edition
 
 A browser-first QR generator with 18 static QR categories, PNG/SVG export, design customization, Indonesian and English interfaces, and an optional server-protected Admin area for shared QR-type settings.
 
