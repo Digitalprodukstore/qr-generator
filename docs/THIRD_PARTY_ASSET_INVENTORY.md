@@ -44,3 +44,16 @@ This is a metadata inventory, not a legal determination. It does not replace rev
 ## Current decision
 
 The known direct/runtime assets reviewed here have permissive licences compatible with ordinary commercial software distribution when their respective terms and notices are followed. This does **not** mean the full project is licence-cleared: the transitive packages, full asset notices, remaining CDN terms/privacy and the application's own source ownership/licence still need review.
+
+
+## CycloneDX verification — 18 November 2026
+
+A clean Linux CI installation (`npm ci --ignore-scripts`) generated a validated CycloneDX 1.5 SBOM from the committed npm lockfile:
+
+- Workflow run: `44238774223` (PASS), source commit `3f83389f386d92d79a7c5a8ce990f804a3cf852f`.
+- Installed components: 73. Declared licence metadata present for all 73.
+- SBOM licence identifiers: MIT 63, ISC 7, Apache-2.0 2, BSD-3-Clause 1.
+- The lockfile contains 74 node_modules entries because optional `fsevents@2.3.3` is not installed on the Linux runner. The lockfile flags one production dependency (`@neondatabase/serverless@1.2.1`, MIT), 72 development dependencies, and that one optional development dependency.
+- Internal CI artifact: `qr-studio-pro-cyclonedx-sbom.zip`, artifact ID `14398816802`, SHA-256 `6c3ed59fa542403b41069bb817c09e66aa8c3c7b6cc0aac96297146be640bb2f`; retained for 14 days. It is evidence for review, not part of the buyer ZIP.
+
+The CycloneDX document contains declared licence identifiers and dependency metadata, not the complete licence texts. The original lockfile metadata table above counts 74 package entries, while the generated SBOM counts 73 installed Linux components; these are different scopes, not contradictory counts. The separate runtime CDN assets in the table above are not represented in the npm SBOM. Final legal review still requires the actual licence/NOTICE files for all 73 installed packages and separate confirmation of CDN-hosted assets, exact font versions, attribution and privacy disclosures.
