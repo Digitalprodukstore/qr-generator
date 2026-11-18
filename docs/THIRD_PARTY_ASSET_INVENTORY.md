@@ -90,3 +90,14 @@ The CycloneDX document contains declared licence identifiers and dependency meta
 - Added root `THIRD_PARTY_NOTICES.txt` using upstream licence texts: `qrcode-generator` 1.4.4 (MIT; Copyright 2009 Kazuhiko Arase), Geist (SIL OFL 1.1; Copyright 2026 The Geist Project Authors), Inter (SIL OFL 1.1; Copyright 2020 The Inter Project Authors), and Google Material Symbols (Apache 2.0; Google upstream repository).
 - qrcode-generator is loaded from cdnjs; Geist, Inter, and Material Symbols are loaded from Google Fonts. These are external requests, not vendored binaries. Current HTML requests do not pin exact font/icon binary versions; buyer documentation must retain this limitation and privacy disclosure.
 - The notice file preserves the full upstream licence texts. This does not certify the seller's original application code ownership or grant rights to unrelated third-party logos or brand marks.
+
+
+## Superseding dependency and notice review — 18 November 2026 (isolated sale experiment)
+
+This section supersedes the older Tailwind/picomatch/dlv dependency-tree findings above for branch `experiment/remove-tailwind-build-chain-2026-11-18` only. Older entries remain historical evidence for the previous build-tool dependency tree.
+
+- Tailwind CSS, its CLI/build chain, `sucrase`, `tinyglobby`, `picomatch`, and `dlv` are absent from the installed npm dependency set on this experiment branch. The application uses committed `assets/tailwind.generated.css`; no Tailwind build step is required.
+- QR CI run `44241396960`: SUCCESS, including the high/critical npm audit gate and complete browser QR regression.
+- SBOM run `44241396975`: SUCCESS. CycloneDX 1.5 records one installed npm component: `@neondatabase/serverless@1.2.1`, MIT. Actual package licence text was collected for 1/1 SBOM packages.
+- The npm SBOM does not include runtime CDN assets. Google Fonts response versions are not pinned; qrcode-generator version is pinned in its cdnjs URL.
+- This branch-scoped evidence does not certify ownership of original application code, clear unrelated logos/brand assets, or authorize redistribution. Seller rights confirmation remains mandatory.
