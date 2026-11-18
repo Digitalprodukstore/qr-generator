@@ -40,10 +40,10 @@ Never reuse or request the seller's credentials, hosting resources, database acc
 
 ## Buyer documentation
 
-- [Buyer Installation Guide](BUYER_INSTALLATION_GUIDE.md)
-- [Global Admin Settings Setup](GLOBAL_ADMIN_SETTINGS_SETUP.md)
-- [AS-IS Feature Matrix](AS_IS_FEATURE_MATRIX.md)
-- [Buyer Handover Checklist](BUYER_HANDOVER_CHECKLIST.md)
+- [Buyer Installation Guide](docs/BUYER_INSTALLATION_GUIDE.md)
+- [Global Admin Settings Setup](docs/GLOBAL_ADMIN_SETTINGS_SETUP.md)
+- [AS-IS Feature Matrix](docs/AS_IS_FEATURE_MATRIX.md)
+- [Buyer Handover Checklist](docs/BUYER_HANDOVER_CHECKLIST.md)
 
 ## Buyer launch checklist
 
