@@ -75,3 +75,11 @@ The CycloneDX document contains declared licence identifiers and dependency meta
 - The dependency is in the development/build tooling chain (Tailwind/tinyglobby), not the application's declared runtime dependency. That narrows normal end-user exposure but does not remove build-time supply-chain risk.
 - Decision: retain the locked Tailwind 3.4.17 tree; do not force a major Tailwind upgrade, invent an npm override, suppress the audit, or claim zero vulnerabilities. Revisit only after an official compatible upstream fix or a separately reviewed mitigation passes the complete browser/CSS suite.
 - Latest QR Generator workflow on exact branch HEAD `850f337af031e7296b5e5725ce15a69d033ddb5d` failed only at `npm audit --audit-level=high`; the browser tests after that gate were skipped. Static checks, QRNode static checks, Admin auth tests, Phase 2, Phase 3, Gitleaks and SBOM workflows passed. The full browser regression is therefore not green on this HEAD.
+
+
+## Build-tool mitigation candidate review — 18 November 2026
+
+- The lockfile path to the flagged `picomatch@4.0.7` is `tailwindcss@3.4.17 → sucrase@3.35.1 → tinyglobby@0.2.17 → picomatch@4.0.7`.
+- A possible experiment is to pin the Tailwind-compatible `sucrase@3.35.0` release: its published dependency metadata uses `glob@^10.3.10` rather than `tinyglobby`. This is only a candidate; no lockfile change or build test has been made.
+- This route changes the glob-matching dependency tree and may introduce a `minimatch` dependency. `minimatch` has a separate Moderate advisory `GHSA-g3hv-75wg-m249` / `CVE-2026-118764`; the upstream advisory identifies `10.2.6` as affected and `11.0.1` as patched. Exact resolved versions and compatibility must be checked before considering this route.
+- Decision: do not apply a Sucrase downgrade or npm override based only on dependency metadata. Any experiment must run on a separate branch and prove: clean `npm ci`, complete `npm audit` review, CSS output equivalence, all static checks, and the full Chromium/browser QR suite. Keep the current locked build tree until that evidence exists.
