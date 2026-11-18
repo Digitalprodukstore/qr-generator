@@ -84,3 +84,14 @@ Do not claim “100% safe”, “penetration tested”, “fully production-read
 ## Completion rule
 
 The product may be offered as an AS-IS Static QR Edition with the above disclosures once the seller is comfortable with the documented limitations and the exact transfer rights. It must not be represented as a fully verified turnkey service until all applicable live acceptance gates pass.
+
+
+## 18 November 2026 follow-up — full Git-history secret scan
+
+- Added `.github/workflows/secret-history-scan.yml` to the sale/development branch. It checks out the full available Git history and scans all fetched origin refs with Gitleaks, pinned by image digest and configured for 100% redaction.
+- Scanned exact branch HEAD `b766d54e698bfd630892b4e32390ac7565fed21f`.
+- Push run `44238511325` and pull-request run `44238519287` both completed successfully.
+- Both logs report 362 commits scanned, approximately 1.19 MB, and **no leaks found**.
+- This closes the dedicated Git-history scan gate for the fetched origin refs at that SHA. It does not scan local clones, unfetched forks/unreachable objects, external accounts, or unrelated GitHub/CI content.
+- Latest QR Generator workflow on this SHA is still a blocker: it completed with failure at `npm audit --audit-level=high`; Phase 2 and Phase 3 passed. Do not suppress the audit or force a major Tailwind upgrade.
+- The full SBOM/licence-notice review, picomatch remediation/documented risk, application licence approval, ZIP archive scan, and buyer-owned clean-room deployment remain open. No ZIP has been issued.
