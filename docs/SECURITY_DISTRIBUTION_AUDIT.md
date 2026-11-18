@@ -156,3 +156,21 @@ This review did not run a full Git-history secret scanner, a dependency SBOM/lic
 - A secondary aggregator recommends `4.0.8`, but that version is not corroborated by the official release list or the GitHub advisory. Do not force an npm override to 4.0.8, do not use `npm audit fix --force`, and do not suppress the audit. The v2 copy also needs a fix, so a 4.x-only override would not clear the full tree.
 - The SBOM and lockfile classify the vulnerable chain as development/build tooling. This lowers normal browser-runtime exposure but leaves CI/build-time risk and does not justify calling the dependency tree clean.
 - Decision: retain the current locked Tailwind 3.4.17 toolchain, keep the high-severity audit visible, and defer dependency remediation until upstream ships a reviewed release for both affected major lines or an independently tested compatible mitigation is available. Re-run npm audit and all browser/CSS regression checks after any later remediation.
+
+
+## Third-party notice text collection — 18 November 2026
+
+- Extended the CycloneDX workflow to collect the actual package-root `LICENSE`, `LICENCE`, `COPYING`, and `NOTICE` text files for package name/version pairs present in the generated SBOM. Non-dependency test fixtures discovered under nested package directories are excluded from this notice count.
+- Latest SBOM + notice workflow run: `44239324540` — SUCCESS, source commit `165a776f72c9260175520f265b128e2efbe24030`.
+- Artifact: `qr-studio-pro-sbom-and-licence-notices.zip`, ID `14397943745`, SHA-256 `97ce030e1465a9ae8b9c64550c1b743228b3896453c59acf71a011a1c33618dd` (14-day retention). It contains the CycloneDX 1.5 report and the collected notice-text bundle; it is an internal audit artifact, not the buyer ZIP.
+- CycloneDX: 73 components, 72 unique name/version pairs, all with declared licence metadata. Licence counts: MIT 63, ISC 7, Apache-2.0 2, BSD-3-Clause 1.
+- Actual notice collection: 72 unique SBOM package identities checked; 71 have a matching licence/NOTICE text file in the installed package. One exception: `dlv@1.1.3` declares MIT in package metadata but contains no matching licence file in the installed package. Its upstream GitHub repository root also has no LICENSE file; upstream package metadata identifies Jason Miller as author. Do not invent a copyright year or claim the notice is complete. Obtain an authoritative MIT notice/copyright statement or written rights-holder clarification before redistributing the final package.
+- Four additional package.json files discovered in dependency test fixtures were not present in the CycloneDX component set and were excluded from the actual dependency notice count.
+- This text collection does not inspect separately hosted runtime CDN/font/icon assets; those still require independent notice and attribution review.
+
+### Release-gate update
+- [x] Generate CycloneDX SBOM and reconcile installed components with lockfile metadata.
+- [x] Collect actual package licence/NOTICE texts for the installed SBOM dependencies.
+- [ ] Resolve the missing `dlv@1.1.3` MIT notice/copyright evidence.
+- [ ] Review external CDN/font/icon assets and buyer-facing privacy disclosures.
+- [ ] Keep the picomatch advisory as an explicit build-tool release blocker until a reviewed upstream release or validated mitigation is available.
