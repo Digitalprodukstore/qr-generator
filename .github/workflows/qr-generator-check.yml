@@ -484,6 +484,9 @@ jobs:
             }, null, { timeout: 30000 });
             await desktop.locator('[data-qrfield="url"]').fill('https://example.com/qrnode-demo');
             await desktop.waitForFunction(() => document.getElementById('qrCanvas')?.dataset.qrReady === 'true');
+            // Filling a form field can scroll the page; reset before capturing fixed navigation.
+            await desktop.evaluate(() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' }));
+            await desktop.waitForTimeout(250);
             await desktop.screenshot({ path: 'codester-screenshots/01-desktop-generator.png', fullPage: true });
             await desktop.locator('#qrnodeStudio').scrollIntoViewIfNeeded();
             await desktop.locator('#qrnodeStudio').screenshot({ path: 'codester-screenshots/02-premium-design-studio.png' });
@@ -491,11 +494,15 @@ jobs:
             await mobile.goto('http://127.0.0.1:4173/', { waitUntil: 'networkidle', timeout: 60000 });
             await mobile.waitForFunction(() => document.getElementById('qrCanvas')?.dataset.qrReady === 'true');
             await mobile.locator('[data-qrfield="url"]').fill('https://example.com/qrnode-demo');
+            await mobile.evaluate(() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' }));
+            await mobile.waitForTimeout(250);
             await mobile.screenshot({ path: 'codester-screenshots/03-mobile-generator.png', fullPage: true });
             const english = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
             await english.goto('http://127.0.0.1:4173/en/', { waitUntil: 'networkidle', timeout: 60000 });
             await english.waitForFunction(() => document.getElementById('qrCanvas')?.dataset.qrReady === 'true');
             await english.locator('[data-qrfield="url"]').fill('https://example.com/qrnode-demo');
+            await english.evaluate(() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' }));
+            await english.waitForTimeout(250);
             await english.screenshot({ path: 'codester-screenshots/04-english-interface.png', fullPage: true });
             await browser.close();
           })().catch(error => { console.error(error); process.exit(1); });
