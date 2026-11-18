@@ -73,10 +73,76 @@ jobs:
           }
           NODE
 
+      - name: Collect package licence and NOTICE texts
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import json
+          import re
+
+          root = Path("node_modules")
+          pattern = re.compile(r"^(license|licence|copying|notice)([-_.].*)?$", re.IGNORECASE)
+          packages = []
+          missing = []
+          for package_json in sorted(root.rglob("package.json")):
+              try:
+                  metadata = json.loads(package_json.read_text(encoding="utf-8"))
+              except Exception:
+                  continue
+              name = metadata.get("name")
+              version = metadata.get("version")
+              if not name or not version:
+                  continue
+              package_dir = package_json.parent
+              candidates = []
+              for item in package_dir.iterdir():
+                  if item.is_file() and pattern.match(item.name):
+                      candidates.append(item)
+              licenses_dir = package_dir / "licenses"
+              if licenses_dir.is_dir():
+                  candidates.extend(item for item in licenses_dir.iterdir() if item.is_file())
+              candidates = sorted(set(candidates))
+              declared = metadata.get("license", "NOT DECLARED")
+              if not candidates:
+                  missing.append((name, version, declared))
+              packages.append((name, version, declared, candidates))
+
+          with open("THIRD_PARTY_NOTICES.txt", "w", encoding="utf-8") as output:
+              output.write("QR Studio Pro — third-party package licence and NOTICE texts\n")
+              output.write("Generated from a clean npm ci installation. Review before redistribution.\n")
+              output.write(f"Packages inspected: {len(packages)}\n")
+              output.write(f"Packages with licence/NOTICE files: {len(packages) - len(missing)}\n")
+              output.write(f"Packages with no matching text file: {len(missing)}\n\n")
+              for name, version, declared, candidates in packages:
+                  output.write("=" * 78 + "\n")
+                  output.write(f"{name}@{version}\nDeclared licence metadata: {declared}\n")
+                  if not candidates:
+                      output.write("NO LICENSE/NOTICE FILE FOUND IN PACKAGE ROOT OR licenses/\n\n")
+                      continue
+                  for license_file in candidates:
+                      output.write("-" * 78 + "\n")
+                      output.write(f"FILE: {license_file.relative_to( package_json.parents[0] ) if False else license_file.name}\n")
+                      try:
+                          text = license_file.read_text(encoding="utf-8", errors="replace")
+                      except Exception as error:
+                          text = f"[Unable to read text: {error}]"
+                      output.write(text[:200000])
+                      if len(text) > 200000:
+                          output.write("\n[TRUNCATED AFTER 200 KB]\n")
+                      output.write("\n\n")
+
+          print("Packages inspected:", len(packages))
+          print("Packages with licence/NOTICE files:", len(packages) - len(missing))
+          print("Packages missing matching text file:", len(missing))
+          for name, version, declared in missing:
+              print(f"MISSING: {name}@{version} — {declared}")
+          PY
+
       - name: Upload SBOM for manual legal review
         uses: actions/upload-artifact@v7
         with:
-          name: qr-studio-pro-cyclonedx-sbom
-          path: qr-studio-pro.cdx.json
+          name: qr-studio-pro-sbom-and-licence-notices
+          path: |\n            qr-studio-pro.cdx.json\n            THIRD_PARTY_NOTICES.txt
           if-no-files-found: error
           retention-days: 14
