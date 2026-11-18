@@ -1,4 +1,4 @@
-# QR Studio Pro — Buyer Handover Checklist
+# QRnode — Buyer Handover Checklist
 
 Use this checklist for a **non-exclusive source-code licence sale**. The seller retains ownership of the original application IP and may license the same product to multiple buyers. The buyer receives only the rights granted by the applicable Codester licence and any written terms that do not conflict with it. A source-code sale does not automatically transfer third-party accounts, domains, service subscriptions, trademarks, or rights in third-party libraries.
 
