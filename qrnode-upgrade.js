@@ -295,6 +295,18 @@
   if (document.documentElement.lang === "en") {
     const englishCopy = [
       ["18 jenis QR dalam 4 kelompok. Pilih sesuai kebutuhan Anda.","18 QR types across 4 groups. Choose the one that fits your needs."],
+      ["Pilih gaya, cek kontras, simpan proyek, lalu ekspor resolusi tinggi.","Choose a style, check contrast, save your project, then export in high resolution."],
+      ["Pilih warna, cek kontras, dan sesuaikan tampilan QR Anda.","Choose colors, check contrast, and customize your QR code."],
+      ["Warna Utama Dot","Primary Dot Color"],["Warna Gradasi Dot","Dot Gradient Color"],
+      ["Latar Belakang","Background"],["Gradasi Neon","Neon Gradient"],
+      ["Preset Tema","Theme Presets"],["Kustomisasi Warna & Gradasi","Color & Gradient Customization"],
+      ["QR Frame & Center Logo","QR Frame & Center Logo"],["Pilih File Logo","Choose Logo File"],
+      ["Logo Tengah Custom","Custom Center Logo"],["Tanpa Bingkai","No Frame"],
+      ["Kartu Modern","Modern Card"],["Header Elegan","Elegant Header"],
+      ["Bawah Badge","Bottom Badge"],["Pilih File Logo","Choose Logo File"],
+      ["Unduh Ukuran Terpilih","Download Selected Size"],["Simpan File HP","Save to Phone"],
+      ["Kirim via HP / WA","Share via Phone / WhatsApp"],
+      ["Tips Langsung: Pengguna iPhone cukup tap & tahan gambar QR lalu pilih Simpan Foto. Pengguna Android dapat menekan tombol Simpan File HP atau bagikan langsung ke grup WhatsApp.","Quick Tip: On iPhone, touch and hold the QR image, then choose Save to Photos. On Android, tap Save to Phone or share directly to a WhatsApp group."],
       ["Pilih jenis QR","Choose a QR type"],["Kategori QR","QR category"],
       ["Pilih jenis QR sesuai kebutuhan Anda.","Choose the QR type that fits your needs."],
       ["Menu digital dan undangan menggunakan tautan publik agar hasil QR dapat dibuka oleh semua pemindai.","Digital menus and invitations use public links so the QR code can be opened by any scanner."],
