@@ -23,6 +23,13 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 - Owner-reported live Preview acceptance on 18 November 2026: Admin login succeeded; global QR type settings were saved, persisted after refresh, and synchronized in another browser; the Admin database health check also succeeded. This is owner-reported manual evidence, not an independently captured API trace. The exact Neon probe output/latency and logout/session-expiry behavior were not supplied.
 - Dynamic QR migration is present but unapplied; Dynamic QR persistence/resolver/analytics are not complete.
 
+## 18 November follow-up — buyer-neutral package and dependency security
+
+- Buyer-facing Indonesian/English pages, contact/legal pages, `sitemap.xml`, and `robots.txt` were neutralized on the sale branch. Seller domain, direct contact, and BoothPro-specific sample/sponsor defaults were replaced with buyer placeholders. Production was not changed.
+- `package-lock.json` contains 74 dependency entries with licence metadata: 64 MIT, 7 ISC, 2 Apache-2.0, and 1 BSD-3-Clause; none are missing a declared licence field. This is not a full SBOM/legal review.
+- CI on commit `353ec2e451754d23e8ee5242f22fc11da1f60858`: static checks and Admin auth tests passed; browser job failed at `npm audit --audit-level=high`, reporting 10 high findings in the transitive `picomatch` dependency tree used by Tailwind CSS 3.4.17/build tooling. The suggested `--force` remediation would upgrade Tailwind to 4.3.5 (major breaking change); no force upgrade was applied. This advisory is being tracked, and the browser suite is not yet green on the latest commit.
+- Current status must not be described as zero vulnerabilities or fully security-cleared. Normal runtime QR generation is browser-side, but build-time dependency risk remains.
+
 ## Current pre-sale gate matrix
 
 | Gate | Status | Evidence / next action |
@@ -35,8 +42,8 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 | Dynamic QR and analytics | NOT INCLUDED / INCOMPLETE | Explicitly exclude from Static QR Edition sale scope. |
 | Public Preview buyer access | NOT VERIFIED | Owner must approve any access-setting changes; do not weaken protection. |
 | Legal/policy/owner disclosures | OWNER REVIEW REQUIRED | Confirm legal entity, contact, privacy/terms, domain and transfer rights. |
-| Third-party dependency/licence review | PARTIAL | Direct asset/licence inventory added in `docs/THIRD_PARTY_ASSET_INVENTORY.md`; full transitive SBOM and privacy review remain open. Tailwind CSS 3.4.17 is now compiled locally; npm lockfile is committed. Full transitive SBOM and privacy review remain open. |
-| Secret and environment handover | DOCUMENTATION REQUIRED | `.gitignore` now excludes local env files; complete Git-history secret scan and inventory variable NAMES only. Buyer recreates/rotates values in buyer-owned accounts. |
+| Third-party dependency/licence review | PARTIAL / SECURITY BLOCKER | 74 lockfile licence metadata entries counted; full SBOM/legal notices remain open. CI reports 10 high `picomatch` transitive dependency advisories via Tailwind build tooling. Do not use `npm audit fix --force`; investigate an upstream fix or document/mitigate before release. |
+| Secret and environment handover | PARTIAL | Sale-branch buyer-facing contact/domain defaults neutralized; common credential-pattern checks were run against selected current files and a limited recent commit-patch sample. Complete Git-history secret scan remains open. Buyer recreates credentials in buyer-owned accounts. |
 | Domain and vendor asset ownership | CONTRACT REQUIRED | Explicitly list domain, Vercel, Upstash, Neon and account-transfer exclusions/inclusions. |
 | Production release | LOCKED / NOT AUTHORIZED | No production release under this audit. |
 
@@ -61,6 +68,7 @@ Do not claim “100% safe”, “penetration tested”, “fully production-read
 2. Complete Admin logout/session-expiry and fail-closed acceptance; retain the owner-reported Preview evidence for Upstash persistence/cross-browser sync and Neon health check.
 3. Verify the committed dependency lockfile with a clean `npm ci`; complete transitive SBOM/licence/privacy review.
 4. Complete Git-history secret scanning and review CSP strategy without exposing secret values.
+5. Resolve or formally document the current high-severity `picomatch` build-tool advisory and obtain a passing full browser workflow without forcing a Tailwind major upgrade.
 5. Review all public pages and confirm legal owner/contact/domain details with the seller.
 6. Finalize the exact sale asset schedule and written transfer agreement.
 7. Provide buyer with source, setup guide, environment variable names, known limitations, and a controlled acceptance checklist.
