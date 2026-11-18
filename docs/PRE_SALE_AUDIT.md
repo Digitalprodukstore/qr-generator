@@ -1,4 +1,4 @@
-# QR Studio Pro — Pre-Sale Audit
+# QRnode — Pre-Sale Audit
 
 Audit date: 18 November 2026  
 Scope: prepare the existing QR Generator for a transparent AS-IS source/product sale. Preserve working features. No application feature changes are authorized by this document.
