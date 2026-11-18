@@ -1,4 +1,4 @@
-# QR Studio Pro — Static QR Generator Commercial Edition (AS-IS)
+# QRnode — Static QR Generator Commercial Edition (AS-IS)
 
 A browser-first QR code generator with 18 static QR categories, PNG/SVG export, design customization, bilingual UI, and an optional server-protected Admin area for shared QR-type settings.
 
@@ -125,4 +125,4 @@ This repository contains third-party dependencies and references external font/i
 
 ## Sale and handover
 
-The recommended listing scope is **QR Studio Pro — Static QR Generator Commercial Edition (AS-IS)**. Agree in writing on the exact commit/version, source rights, exclusivity, resale/sublicensing, support, excluded services/accounts, and acceptance window. Use the buyer handover checklist and obtain appropriate legal review.
+The recommended listing scope is **QRnode — Static QR Generator Commercial Edition (AS-IS)**. Agree in writing on the exact commit/version, source rights, exclusivity, resale/sublicensing, support, excluded services/accounts, and acceptance window. Use the buyer handover checklist and obtain appropriate legal review.
