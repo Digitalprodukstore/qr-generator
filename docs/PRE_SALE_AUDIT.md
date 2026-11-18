@@ -23,15 +23,18 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 - Owner-reported live Preview acceptance on 18 November 2026: Admin login succeeded; global QR type settings were saved, persisted after refresh, and synchronized in another browser; the Admin database health check also succeeded. This is owner-reported manual evidence, not an independently captured API trace. The exact Neon probe output/latency and logout/session-expiry behavior were not supplied.
 - Dynamic QR migration is present but unapplied; Dynamic QR persistence/resolver/analytics are not complete.
 
-## 18 November follow-up — buyer-neutral package and dependency security
+## 18 November follow-up — buyer-neutral package, buyer README, and dependency security
 
 - Pattern-based scan of 35 selected current source/configuration/documentation files found no common token, private-key, credential-assignment, or credential-bearing Redis URL patterns. This is not a full repository-wide historical scan.
-- Added `docs/DISTRIBUTION_PACKAGE_MANIFEST.md` with candidate include/exclude lists and explicit release gates. No final ZIP has been built or issued.
+- Added `docs/DISTRIBUTION_PACKAGE_MANIFEST.md` with candidate include/exclude lists and explicit release gates. Added `docs/BUYER_README.md` as the buyer-facing root README source for the ZIP, excluding seller-only working documentation. No final ZIP has been built or issued.
 
 - Buyer-facing Indonesian/English pages, contact/legal pages, `sitemap.xml`, and `robots.txt` were neutralized on the sale branch. Seller domain, direct contact, and BoothPro-specific sample/sponsor defaults were replaced with buyer placeholders. Production was not changed.
 - `package-lock.json` contains 74 dependency entries with licence metadata: 64 MIT, 7 ISC, 2 Apache-2.0, and 1 BSD-3-Clause; none are missing a declared licence field. This is not a full SBOM/legal review.
 - Static common-secret-pattern scan covered all 56 tracked text/code/config/documentation files in the reviewed tree and a sample of 28 recent commit patches; no tested token/private-key/credential-literal patterns were found. A dedicated complete all-branches/tags Git-history secret scan remains outstanding.
 - CI on commit `353ec2e451754d23e8ee5242f22fc11da1f60858`: static checks and Admin auth tests passed; browser job failed at `npm audit --audit-level=high`, reporting 10 high findings in the transitive `picomatch` dependency tree used by Tailwind CSS 3.4.17/build tooling. The suggested `--force` remediation would upgrade Tailwind to 4.3.5 (major breaking change); no force upgrade was applied. This advisory is being tracked, and the browser suite is not yet green on the latest commit.
+- The branch is 266 commits ahead of the locked baseline. Earlier scans covered selected current source files and 28 recent commit patches, not the complete 266-commit delta or all branches/tags. A full Git-history secret scan remains an open release gate.
+- The latest tree contains 60 tracked files and no filenames matching common `.env`, private-key, certificate, database-dump, or credential-file patterns; filename review is not a content/history scan.
+- Latest Preview deployment for `4de369563396c0a756c012742e4e957ecc9a91ff` was initializing at the time of this update. Phase 2 and Phase 3 checks passed; the QR Generator workflow was still running.
 - Current status must not be described as zero vulnerabilities or fully security-cleared. Normal runtime QR generation is browser-side, but build-time dependency risk remains.
 
 ## Current pre-sale gate matrix
