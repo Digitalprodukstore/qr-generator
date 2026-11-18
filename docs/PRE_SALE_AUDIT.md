@@ -149,3 +149,10 @@ The product may be offered as an AS-IS Static QR Edition with the above disclosu
 - Added Playwright screenshot capture for the Indonesian desktop generator, Premium Design Studio panel, mobile generator, and English interface. These are real screenshots captured from the browser test server, not generated mockups.
 - Added an explicit buyer ZIP allowlist and clean-room packaging step. The step copies buyer README to root, installs the exact locked dependency set in the extracted package, runs high/critical npm audit, checks shipped JS syntax, validates archive contents, excludes seller/internal files, and computes SHA-256 before artifact upload.
 - Package pipeline outcome must be checked on the final workflow run before claiming the ZIP is ready. The generated artifact still requires seller visual review, buyer-owned deployment acceptance, and confirmation of commercial rights.
+
+
+## 18 November 2026 — sale-facing branding and package validator correction
+
+- Review of the actual Playwright captures identified seller-specific booth/photobooth copy and a sample coffee-shop sponsor campaign still present in the two public generator pages. Replaced those with neutral QR Studio Pro / creator / events / business copy, removed BoothPro identifiers from the public UI, and cleared the sample sponsor tagline defaults. No QR-generation feature was changed.
+- Corrected the English sponsor settings notice: those sponsor settings are saved locally in that browser and are not synced across devices. This aligns the UI with the actual localStorage behavior.
+- The first package archive was successfully created, installed in a clean directory, and passed npm audit with zero vulnerabilities; ZIP integrity also passed. The final archive-content validation script failed only because it looked for the ZIP from the wrong working directory. The workflow now changes back to the workspace before validating the archive; a fresh full run is required.

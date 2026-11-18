@@ -61,6 +61,7 @@ jobs:
           const unsafeBlankLinks = anchors.filter(anchor => /\btarget\s*=\s*["']_blank["']/i.test(anchor) && !/\brel\s*=\s*["'][^"']*\bnoopener\b/i.test(anchor));
           assert(unsafeBlankLinks.length === 0, 'external new-tab links use rel=noopener');
           assert(/canvas\.dataset\.qrReady !== 'true'/.test(html), 'export checks QR readiness');
+          assert(!/BOOTHPRO|Photobooth Enterprise Kiosk|Cetak Foto Kilat 4K|ADMIN-BOOTHPRO/i.test(html + english), 'buyer-facing generator pages contain no BoothPro or seller-specific sample campaign branding');
           const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
           let count = 0;
           for (const [, attrs, code] of scripts) {
@@ -563,6 +564,7 @@ jobs:
           cd "$RUNNER_TEMP"
           zip -qr "$GITHUB_WORKSPACE/QR-Studio-Pro-Commercial-Edition.zip" qr-studio-pro-buyer
           unzip -t "$GITHUB_WORKSPACE/QR-Studio-Pro-Commercial-Edition.zip"
+          cd "$GITHUB_WORKSPACE"
           python - <<'PY'
           import zipfile
           p='QR-Studio-Pro-Commercial-Edition.zip'
