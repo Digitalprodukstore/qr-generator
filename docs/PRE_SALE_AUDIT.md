@@ -95,3 +95,13 @@ The product may be offered as an AS-IS Static QR Edition with the above disclosu
 - This closes the dedicated Git-history scan gate for the fetched origin refs at that SHA. It does not scan local clones, unfetched forks/unreachable objects, external accounts, or unrelated GitHub/CI content.
 - Latest QR Generator workflow on this SHA is still a blocker: it completed with failure at `npm audit --audit-level=high`; Phase 2 and Phase 3 passed. Do not suppress the audit or force a major Tailwind upgrade.
 - The full SBOM/licence-notice review, picomatch remediation/documented risk, application licence approval, ZIP archive scan, and buyer-owned clean-room deployment remain open. No ZIP has been issued.
+
+
+## 18 November 2026 follow-up — CycloneDX dependency inventory
+
+- Added `.github/workflows/sbom.yml`; it installs the exact lockfile with `npm ci --ignore-scripts`, generates CycloneDX 1.5 via `npm sbom`, validates the document, and uploads it for review.
+- SBOM run `44238774223` passed on commit `3f83389f386d92d79a7c5a8ce990f804a3cf852f`. Artifact ID `14398816802`; SHA-256 `6c3ed59fa542403b41069bb817c09e66aa8c3c7b6cc0aac96297146be640bb2f`; retention 14 days.
+- Installed SBOM components: 73; components without declared licence metadata: 0. Declared licence counts: MIT 63, ISC 7, Apache-2.0 2, BSD-3-Clause 1. The lockfile contains 74 package entries including optional Linux-incompatible `fsevents@2.3.3`; the runner installed 73.
+- Lockfile flags: one production dependency (`@neondatabase/serverless@1.2.1`, MIT), 72 development dependencies, and one optional development dependency. The picomatch findings are in the build/development dependency tree, not the single declared runtime dependency.
+- This SBOM provides dependency/licence metadata, not the actual licence texts or legal clearance. External CDN/font/icon/QR assets are outside this npm SBOM and still need separate review. Preserve all applicable third-party notices in the final buyer archive.
+- Pre-sale gate status: SBOM generation and metadata validation PASS; actual licence-notice review remains OPEN. The full Git-history Gitleaks scan passed on the preceding scanned HEAD and is re-run on subsequent branch pushes.
