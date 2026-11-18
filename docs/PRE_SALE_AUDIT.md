@@ -105,3 +105,12 @@ The product may be offered as an AS-IS Static QR Edition with the above disclosu
 - Lockfile flags: one production dependency (`@neondatabase/serverless@1.2.1`, MIT), 72 development dependencies, and one optional development dependency. The picomatch findings are in the build/development dependency tree, not the single declared runtime dependency.
 - This SBOM provides dependency/licence metadata, not the actual licence texts or legal clearance. External CDN/font/icon/QR assets are outside this npm SBOM and still need separate review. Preserve all applicable third-party notices in the final buyer archive.
 - Pre-sale gate status: SBOM generation and metadata validation PASS; actual licence-notice review remains OPEN. The full Git-history Gitleaks scan passed on the preceding scanned HEAD and is re-run on subsequent branch pushes.
+
+
+## 18 November 2026 follow-up — picomatch upstream remediation status
+
+- Rechecked the official GitHub advisory and upstream repository. GHSA-fc5q-39xc-vjpf remains published as High; affected/patched versions remain Unknown in the advisory, and `npm audit` still flags the locked picomatch dependency chain.
+- Upstream issue #247 remains open. Candidate fix PR #238 (4.x/master) and #246 (v2) remain open and unmerged. Official releases still list 4.0.7 as latest; no official 4.0.8 release was verified.
+- The secondary 4.0.8 remediation claim is not enough to justify an override. The v2 copy also needs a fix, so a 4.x-only override would not clear the full tree.
+- Decision: retain the current Tailwind 3.4.17 lockfile, keep npm audit failure visible, and do not run `npm audit fix --force`, force a major Tailwind upgrade, or suppress the audit. Revisit only after an official compatible upstream release or independently validated mitigation; rerun full browser/CSS tests.
+- This remains a release blocker. SBOM evidence classifies the dependency chain as build/development tooling, not a direct runtime dependency, but build-time risk remains.
