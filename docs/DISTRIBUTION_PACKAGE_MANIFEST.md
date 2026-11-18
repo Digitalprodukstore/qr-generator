@@ -21,7 +21,8 @@ Include application files required for the buyer to build and deploy the current
 - `assets/tailwind.generated.css`.
 - `package.json`, `package-lock.json`.
 - `vercel.json`, `.gitignore`.
-- Buyer-facing documentation: use `docs/BUYER_README.md` as the root `README.md` in the ZIP, plus `docs/AS_IS_FEATURE_MATRIX.md`, `docs/BUYER_INSTALLATION_GUIDE.md`, `docs/BUYER_HANDOVER_CHECKLIST.md`, and `docs/GLOBAL_ADMIN_SETTINGS_SETUP.md`. Include third-party licence notices only after the complete SBOM and redistribution review establishes the exact required files.
+- `THIRD_PARTY_NOTICES.txt` (verified notices for the QR encoder, Geist, Inter, and Material Symbols; the font/icon binaries themselves are not bundled).
+- Buyer-facing documentation: use `docs/BUYER_README.md` as the root `README.md` in the ZIP, plus `docs/AS_IS_FEATURE_MATRIX.md`, `docs/BUYER_INSTALLATION_GUIDE.md`, `docs/BUYER_HANDOVER_CHECKLIST.md`, and `docs/GLOBAL_ADMIN_SETTINGS_SETUP.md`.
 
 
 ## Candidate exclude list
