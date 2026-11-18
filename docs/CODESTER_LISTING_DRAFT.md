@@ -12,7 +12,7 @@ QR Studio Pro — 18-Type Static QR Code Generator with PNG/SVG Export
 
 ## Product category
 
-PHP Scripts / JavaScript / Tools (choose the closest category available in the Codester submission form; the product uses browser JavaScript and Vercel serverless API routes, not a PHP backend).
+Choose the closest available JavaScript / HTML5 / Scripts & Code category. Do not select PHP: this product uses browser JavaScript and Vercel serverless API routes, not a PHP backend.
 
 ## Suggested tags
 
