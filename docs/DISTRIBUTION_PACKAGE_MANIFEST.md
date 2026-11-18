@@ -1,10 +1,10 @@
-# Codester Distribution Package Manifest — QR Studio Pro
+# Codester Distribution Package Manifest — QRnode
 
 Status: preparation manifest only. Do not publish or deliver the archive until all release gates in `PRE_SALE_AUDIT.md` are closed.
 
 ## Package identity
 
-- Product: QR Studio Pro — Static QR Generator Commercial Edition
+- Product: QRnode — Static QR Generator Commercial Edition
 - Sale model: non-exclusive licence through Codester; seller retains ownership of original application IP.
 - Source branch: `experiment/remove-tailwind-build-chain-2026-11-18` (isolated QA branch; not merged to locked baseline)
 - Package version/commit: provisional build from the isolated experiment branch; final archive SHA-256 and commit are recorded by the package CI artifact.
