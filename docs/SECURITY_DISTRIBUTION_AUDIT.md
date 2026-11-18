@@ -1,7 +1,7 @@
 # Security & Distribution Audit — QR Studio Pro
 
 Audit date: 18 November 2026  
-Reviewed ref: `353ec2e451754d23e8ee5242f22fc11da1f60858` (security audit updates continue on the same development branch)  
+Reviewed branch HEAD: `8f559e2005e29888698843ce60c4a8627b9120da` (18 November 2026)  
 Scope: source-tree review of all 56 tracked text/code/config/documentation files in the reviewed sale-branch tree for common credential patterns, plus targeted Admin/authentication and buyer-facing configuration review. A sample of 28 recent commit patches was also checked for common token/private-key patterns. This is a focused static review, not a dedicated secret-scanning product, a complete Git-history secret scan, or a penetration test.
 
 ## Executive result
@@ -44,13 +44,13 @@ The current Vercel configuration includes nosniff, referrer policy, frame denial
 
 ### 6. Dependency and third-party licensing and security
 
-The current CI run on commit `353ec2e451754d23e8ee5242f22fc11da1f60858` completed the static checks and Admin auth tests successfully, but its browser job stopped at `npm audit --audit-level=high`. npm reported 10 high-severity findings in the transitive `picomatch` dependency chain used by Tailwind CSS 3.4.17 and related build tooling. The log recommends a forced update to Tailwind CSS 4.3.5, which is a major-version breaking change. **Do not run `npm audit fix --force` or upgrade Tailwind to v4 without a separate compatibility review and full CSS/browser regression.**
+The latest CI run on branch HEAD `8f559e2005e29888698843ce60c4a8627b9120da` completed the static checks and Admin auth tests successfully, but its browser job stopped at `npm audit --audit-level=high`. npm reported 10 high-severity findings in the transitive `picomatch` dependency chain used by Tailwind CSS 3.4.17/build tooling. The log recommends `npm audit fix --force`, which would force a major Tailwind upgrade in this dependency graph. **Do not run `npm audit fix --force` or upgrade Tailwind to v4 without a separate compatibility review and full CSS/browser regression.**
 
-The surfaced advisory GHSA-fc5q-39xc-vjpf / CVE-2026-112366 concerns ReDoS in picomatch through version 4.0.7. Public advisory records currently show no upstream fixed version; the upstream maintainer's position has also been disputed in public issue discussion. In this repository the affected packages are transitive dependencies of Tailwind/build tooling, not direct application runtime dependencies. That reduces exposure in normal static QR use, but does not eliminate build-time risk. Keep the CI finding visible, avoid processing untrusted glob patterns in build configuration, and re-evaluate when upstream publishes a confirmed fix. Do not claim “zero vulnerabilities” for the current full dependency tree.
+The surfaced advisory GHSA-fc5q-39xc-vjpf / CVE-2026-112366 concerns ReDoS in picomatch versions through 4.0.7. The GitHub Advisory Database currently lists no patched version; npm's registry currently lists 4.0.7 as latest. The issue is disputed by the upstream maintainer, but the published high-severity advisory remains active. In this repository picomatch is a transitive dependency of Tailwind/build tooling, not a direct application runtime dependency. This lowers exposure during normal browser-side static QR generation, but does not eliminate build-time risk. Keep the CI finding visible, do not feed untrusted glob patterns into build tooling, and re-evaluate when a confirmed upstream fix is published. Do not claim “zero vulnerabilities” for the current dependency tree. See the [GitHub advisory](https://github.com/advisories/GHSA-fc5q-39xc-vjpf) and [npm picomatch version history](https://www.npmjs.com/package/picomatch?activeTab=versions).
 
 ### Third-party licensing inventory
 
-The current third-party inventory includes 74 lockfile package entries with licence metadata (64 MIT, 7 ISC, 2 Apache-2.0, 1 BSD-3-Clause; no missing metadata fields detected). This remains a metadata-only inventory, not a full SBOM or legal licence clearance. It also identifies the direct Neon dependency and runtime QR/font/icon assets.
+The current third-party inventory includes 74 lockfile package entries with licence metadata (64 MIT, 7 ISC, 2 Apache-2.0, 1 BSD-3-Clause; no missing metadata fields detected). This remains a metadata-only inventory, not a full SBOM or legal licence clearance. It also identifies the direct Neon dependency and runtime QR/font/icon assets. A pattern-based scan of 35 selected current source/configuration/documentation files found no matches for common token/private-key/credential patterns; this is not a full Git-history secret scan.
 
 Before release:
 - Run a clean install from the lockfile.
