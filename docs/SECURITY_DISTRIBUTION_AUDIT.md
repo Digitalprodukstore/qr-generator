@@ -111,3 +111,22 @@ This review did not run a full Git-history secret scanner, a dependency SBOM/lic
 - The latest branch lockfile contains `picomatch@2.3.2` and `picomatch@4.0.7`, both marked `dev: true`; the latter is nested beneath `tinyglobby@0.2.17`.
 - The official GitHub advisory update dated 17 November lists affected and patched versions as Unknown. A secondary source mentions 4.0.8, but no override was applied because the fix status is not authoritatively confirmed.
 - PR #5 remains Draft/open, based on `lock/qr-studio-pro-premium-v3-2026-10-15`; no merge or Production change was made.
+
+
+## Follow-up review — full Git-history scan completed (18 November 2026)
+
+- Added `.github/workflows/secret-history-scan.yml` on the sale/development branch. The workflow checks out the full available history (`fetch-depth: 0`) and runs Gitleaks against all fetched refs using `git --log-opts=--all`.
+- Gitleaks container is pinned by immutable image digest; scan output is configured for 100% redaction. The workflow uses read-only repository contents and does not upload a report artifact containing candidate secrets.
+- Exact branch HEAD scanned: `b766d54e698bfd630892b4e32390ac7565fed21f`.
+- Push run: `44238511325` — SUCCESS. Pull-request run: `44238519287` — SUCCESS.
+- Both logs independently report **362 commits scanned**, approximately **1.19 MB** scanned, and **no leaks found**.
+- Scope: all Git refs/history fetched from the origin repository by the workflow at scan time. This does not inspect private local clones, deleted/unreachable Git objects, forks not fetched, GitHub issues/discussions, CI artifacts/logs outside this job, vendor dashboards, or credentials already exposed elsewhere. It is a strong repository-history result, not proof of global absence of secrets.
+- The earlier 56-file and 28-commit sample scans remain historical evidence only; the full-history Gitleaks result supersedes the outstanding Git-history gate for this scanned HEAD.
+- PR #5 remains Draft/open and unmerged, based on the locked baseline. No Production deployment or settings were changed.
+
+### Release-gate update
+- [x] Dedicated Gitleaks scan across all fetched origin refs and complete reachable Git history at the scanned HEAD — no leaks found.
+- [ ] Generate/review a complete transitive SBOM and actual licence notices, including externally hosted fonts/icons/QR assets.
+- [ ] Resolve or formally document the current high-severity picomatch build-tool advisory and obtain a passing full QR browser workflow without forcing a Tailwind major upgrade.
+- [ ] Finalize application licence wording and third-party notices.
+- [ ] Build the ZIP from the allowlist, run archive secret scan, and complete buyer-owned clean-room installation/QA.
