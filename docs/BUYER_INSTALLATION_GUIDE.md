@@ -21,7 +21,7 @@ Create these resources in the buyer's own accounts. The seller's Vercel, Upstash
 3. Upload the source files to that repository. Do not upload `.env` files, local credentials, access tokens, `node_modules`, or the seller's `.git` history.
 4. In Vercel, create a new project and import the buyer-owned repository.
 5. Keep the first deployment in Preview while configuring and testing.
-6. Use the repository's normal build settings. Install dependencies with `npm ci`; the project does not currently provide a standalone `npm start` command.
+6. Use the repository's normal Vercel settings. Install dependencies with `npm ci`; the project does not currently provide a standalone `npm start` command. The responsive stylesheet is shipped as the precompiled `assets/tailwind.generated.css` file, so buyers do not need Tailwind CLI or a CSS build step to deploy or operate this edition.
 
 Do not connect the buyer's copy to the seller's repository or Vercel project.
 
