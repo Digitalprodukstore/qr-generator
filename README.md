@@ -109,6 +109,7 @@ See [docs/AS_IS_FEATURE_MATRIX.md](docs/AS_IS_FEATURE_MATRIX.md) for the complet
 - [Buyer Installation Guide](docs/BUYER_INSTALLATION_GUIDE.md)
 - [Security & Distribution Audit](docs/SECURITY_DISTRIBUTION_AUDIT.md)
 - [Codester Listing Draft](docs/CODESTER_LISTING_DRAFT.md)
+- [Distribution Package Manifest](docs/DISTRIBUTION_PACKAGE_MANIFEST.md)
 - [AS-IS Feature Matrix](docs/AS_IS_FEATURE_MATRIX.md)
 - [Pre-Sale Audit](docs/PRE_SALE_AUDIT.md)
 - [Buyer Handover Checklist](docs/BUYER_HANDOVER_CHECKLIST.md)
