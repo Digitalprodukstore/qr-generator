@@ -1,6 +1,6 @@
 # QR Studio Pro — AS-IS Commercial Feature Matrix
 
-Status basis: repository audit notes and PR #5 documentation reviewed on 15 November 2026. This is a disclosure matrix, not a certification that every live workflow has been re-tested.
+Status basis: repository audit and owner-reported Preview checks updated 18 November 2026. This is a disclosure matrix, not a certification that every live workflow has been re-tested. This is a disclosure matrix, not a certification that every live workflow has been re-tested.
 
 ## Included in the current Static QR Edition scope
 
@@ -13,13 +13,13 @@ Status basis: repository audit notes and PR #5 documentation reviewed on 15 Nove
 | Sharing | Mobile share support where browser/device supports it | Native share availability depends on browser and OS. |
 | Saved projects | Up to eight recent projects via browser localStorage | Browser/device-local; not cloud synced and may be removed when site data is cleared. |
 | Language and layout | Indonesian/English interface; responsive layout | Final bilingual and mobile regression remains a buyer-acceptance item. |
-| Admin | Server-side Admin authentication and global settings for 18 QR categories | Requires Vercel environment secrets and Upstash Redis; live failure-mode and session tests remain required. |
+| Admin | Server-side Admin authentication and global settings for 18 QR categories | Requires Vercel environment secrets and Upstash Redis. Owner confirmed Preview login, global settings persistence after refresh, and cross-browser sync on 18 Nov 2026; logout, expiry, and failure-mode tests remain outstanding. |
 | Public information | Privacy, Terms, FAQ, Tutorial, Use Cases, Contact and related pages | Owner/legal identity, contact, policies and domain references must be approved before resale/release. |
 
 ## Explicitly not included / not represented as complete
 
 - Dynamic QR management, persistent destination editing, resolver redirects, lifecycle controls and analytics.
-- A live, verified Neon database connection. Existing health-endpoint tests are mocked; real authenticated Preview health verification remains outstanding.
+- Fully implemented Dynamic QR database-backed functionality. Owner reported that the Admin Preview database health check succeeded on 18 Nov 2026, but this only confirms the health probe and does not mean Dynamic QR CRUD, resolver, or analytics are implemented.
 - Applied Dynamic QR database migration. The migration file exists but has not been applied.
 - Cloud synchronization or cloud backup of saved QR projects.
 - Active Google AdSense integration, approval, ad serving or guaranteed revenue. Current ad controls/placeholders are not an active monetization integration.
