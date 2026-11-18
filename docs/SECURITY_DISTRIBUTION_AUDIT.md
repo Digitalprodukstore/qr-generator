@@ -130,3 +130,20 @@ This review did not run a full Git-history secret scanner, a dependency SBOM/lic
 - [ ] Resolve or formally document the current high-severity picomatch build-tool advisory and obtain a passing full QR browser workflow without forcing a Tailwind major upgrade.
 - [ ] Finalize application licence wording and third-party notices.
 - [ ] Build the ZIP from the allowlist, run archive secret scan, and complete buyer-owned clean-room installation/QA.
+
+
+## Follow-up review — CycloneDX SBOM generated (18 November 2026)
+
+- Added `.github/workflows/sbom.yml` to generate a CycloneDX 1.5 SBOM after a clean `npm ci --ignore-scripts` from the committed lockfile.
+- SBOM run: `44238774223` on commit `3f83389f386d92d79a7c5a8ce990f804a3cf852f` — SUCCESS. The SBOM was validated and uploaded as artifact ID `14398816802` (`qr-studio-pro-cyclonedx-sbom.zip`); SHA-256 of the uploaded artifact: `6c3ed59fa542403b41069bb817c09e66aa8c3c7b6cc0aac96297146be640bb2f` (14-day retention).
+- CycloneDX report contains **73 installed components**; all 73 have declared licence metadata. Counts: MIT 63, ISC 7, Apache-2.0 2, BSD-3-Clause 1. The package lock separately contains 74 node_modules entries: 73 installed on the Linux runner plus optional `fsevents@2.3.3`, which is not installed on Linux.
+- Lockfile dependency flags identify one production dependency (`@neondatabase/serverless@1.2.1`, MIT), 72 development dependencies, and one optional development dependency (`fsevents`). This confirms the high-severity picomatch chain is in development/build tooling, not the single declared production dependency. It does not mean build-time risk is absent.
+- The SBOM records package metadata and declared licence identifiers; it does **not** include the complete text of each package's licence or establish legal clearance. The 63/7/2/1 counts must not be treated as approval to redistribute without preserving notices.
+- npm SBOM does not cover separately hosted runtime assets such as Google Fonts, cdnjs libraries, QR encoder assets, or bundled non-npm fonts/icons. Those require a separate asset-by-asset licence/notice review.
+
+### Release-gate update
+- [x] Generate CycloneDX SBOM from clean locked dependency installation and verify component/licence metadata.
+- [ ] Review actual licence texts/notices for all installed packages and preserve required notices in the buyer archive.
+- [ ] Review third-party runtime/CDN assets and bundled fonts/icons independently.
+- [ ] Resolve or formally document the picomatch build-tool advisory; do not force a Tailwind major upgrade.
+- [ ] Finalize application licence wording, then build and scan the allowlist ZIP and complete buyer-owned clean-room QA.
