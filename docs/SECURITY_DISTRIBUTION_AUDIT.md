@@ -1,7 +1,7 @@
 # Security & Distribution Audit — QR Studio Pro
 
 Audit date: 18 November 2026  
-Reviewed ref: `9a4377dcf4d1d4e3ea6522f9448f6c331825cac5`  
+Reviewed ref: `353ec2e451754d23e8ee5242f22fc11da1f60858` (security audit updates continue on the same development branch)  
 Scope: source-tree review of buyer-facing configuration, Admin authentication, deployment settings, contact/legal identity, and common credential patterns. This is a focused static review, not a penetration test or a complete Git-history secret scan.
 
 ## Executive result
@@ -25,21 +25,17 @@ The inspected Admin implementation uses server-side environment variables for cr
 
 The database health test contains a deliberately fake connection string using the username/password pair `probe:secret` and a non-production Neon hostname. It is used as a test fixture and is not a live database credential based on the inspected test code. Keep it clearly marked as synthetic; do not copy it into deployment settings.
 
-### 3. Seller identity embedded in the public contact page
+### 3. Seller identity embedded in public pages
 
-The current `contact.html` includes seller-specific email, WhatsApp number, and operator/brand details. These details are appropriate only if the seller intentionally keeps them on the public demo. They must **not** be silently shipped as the buyer's own business contact details.
-
-Packaging requirement:
-- Include a clearly labelled buyer action in the handover guide to review and replace the contact page's email, phone/WhatsApp, operator name, service hours, privacy contact, terms, and legal/business disclosures.
-- For a white-label distribution archive, create a buyer-ready contact-page variant with explicit replacement placeholders, or make a documented pre-packaging copy that removes seller contact details. Do not overwrite the seller's live demo identity without approval.
+The sale branch has been cleaned of the seller's direct email, phone/WhatsApp number, operator identity, and BoothPro branding in the reviewed public pages. Buyer-neutral placeholders such as `support@example.com` and `Your Business` are now used. The buyer must replace all placeholders with their own support and legal/business information before public launch. This cleanup applies only to the development/sale branch; the seller's live Production site was not changed.
 
 ### 4. Domain and deployment ownership
 
 - Buyer installation must use the buyer's own GitHub repository, Vercel project, environment variables, Upstash database, optional Neon database, and domain/DNS account.
 - The seller's hosting accounts, domains, credentials, API keys, and service subscriptions are excluded from the sale.
 - A custom domain is configured through the buyer's Vercel project and DNS provider. The source does not need a seller-domain substitution merely to use a buyer-owned domain.
-- Current source review found seller-domain references in `index.html`, `en/index.html`, `sitemap.xml`, and `robots.txt` (`qrnode.boothpro.my.id`). Both language home pages also contain a BoothPro soft-file URL as the sample QR payload and a BoothPro Instagram URL as the sponsor default. Replace these with neutral examples or buyer-owned values in the distributable package.
-- Verify all public canonical, hreflang, sitemap, robots, Open Graph, contact, and legal references during final package preparation. Do not include seller Production credentials or project configuration.
+- The reviewed sale branch now uses `https://example.com` placeholders for canonical/hreflang, sitemap, and robots references. The sample QR payload and sponsor/social defaults have also been neutralized.
+- Verify all public canonical, hreflang, sitemap, robots, Open Graph, contact, and legal references during final package preparation; the buyer must replace placeholders with their own domain and identity. Do not include seller Production credentials or project configuration.
 - Keep the seller's live Production domain untouched; make buyer-neutral changes only on the sale/development branch and in the generated ZIP.
 
 ### 5. Deployment headers
@@ -94,7 +90,7 @@ These are development-branch edits only. No Production domain, account, environm
 - [ ] Confirm seller-specific contact/legal identity is clearly marked for replacement or neutralized in the buyer archive.
 - [ ] Replace seller-specific canonical/hreflang/sitemap/robots URLs with the buyer's domain or clearly documented placeholders.
 - [ ] Replace seller-specific sample QR payload and sponsor/social defaults with neutral placeholders or buyer-owned values.
-- [ ] Complete transitive dependency licence/SBOM review.
+- [ ] Complete transitive dependency licence/SBOM review and resolve or formally document the current high-severity build-tool advisory before claiming a clean dependency audit.
 - [ ] Confirm ownership/licensing rights for original code, images, icons, fonts, and all included assets.
 - [ ] Add approved non-exclusive commercial licence and required third-party notices.
 - [ ] Build a clean source ZIP using an explicit allowlist/exclusion list.
