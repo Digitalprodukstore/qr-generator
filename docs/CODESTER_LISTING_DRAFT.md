@@ -1,10 +1,10 @@
-# Codester Listing Draft — QR Studio Pro
+# Codester Listing Draft — QRnode
 
 Status: Draft for seller review. Do not publish until licence, source package, demo, screenshots, and final QA are approved.
 
 ## Product title
 
-QR Studio Pro — 18-Type Static QR Code Generator with PNG/SVG Export
+QRnode — 18-Type Static QR Code Generator with PNG/SVG Export
 
 ## Short description
 
@@ -22,7 +22,7 @@ QR Code, QR Generator, Static QR, JavaScript, PNG Export, SVG Export, Responsive
 
 ### Create and customize QR codes in your browser
 
-QR Studio Pro is a browser-first QR code generator designed for personal use, creators, and businesses that need a straightforward way to create and export static QR codes.
+QRnode is a browser-first QR code generator designed for personal use, creators, and businesses that need a straightforward way to create and export static QR codes.
 
 The interface includes 18 QR categories grouped into Basic, Communication, Business, and Marketing & Event. Users can enter the relevant data, customize the visual appearance, preview the result, and export the QR code as PNG or SVG.
 
