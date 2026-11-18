@@ -27,6 +27,7 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 
 - Buyer-facing Indonesian/English pages, contact/legal pages, `sitemap.xml`, and `robots.txt` were neutralized on the sale branch. Seller domain, direct contact, and BoothPro-specific sample/sponsor defaults were replaced with buyer placeholders. Production was not changed.
 - `package-lock.json` contains 74 dependency entries with licence metadata: 64 MIT, 7 ISC, 2 Apache-2.0, and 1 BSD-3-Clause; none are missing a declared licence field. This is not a full SBOM/legal review.
+- Static common-secret-pattern scan covered all 56 tracked text/code/config/documentation files in the reviewed tree and a sample of 28 recent commit patches; no tested token/private-key/credential-literal patterns were found. A dedicated complete all-branches/tags Git-history secret scan remains outstanding.
 - CI on commit `353ec2e451754d23e8ee5242f22fc11da1f60858`: static checks and Admin auth tests passed; browser job failed at `npm audit --audit-level=high`, reporting 10 high findings in the transitive `picomatch` dependency tree used by Tailwind CSS 3.4.17/build tooling. The suggested `--force` remediation would upgrade Tailwind to 4.3.5 (major breaking change); no force upgrade was applied. This advisory is being tracked, and the browser suite is not yet green on the latest commit.
 - Current status must not be described as zero vulnerabilities or fully security-cleared. Normal runtime QR generation is browser-side, but build-time dependency risk remains.
 
@@ -67,7 +68,7 @@ Do not claim “100% safe”, “penetration tested”, “fully production-read
 1. Complete real phone-camera scanning and physical-device export/share acceptance on the current Preview.
 2. Complete Admin logout/session-expiry and fail-closed acceptance; retain the owner-reported Preview evidence for Upstash persistence/cross-browser sync and Neon health check.
 3. Verify the committed dependency lockfile with a clean `npm ci`; complete transitive SBOM/licence/privacy review.
-4. Complete Git-history secret scanning and review CSP strategy without exposing secret values.
+4. Complete dedicated Git-history secret scanning across all branches/tags and review CSP strategy without exposing secret values.
 5. Resolve or formally document the current high-severity `picomatch` build-tool advisory and obtain a passing full browser workflow without forcing a Tailwind major upgrade.
 5. Review all public pages and confirm legal owner/contact/domain details with the seller.
 6. Finalize the exact sale asset schedule and written transfer agreement.
