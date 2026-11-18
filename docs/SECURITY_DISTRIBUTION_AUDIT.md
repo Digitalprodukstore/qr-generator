@@ -1,4 +1,4 @@
-# Security & Distribution Audit — QR Studio Pro
+# Security & Distribution Audit — QRnode
 
 Audit date: 18 November 2026  
 Reviewed branch HEAD: `760cf971b7d4e147a76338fc4b86b1908f7b641f` (18 November 2026)  
@@ -174,3 +174,32 @@ This review did not run a full Git-history secret scanner, a dependency SBOM/lic
 - [ ] Resolve the missing `dlv@1.1.3` MIT notice/copyright evidence.
 - [ ] Review external CDN/font/icon assets and buyer-facing privacy disclosures.
 - [ ] Keep the picomatch advisory as an explicit build-tool release blocker until a reviewed upstream release or validated mitigation is available.
+
+
+## Verification addendum — 19 November 2026
+
+Reviewed branch: `fix/qrnode-phase1-adoption-2026-11-02`  
+Exact reviewed HEAD: `9d65b7d89c127053eb184a014b703f9d7365fb70`  
+Preview deployment: `https://qr-generator-ho2xuq7y1-risakil.vercel.app` — Vercel state READY, source SHA matches this HEAD.
+
+### Current verification evidence
+
+- Full Git-history Gitleaks workflow run #98 completed successfully on this HEAD. Scope is fetched origin refs/history only; it does not cover private local clones, unfetched forks/unreachable objects, or external accounts.
+- CycloneDX SBOM workflow run #109 completed successfully on this HEAD. This proves the inventory workflow ran, not that every third-party licence is legally cleared.
+- Phase 3 schema guard run #298 completed successfully on this HEAD.
+- Phase 2 checks run #527 were still in progress at the time of this addendum; do not report them as passed until a completed successful result is observed.
+- The QR Generator browser workflow has not been shown green on this exact documentation HEAD. The latest known browser workflow failure remains the `npm audit --audit-level=high` gate with 10 High findings in the transitive `picomatch` chain; browser tests after that gate were skipped.
+
+### Remaining release blockers
+
+- Keep the `picomatch` advisory visible. Do not use `npm audit fix --force`, invent an npm override, suppress the audit, or force a Tailwind major upgrade. Any dependency experiment must be isolated on a separate branch and pass clean install, complete audit review, CSS output comparison, static checks, and the full Chromium QR browser suite.
+- `dlv@1.1.3` remains the unresolved third-party package notice item until authoritative MIT notice/copyright evidence is obtained.
+- Google Fonts, Material Symbols, and the externally loaded QR encoder remain outside the npm SBOM and require a separate redistribution, attribution, and privacy review.
+- Application source licence wording has not been approved or included. Do not create a guessed licence file or claim legal clearance.
+- No final allowlist ZIP, archive scan, buyer-owned clean-room deployment, or final buyer acceptance has been completed.
+
+### Branch and production guardrails
+
+- Buyer-facing README, Codester draft, installation guide, handover checklist, distribution manifest, and feature matrix were aligned to the QRnode product name in the latest documentation commits.
+- PR #5 remains Draft, open, and unmerged. Production domain `https://qrnode.boothpro.my.id/` remains locked and untouched.
+- The current Preview is a documentation/branding update and does not establish final browser QA or commercial release readiness.
