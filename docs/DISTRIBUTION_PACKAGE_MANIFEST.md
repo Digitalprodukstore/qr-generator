@@ -70,7 +70,7 @@ Before the release archive is created, verify that buyer-facing placeholders rem
 
 - QR Generator workflow run `44241396960` on commit `9f7109f60c2fe05cf22d3476650175313c22be05`: SUCCESS. Static checks, Admin auth tests, QRNode static checks, browser QR decode, Premium Design Studio, responsive viewport checks, high/critical npm audit gate, and production-only lockfile commit all completed successfully.
 - SBOM workflow run `44241396975`: SUCCESS. CycloneDX 1.5 lists one installed npm dependency: `@neondatabase/serverless@1.2.1` (MIT). Actual package licence text was collected; no missing npm package notice text. The earlier `picomatch`/Tailwind/`dlv` dependency chain is absent from the installed application dependency set on this experiment branch.
-- This evidence is branch-specific and does not authorize merging, Production deployment, or sale publication. The full-history secret scan, final buyer ZIP, clean extraction test, final demo/screenshots, and seller ownership/licence confirmation remain release gates.
+- This evidence is branch-specific and does not authorize merging, Production deployment, or sale publication. The full-history secret scan passed on the current experiment HEAD (run `44243423988`, redacted Gitleaks scan). Final buyer ZIP, clean extraction test, final demo/screenshots, and seller ownership/licence confirmation remain release gates.
 
 ## Important limitations
 
