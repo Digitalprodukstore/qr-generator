@@ -47,7 +47,7 @@ The interface includes 18 QR categories grouped into Basic, Communication, Busin
 - Vercel serverless API routes for Admin features.
 - Upstash Redis REST for Admin sessions, login rate limiting, and shared settings.
 - Optional Neon PostgreSQL connectivity probe for Admin diagnostics.
-- Tailwind CSS compiled into a local stylesheet.
+- Precompiled responsive stylesheet served locally; no Tailwind CLI/build dependency is required for installation.
 
 ### Installation
 
@@ -69,7 +69,7 @@ The download includes a buyer installation guide covering deployment, Admin cred
 
 - Complete application source code.
 - Vercel serverless Admin API routes.
-- Compiled CSS and source styling configuration.
+- Compiled local CSS stylesheet.
 - Package manifest and lockfile.
 - Buyer Installation Guide.
 - Buyer Handover Checklist.
@@ -79,7 +79,7 @@ The download includes a buyer installation guide covering deployment, Admin cred
 
 ## Requirements
 
-- Node.js and npm for dependency installation/build tasks.
+- Node.js and npm for dependency installation; no CSS build toolchain is required.
 - GitHub account for buyer-owned source repository (recommended).
 - Vercel account/project for serverless Admin API deployment.
 - Upstash Redis database for Admin login, sessions, rate limiting, and global settings.
