@@ -5,13 +5,17 @@ Scope: prepare the existing QR Generator for a transparent AS-IS source/product 
 
 ## Guardrails
 
-- Work only on `fix/qrnode-phase1-adoption-2026-11-02`.
-- Preserve `baseline/qr-generator-v1-locked`.
+- Work only on `experiment/remove-tailwind-build-chain-2026-11-18` for the isolated Codester sale-preparation package.
+- PR #5 is a separate open Draft PR from `fix/qrnode-phase1-adoption-2026-11-02` into `lock/qr-studio-pro-premium-v3-2026-10-15`; keep it Draft/unmerged. Do not treat the experiment branch as PR #5's head.
 - Keep PR #5 Draft.
 - Do not merge, promote, deploy to Production, alter Production environment variables, or change the production domain.
 - Do not apply database migrations, modify database resources, rotate secrets, or weaken deployment protection.
 - Do not redesign or rewrite existing generator code.
 - Do not claim a test passed unless there is fresh, attributable evidence.
+
+## Owner rights confirmation — 18 November 2026
+
+The owner confirmed in chat that the original QRnode application code and all owner-created assets are owned by the seller and may be sold/distributed. This is an owner statement, not independent legal verification. Third-party components remain subject to their own licences and required notices.
 
 ## Evidence reviewed
 
@@ -156,3 +160,15 @@ The product may be offered as an AS-IS Static QR Edition with the above disclosu
 - Review of the actual Playwright captures identified seller-specific booth/photobooth copy and a sample coffee-shop sponsor campaign still present in the two public generator pages. Replaced those with neutral QR Studio Pro / creator / events / business copy, removed BoothPro identifiers from the public UI, and cleared the sample sponsor tagline defaults. No QR-generation feature was changed.
 - Corrected the English sponsor settings notice: those sponsor settings are saved locally in that browser and are not synced across devices. This aligns the UI with the actual localStorage behavior.
 - The first package archive was successfully created, installed in a clean directory, and passed npm audit with zero vulnerabilities; ZIP integrity also passed. The final archive-content validation script failed only because it looked for the ZIP from the wrong working directory. The workflow now changes back to the workspace before validating the archive; a fresh full run is required.
+
+## Latest verified sale-preparation state — 18 November 2026
+
+- Sale-preparation branch: `experiment/remove-tailwind-build-chain-2026-11-18`; latest documentation/notice commit before this note: `ef7d5c351b7632a2562604c95cdc9dcc7c9024c6` (this note may itself create a subsequent documentation commit).
+- QR Generator workflow run `44317014039` passed all jobs on commit `386be4cf03b38112a8123f7beed8eab9efde3afa`: static checks, QRnode module/payload checks, Admin auth tests, browser QR decode, Premium Design Studio, responsive phone/tablet checks, screenshots, and clean-room buyer package build.
+- Full fetched Git history/ref Gitleaks scan passed on commit `386be4cf03b38112a8123f7beed8e8ab9efde3afa` (run `44317014032`). The scan covers the refs fetched by that workflow; it is not a claim about unrelated forks, external copies, or unreachable objects.
+- CycloneDX SBOM workflow passed on the same commit (run `44317013806`); the installed npm dependency set contains one component, `@neondatabase/serverless@1.2.1` (MIT). CDN assets are inventoried separately.
+- CI generated buyer package artifact `14432837684` (SHA-256 `3127d1d793f42beec64f2b3f6cb268d7c6a14af52ac0e54f01c98f2eb630cab4`) and screenshot artifact `14431994021` (SHA-256 `268aaaa2290eab5e16e75ed9d36141c8f928a9923fe45e32b52fde2cb8dddc4e`). The buyer ZIP contains a nested `QRnode-Commercial-Edition.zip`; inspect and extract the inner archive for delivery.
+- Independent inspection of that buyer archive found 42 entries, ZIP integrity passed, and no matches for the checked private-key/token/password patterns. This is a pattern scan, not a guarantee that no secret exists.
+- Screenshot gallery remains **not approved**: the current English screenshot contains Indonesian helper/ad-placeholder text, and the dark navigation bar overlaps the hero area in the desktop captures. Regenerate the gallery only after correcting those presentation issues.
+- The application has no root `LICENSE`; seller must still approve final application licence/terms and ensure the listing accurately describes Codester Regular/Extended restrictions.
+- PR #5 remains Draft/unmerged; the Production domain and Production resources remain locked/untouched.
