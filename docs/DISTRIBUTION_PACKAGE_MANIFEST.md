@@ -22,7 +22,7 @@ Include application files required for the buyer to build and deploy the current
 - `styles/tailwind.input.css`, `tailwind.config.cjs`.
 - `package.json`, `package-lock.json`.
 - `vercel.json`, `.gitignore`.
-- Buyer-facing documentation: `README.md`, `ADMIN_AUTH_SETUP.md`, `docs/AS_IS_FEATURE_MATRIX.md`, `docs/BUYER_INSTALLATION_GUIDE.md`, `docs/BUYER_HANDOVER_CHECKLIST.md`, `docs/GLOBAL_ADMIN_SETTINGS_SETUP.md`, `docs/AS_IS_FEATURE_MATRIX.md`, `docs/THIRD_PARTY_ASSET_INVENTORY.md`, and any final buyer support document.
+- Buyer-facing documentation: use `docs/BUYER_README.md` as the root `README.md` in the ZIP, plus `docs/AS_IS_FEATURE_MATRIX.md`, `docs/BUYER_INSTALLATION_GUIDE.md`, `docs/BUYER_HANDOVER_CHECKLIST.md`, and `docs/GLOBAL_ADMIN_SETTINGS_SETUP.md`. Include third-party licence notices only after the complete SBOM and redistribution review establishes the exact required files.
 - Third-party licence/notice files required by the completed SBOM and asset review.
 
 ## Candidate exclude list
@@ -53,8 +53,8 @@ Before the release archive is created, verify that buyer-facing placeholders rem
 3. Complete transitive SBOM and licence-notice review, including CDN-hosted QR encoder, Google Fonts, and cdnjs assets.
 4. Confirm seller rights for all original code, copy, graphics, logos, fonts, icons, and included assets.
 5. Finalize the non-exclusive application licence and Codester Regular/Extended scope; do not promise copyright transfer or rights beyond Codester terms.
-6. Reconcile the buyer ZIP allowlist against all HTML script/style/navigation references; in particular, retain `qrnode-upgrade.js`, which is required by both generator pages, and `docs/GLOBAL_ADMIN_SETTINGS_SETUP.md`, which is linked from the README and explains shared Admin settings.
-7. Prepare a buyer-edition README whose links resolve only to files actually included in the archive; do not ship seller-only audit, PR, pricing, or roadmap working documents.
+6. Reconcile the buyer ZIP allowlist against all HTML script/style/navigation references; in particular, retain `qrnode-upgrade.js`, which is required by both generator pages. Copy `docs/BUYER_README.md` to the archive root as `README.md`; do not include the repository's seller-working README.
+7. Confirm every link in the buyer-edition README resolves to a file included in the archive; do not ship seller-only audit, PR, pricing, or roadmap working documents.
 8. Build the ZIP from an explicit allowlist, not by zipping the repository root.
 9. Inspect archive listing for forbidden paths/patterns and scan archive contents for secrets.
 10. Extract into a clean directory, run the documented install/build process, and deploy to a buyer-owned Vercel Preview with buyer-owned Upstash.
