@@ -290,4 +290,78 @@
   window.addEventListener("DOMContentLoaded", preparePublicMonetization);
   if (document.readyState !== "loading") preparePublicMonetization();
 
+
+  // English-page completion: translate static and dynamically injected generator copy.
+  if (document.documentElement.lang === "en") {
+    const englishCopy = [
+      ["18 jenis QR dalam 4 kelompok. Pilih sesuai kebutuhan Anda.","18 QR types across 4 groups. Choose the one that fits your needs."],
+      ["Pilih jenis QR","Choose a QR type"],["Kategori QR","QR category"],
+      ["Pilih jenis QR sesuai kebutuhan Anda.","Choose the QR type that fits your needs."],
+      ["Menu digital dan undangan menggunakan tautan publik agar hasil QR dapat dibuka oleh semua pemindai.","Digital menus and invitations use public links so the QR code can be opened by any scanner."],
+      ["Lengkapi data untuk membuat QR.","Complete the fields to create your QR code."],
+      ["Pola modul QR","QR module pattern"],["Kotak klasik","Classic squares"],["Sudut membulat","Rounded"],["Titik","Dots"],
+      ["Pola finder di tiga sudut tetap kotak untuk membantu pemindaian.","The finder patterns in all three corners remain square to support scanning."],
+      ["Kontras akan diperiksa otomatis.","Contrast will be checked automatically."],
+      ["Ukuran Download","Download sizes"],["Pilih format sesuai media tujuan. QR akan otomatis diposisikan di tengah.","Choose a format for your target medium. The QR code will be centered automatically."],
+      ["Dipilih:","Selected:"],["Unduh Ukuran Terpilih","Download Selected Size"],
+      ["Simpan Proyek","Save Project"],["Proyek tersimpan di perangkat ini","Projects saved on this device"],
+      ["Belum ada proyek tersimpan.","No saved projects yet."],["Proyek disimpan","Project saved"],
+      ["Tersimpan lokal di perangkat ini.","Saved locally on this device."],
+      ["Gagal menyimpan","Unable to save"],["Penyimpanan browser tidak tersedia.","Browser storage is unavailable."],
+      ["Proyek dimuat","Project loaded"],["Desain dan konten berhasil dipulihkan.","Design and content restored."],
+      ["Gagal memuat proyek","Unable to load project"],["Data lokal rusak.","Local data is corrupted."],
+      ["Hapus","Delete"],["Unduh SVG","Download SVG"],["Unduh PNG 2048 × 2048","Download PNG 2048 × 2048"],
+      ["Unduh","Download"],["Simpan","Save"],["Kembali","Back"],["Lanjut","Continue"],
+      ["BASIC · Kebutuhan QR sehari-hari","BASIC · Everyday QR needs"],
+      ["KOMUNIKASI · Terhubung dengan pelanggan","COMMUNICATION · Connect with customers"],
+      ["BISNIS · Identitas dan pembayaran","BUSINESS · Identity and payments"],
+      ["PEMASARAN & ACARA · Promosi dan event","MARKETING & EVENTS · Promotions and events"],
+      ["Ruang iklan responsif. Iklan belum aktif karena akun Google AdSense belum disetujui.","Responsive ad space. Ads are inactive until the Google AdSense account is approved."],
+      ["Iklan akan ditempatkan di area ini setelah QR berhasil dibuat. Tombol unduh tetap tersedia tanpa jeda iklan.","An ad may appear here after the QR code is generated. Download buttons remain available without an ad delay."]
+    ];
+    const translateEnglishText = value => {
+      let output = value;
+      for (const [id, en] of englishCopy) output = output.split(id).join(en);
+      return output;
+    };
+    const translateEnglishDom = root => {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      for (const node of nodes) {
+        const translated = translateEnglishText(node.nodeValue);
+        if (translated !== node.nodeValue) node.nodeValue = translated;
+      }
+      if (root.nodeType === Node.ELEMENT_NODE) {
+        for (const el of [root, ...root.querySelectorAll("*")]) {
+          for (const attr of ["placeholder","title","aria-label"]) {
+            const value = el.getAttribute(attr);
+            if (value) {
+              const translated = translateEnglishText(value);
+              if (translated !== value) el.setAttribute(attr, translated);
+            }
+          }
+        }
+      }
+    };
+    const applyEnglishCopy = () => translateEnglishDom(document.body);
+    window.addEventListener("DOMContentLoaded", applyEnglishCopy);
+    if (document.readyState !== "loading") applyEnglishCopy();
+    const englishObserver = new MutationObserver(records => {
+      for (const record of records) {
+        for (const node of record.addedNodes) {
+          if (node.nodeType === Node.TEXT_NODE) {
+            const translated = translateEnglishText(node.nodeValue);
+            if (translated !== node.nodeValue) node.nodeValue = translated;
+          } else if (node.nodeType === Node.ELEMENT_NODE) {
+            translateEnglishDom(node);
+          }
+        }
+      }
+    });
+    const startEnglishObserver = () => englishObserver.observe(document.body, {childList:true,subtree:true});
+    if (document.body) startEnglishObserver();
+    else window.addEventListener("DOMContentLoaded", startEnglishObserver, {once:true});
+  }
+
 })();
