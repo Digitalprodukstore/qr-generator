@@ -17,7 +17,7 @@ This is the **Static QR Edition (AS-IS)**. It does not include Dynamic QR manage
 
 ## Requirements
 
-- Node.js and npm (supported Node.js LTS recommended).
+- Node.js and npm (supported Node.js LTS recommended) for installing the small server-side dependency set. The CSS is precompiled and included; no Tailwind CLI or CSS build step is required.
 - A Vercel account/project to deploy the serverless Admin API.
 - An Upstash Redis database for Admin sessions, login rate limiting, and shared settings.
 - Optional Neon PostgreSQL only if the Admin database-health probe is needed; it is not required for static QR generation or settings storage.
