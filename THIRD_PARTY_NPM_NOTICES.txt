@@ -1,4 +1,4 @@
-QR Studio Pro — third-party package licence and NOTICE texts
+QRnode — third-party package licence and NOTICE texts
 Generated from a clean npm ci installation and filtered to CycloneDX components. Review before redistribution.
 Unique SBOM packages inspected: 1
 Packages with licence/NOTICE files: 1
