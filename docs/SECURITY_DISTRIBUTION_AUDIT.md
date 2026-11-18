@@ -38,7 +38,9 @@ Packaging requirement:
 - Buyer installation must use the buyer's own GitHub repository, Vercel project, environment variables, Upstash database, optional Neon database, and domain/DNS account.
 - The seller's hosting accounts, domains, credentials, API keys, and service subscriptions are excluded from the sale.
 - A custom domain is configured through the buyer's Vercel project and DNS provider. The source does not need a seller-domain substitution merely to use a buyer-owned domain.
-- Verify all public canonical, sitemap, Open Graph, contact, and legal references during final package preparation. Do not include seller Production credentials or project configuration.
+- Current source review found seller-domain references in `index.html`, `en/index.html`, `sitemap.xml`, and `robots.txt` (`qrnode.boothpro.my.id`). Both language home pages also contain a BoothPro soft-file URL as the sample QR payload and a BoothPro Instagram URL as the sponsor default. Replace these with neutral examples or buyer-owned values in the distributable package.
+- Verify all public canonical, hreflang, sitemap, robots, Open Graph, contact, and legal references during final package preparation. Do not include seller Production credentials or project configuration.
+- Keep the seller's live Production domain untouched; make buyer-neutral changes only on the sale/development branch and in the generated ZIP.
 
 ### 5. Deployment headers
 
@@ -72,7 +74,8 @@ Do not exclude `package-lock.json`, application source, API routes, required ass
 
 - [ ] Complete secret scan of the current source tree and full Git history.
 - [ ] Confirm seller-specific contact/legal identity is clearly marked for replacement or neutralized in the buyer archive.
-- [ ] Review all domain/canonical/sitemap references for seller-only URLs.
+- [ ] Replace seller-specific canonical/hreflang/sitemap/robots URLs with the buyer's domain or clearly documented placeholders.
+- [ ] Replace seller-specific sample QR payload and sponsor/social defaults with neutral placeholders or buyer-owned values.
 - [ ] Complete transitive dependency licence/SBOM review.
 - [ ] Confirm ownership/licensing rights for original code, images, icons, fonts, and all included assets.
 - [ ] Add approved non-exclusive commercial licence and required third-party notices.
