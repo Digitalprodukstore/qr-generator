@@ -83,3 +83,10 @@ The CycloneDX document contains declared licence identifiers and dependency meta
 - A possible experiment is to pin the Tailwind-compatible `sucrase@3.35.0` release: its published dependency metadata uses `glob@^10.3.10` rather than `tinyglobby`. This is only a candidate; no lockfile change or build test has been made.
 - This route changes the glob-matching dependency tree and may introduce a `minimatch` dependency. `minimatch` has a separate Moderate advisory `GHSA-g3hv-75wg-m249` / `CVE-2026-118764`; the upstream advisory identifies `10.2.6` as affected and `11.0.1` as patched. Exact resolved versions and compatibility must be checked before considering this route.
 - Decision: do not apply a Sucrase downgrade or npm override based only on dependency metadata. Any experiment must run on a separate branch and prove: clean `npm ci`, complete `npm audit` review, CSS output equivalence, all static checks, and the full Chromium/browser QR suite. Keep the current locked build tree until that evidence exists.
+
+
+## Third-party notice collection — 18 November 2026 (experimental sale branch)
+
+- Added root `THIRD_PARTY_NOTICES.txt` using upstream licence texts: `qrcode-generator` 1.4.4 (MIT; Copyright 2009 Kazuhiko Arase), Geist (SIL OFL 1.1; Copyright 2026 The Geist Project Authors), Inter (SIL OFL 1.1; Copyright 2020 The Inter Project Authors), and Google Material Symbols (Apache 2.0; Google upstream repository).
+- qrcode-generator is loaded from cdnjs; Geist, Inter, and Material Symbols are loaded from Google Fonts. These are external requests, not vendored binaries. Current HTML requests do not pin exact font/icon binary versions; buyer documentation must retain this limitation and privacy disclosure.
+- The notice file preserves the full upstream licence texts. This does not certify the seller's original application code ownership or grant rights to unrelated third-party logos or brand marks.
