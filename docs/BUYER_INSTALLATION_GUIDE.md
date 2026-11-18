@@ -1,6 +1,6 @@
-# Buyer Installation Guide — QR Studio Pro
+# Buyer Installation Guide — QRnode
 
-This guide explains how a buyer can deploy an independent copy of QR Studio Pro using their own accounts, credentials, and domain.
+This guide explains how a buyer can deploy an independent copy of QRnode using their own accounts, credentials, and domain.
 
 > **Product scope:** This package is the Static QR Generator Commercial Edition (AS-IS). Dynamic QR, redirect management, analytics, cloud project sync, and active AdSense integration are not included.
 
