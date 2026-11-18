@@ -2,7 +2,7 @@
 
 Audit date: 18 November 2026  
 Reviewed ref: `353ec2e451754d23e8ee5242f22fc11da1f60858` (security audit updates continue on the same development branch)  
-Scope: source-tree review of buyer-facing configuration, Admin authentication, deployment settings, contact/legal identity, and common credential patterns. This is a focused static review, not a penetration test or a complete Git-history secret scan.
+Scope: source-tree review of all 56 tracked text/code/config/documentation files in the reviewed sale-branch tree for common credential patterns, plus targeted Admin/authentication and buyer-facing configuration review. A sample of 28 recent commit patches was also checked for common token/private-key patterns. This is a focused static review, not a dedicated secret-scanning product, a complete Git-history secret scan, or a penetration test.
 
 ## Executive result
 
@@ -19,7 +19,7 @@ The inspected Admin implementation uses server-side environment variables for cr
 - Active session records, rate-limit counters, and shared settings require buyer-provided Upstash Redis credentials.
 - The application fails closed when required authentication or Redis configuration is missing/unavailable.
 - The inspected auth/config files did not contain a detected hardcoded Admin password, PIN, Upstash token, Neon URL, or common provider/API-key literal.
-- This does not establish that Git history, uninspected files, deployment logs, or external accounts contain no secrets. A full historical secret scan remains required.
+- The current 56-file text/code/config/documentation tree scan found no matches for the tested common provider-token/private-key/credential-assignment patterns. The 28-commit patch sample also found no matches. This does not establish that all Git history, binary files, deployment logs, branches, tags, or external accounts contain no secrets; a complete historical secret scan remains required.
 
 ### 2. Test-only database fixture
 
@@ -86,7 +86,8 @@ These are development-branch edits only. No Production domain, account, environm
 
 ## Required release gates
 
-- [ ] Complete secret scan of the current source tree and full Git history.
+- [x] Static common-secret-pattern scan of all 56 tracked text/code/config/documentation files in the reviewed tree — no matches found.
+- [ ] Run a dedicated secret scanner across every branch, tag, and the complete Git history; review any findings without printing secret values.
 - [ ] Confirm seller-specific contact/legal identity is clearly marked for replacement or neutralized in the buyer archive.
 - [ ] Replace seller-specific canonical/hreflang/sitemap/robots URLs with the buyer's domain or clearly documented placeholders.
 - [ ] Replace seller-specific sample QR payload and sponsor/social defaults with neutral placeholders or buyer-owned values.
