@@ -136,3 +136,9 @@ The product may be offered as an AS-IS Static QR Edition with the above disclosu
 - The buyer app uses committed `assets/tailwind.generated.css`; no Tailwind CLI or CSS compilation step is required.
 - This is branch-scoped CI evidence, not a security certification. The full-history Gitleaks scan must run after final changes. The final buyer ZIP, clean extraction test, final demo/screenshots, live Admin logout/session-expiry acceptance, and seller ownership/licence confirmation remain outstanding.
 - The npm SBOM excludes CDN assets. Separate notices cover qrcode-generator, Geist, Inter, and Material Symbols; exact Google Fonts response versions remain unpinned.
+
+## 18 November 2026 — full Git-history secret scan on sale experiment
+
+- Gitleaks full-history workflow run `44243423988` on exact experiment HEAD `9e1fe9fc60d6d9d01cd3a7f04029224cc7ed89bf`: SUCCESS.
+- The workflow checked out complete repository history/refs (`fetch-depth: 0`) and ran pinned Gitleaks with `--redact=100` and `--log-opts=--all`. The scan step completed successfully with no findings reported.
+- This result covers reachable commits/refs fetched by that workflow at the stated HEAD. It cannot cover unreachable Git objects, external forks, local clones, or credentials outside this repository. If any historical credentials were ever exposed elsewhere, revoke/rotate them independently.
