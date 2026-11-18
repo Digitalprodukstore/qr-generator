@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [main, "fix/**", "audit/**"]
+    branches: [main, "fix/**", "audit/**", "experiment/**"]
   workflow_dispatch:
 
 permissions:
@@ -95,19 +95,21 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Install locked application and build dependencies
+      - name: Regenerate lockfile for the declared production dependency set
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+      - name: Install locked application dependencies
         run: npm ci --ignore-scripts
-      - name: Audit locked npm dependency tree for high and critical advisories
+      - name: Audit complete installed application dependency tree for high and critical advisories
         run: npm audit --audit-level=high
       - name: Install browser test dependencies
         run: npm install --no-save playwright jsqr pngjs http-server
-      - name: Compile and verify local Tailwind stylesheet
+      - name: Verify committed local stylesheet artifact
         run: |
-          mkdir -p assets
-          npm run build:css
           test -s assets/tailwind.generated.css
           grep -q '.bg-background' assets/tailwind.generated.css
           grep -q '.text-body-md' assets/tailwind.generated.css
+          grep -q 'assets/tailwind.generated.css' index.html
+          grep -q 'assets/tailwind.generated.css' en/index.html
           ! grep -q 'cdn.tailwindcss.com' index.html en/index.html
       - name: Install Chromium browser
         run: npx playwright install --with-deps chromium
@@ -459,16 +461,16 @@ jobs:
           NODE
 
 
-      - name: Commit generated CSS and dependency lockfile to the development branch
-        if: success() && github.ref == 'refs/heads/fix/qrnode-phase1-adoption-2026-11-02'
+      - name: Commit regenerated production-only lockfile to the experimental branch
+        if: success() && github.ref == 'refs/heads/experiment/remove-tailwind-build-chain-2026-11-18'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin "$GITHUB_REF_NAME"
           git rebase "origin/$GITHUB_REF_NAME"
-          git add package-lock.json assets/tailwind.generated.css
+          git add package-lock.json
           if ! git diff --cached --quiet; then
-            git commit -m "build: compile Tailwind CSS and lock dependencies"
+            git commit -m "build: remove unused Tailwind build dependency tree"
             git push origin HEAD:$GITHUB_REF_NAME
           fi
 
