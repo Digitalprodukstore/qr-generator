@@ -57,3 +57,13 @@ A clean Linux CI installation (`npm ci --ignore-scripts`) generated a validated 
 - Internal CI artifact: `qr-studio-pro-cyclonedx-sbom.zip`, artifact ID `14398816802`, SHA-256 `6c3ed59fa542403b41069bb817c09e66aa8c3c7b6cc0aac96297146be640bb2f`; retained for 14 days. It is evidence for review, not part of the buyer ZIP.
 
 The CycloneDX document contains declared licence identifiers and dependency metadata, not the complete licence texts. The original lockfile metadata table above counts 74 package entries, while the generated SBOM counts 73 installed Linux components; these are different scopes, not contradictory counts. The separate runtime CDN assets in the table above are not represented in the npm SBOM. Final legal review still requires the actual licence/NOTICE files for all 73 installed packages and separate confirmation of CDN-hosted assets, exact font versions, attribution and privacy disclosures.
+
+
+## Actual package notice-text review — 18 November 2026
+
+- The CycloneDX workflow now gathers actual package-root licence/NOTICE files for SBOM component identities, excluding package.json files from non-dependency test fixtures.
+- Latest run `44239324540` passed on commit `165a776f72c9260175520f265b128e2efbe24030`. Internal review artifact ID `14397943745`, SHA-256 `97ce030e1465a9ae8b9c64550c1b743228b3896453c59acf71a011a1c33618dd` (14-day retention).
+- The CycloneDX SBOM lists 73 components representing 72 unique package name/version pairs; all declare licence metadata. Licence IDs: MIT 63, ISC 7, Apache-2.0 2, BSD-3-Clause 1.
+- Actual text collection found licence/NOTICE files for 71 of 72 unique SBOM packages. The single unresolved package is `dlv@1.1.3`: package metadata declares MIT and identifies Jason Miller as author, but neither the installed npm package nor the upstream repository root includes a matching LICENSE file. The final buyer archive must not invent a copyright year or claim this notice is complete; obtain an authoritative notice or written clarification before release.
+- The other four missing-text entries from the initial broad scan were test-fixture package.json files not present in the CycloneDX dependency component set; they are excluded from the 72-package count.
+- This review does not cover the external CDN/font/icon/QR encoder assets listed above. Their upstream terms, exact served versions, notices and privacy implications remain open.
