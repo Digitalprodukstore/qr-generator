@@ -465,6 +465,45 @@ jobs:
           NODE
 
 
+      - name: Capture authentic Codester gallery screenshots
+        run: |
+          mkdir -p codester-screenshots
+          node <<'NODE'
+          const { chromium } = require('playwright');
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
+            await desktop.goto('http://127.0.0.1:4173/', { waitUntil: 'networkidle', timeout: 60000 });
+            await desktop.waitForFunction(() => {
+              const c = document.getElementById('qrCanvas');
+              return c && c.dataset.qrReady === 'true' && document.getElementById('qrnodeStudio');
+            }, null, { timeout: 30000 });
+            await desktop.locator('[data-qrfield="url"]').fill('https://example.com/qr-studio-pro-demo');
+            await desktop.waitForFunction(() => document.getElementById('qrCanvas')?.dataset.qrReady === 'true');
+            await desktop.screenshot({ path: 'codester-screenshots/01-desktop-generator.png', fullPage: true });
+            await desktop.locator('#qrnodeStudio').scrollIntoViewIfNeeded();
+            await desktop.locator('#qrnodeStudio').screenshot({ path: 'codester-screenshots/02-premium-design-studio.png' });
+            const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 });
+            await mobile.goto('http://127.0.0.1:4173/', { waitUntil: 'networkidle', timeout: 60000 });
+            await mobile.waitForFunction(() => document.getElementById('qrCanvas')?.dataset.qrReady === 'true');
+            await mobile.locator('[data-qrfield="url"]').fill('https://example.com/qr-studio-pro-demo');
+            await mobile.screenshot({ path: 'codester-screenshots/03-mobile-generator.png', fullPage: true });
+            const english = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
+            await english.goto('http://127.0.0.1:4173/en/', { waitUntil: 'networkidle', timeout: 60000 });
+            await english.waitForFunction(() => document.getElementById('qrCanvas')?.dataset.qrReady === 'true');
+            await english.locator('[data-qrfield="url"]').fill('https://example.com/qr-studio-pro-demo');
+            await english.screenshot({ path: 'codester-screenshots/04-english-interface.png', fullPage: true });
+            await browser.close();
+          })().catch(error => { console.error(error); process.exit(1); });
+          NODE
+      - name: Upload Codester gallery screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: qr-studio-pro-codester-screenshots
+          path: codester-screenshots/*.png
+          if-no-files-found: error
+          retention-days: 14
+
       - name: Commit regenerated production-only lockfile to the experimental branch
         if: success() && github.ref == 'refs/heads/experiment/remove-tailwind-build-chain-2026-11-18'
         run: |
