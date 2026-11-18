@@ -1523,12 +1523,6 @@ footer *{color:#e9e0d0!important}
 
     if (badge) badge.innerText = cfg.adMode.toUpperCase();
     if (syncPill) syncPill.innerText = cfg.adMode.toUpperCase() + ' MODE';
-    if (topText) topText.innerHTML = '<strong></strong> &bull; ';
-    if (topText) {
-      const strong = topText.querySelector('strong');
-      if (strong) strong.textContent = cfg.sponsorName || 'QR Studio Pro';
-      topText.appendChild(document.createTextNode(cfg.sponsorTagline ? ' ' + cfg.sponsorTagline : ''));
-    }
     if (topLink) topLink.href = cfg.sponsorLink ? safeHttpUrl(cfg.sponsorLink) : '#';
     if (!slot) return;
 
