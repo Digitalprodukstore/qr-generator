@@ -414,7 +414,7 @@ footer *{color:#e9e0d0!important}
 </button>
 <button class="py-2 rounded-lg font-label-md text-label-md transition-all flex items-center justify-center gap-1.5 text-on-surface-variant hover:text-on-surface" id="tabText" onclick="setPayloadType('text')">
 <span class="material-symbols-outlined text-[16px]">notes</span>
-<span>Text Bebas</span>
+<span>Free Text</span>
 </button>
 </div>
 <!-- Dynamic Input Box -->
@@ -433,7 +433,7 @@ footer *{color:#e9e0d0!important}
 </div>
 <div class="flex flex-col gap-1">
 <label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Message Template</label>
-<input class="bg-surface-container-highest text-on-surface font-body-md text-body-md px-3 py-2.5 rounded-xl focus:outline-none" id="waMessage" oninput="updateWaPayload()" placeholder="Halo, ini soft file foto..." type="text"/>
+<input class="bg-surface-container-highest text-on-surface font-body-md text-body-md px-3 py-2.5 rounded-xl focus:outline-none" id="waMessage" oninput="updateWaPayload()" placeholder="Hello, here is your photo file..." type="text"/>
 </div>
 </div>
 </div>
@@ -1276,7 +1276,7 @@ footer *{color:#e9e0d0!important}
       }
     } catch (err) {
       if (err && err.name === 'AbortError') return;
-      showToast('Bagikan tidak tersedia', 'Mencoba mengunduh gambar QR sebagai alternatif.');
+      showToast('Sharing unavailable', 'Trying to download the QR image instead.');
       await downloadQRImage();
     }
   }
