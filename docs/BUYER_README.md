@@ -55,7 +55,7 @@ Never reuse or request the seller's credentials, hosting resources, database acc
 
 ## Third-party components and licence
 
-Third-party dependencies and external services remain subject to their own licences and terms. See the root `THIRD_PARTY_NOTICES.txt` for the QR encoder, Geist, Inter, and Material Symbols notices. Fonts and icons are requested from external Google Fonts services; the QR encoder is requested from cdnjs, so those resources are not bundled as local binaries. The application's own licence is the separate written licence granted for this purchase; no copyright assignment, exclusivity, or rights beyond the applicable Codester licence are implied.
+Third-party dependencies and external services remain subject to their own licences and terms. See the root `THIRD_PARTY_NOTICES.txt` for the QR encoder, Geist, Inter, and Material Symbols notices. Fonts and icons are requested from external Google Fonts services; the QR encoder is requested from cdnjs, so those resources are not bundled as local binaries. The application's own source-code usage rights are governed by the Codester licence type selected for the purchase and the applicable platform terms. No copyright assignment or exclusivity is implied. Do not redistribute or resell this item as-is; comply with the selected licence's project and source-distribution restrictions.
 
 ## Support and updates
 
