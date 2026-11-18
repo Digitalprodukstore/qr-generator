@@ -525,6 +525,66 @@ jobs:
             git push origin HEAD:$GITHUB_REF_NAME
           fi
 
+      - name: Build and clean-room test Codester buyer package
+        run: |
+          set -euo pipefail
+          DIST="$RUNNER_TEMP/qr-studio-pro-buyer"
+          rm -rf "$DIST"
+          mkdir -p "$DIST"
+          FILES=(
+            index.html en/index.html about.html contact.html disclaimer.html faq.html privacy.html terms.html tutorial.html use-cases.html
+            admin-settings.js qrnode-upgrade.js assets/tailwind.generated.css
+            api/_adminAuth.js api/_adminRateLimit.js api/_redisFetch.js api/_sameOrigin.js
+            api/admin/database-health.js api/admin/login.js api/admin/logout.js api/admin/session.js api/admin/settings.js
+            package.json package-lock.json vercel.json .gitignore robots.txt sitemap.xml
+            THIRD_PARTY_NOTICES.txt THIRD_PARTY_NPM_NOTICES.txt SBOM.cdx.json
+            docs/AS_IS_FEATURE_MATRIX.md docs/BUYER_INSTALLATION_GUIDE.md docs/BUYER_HANDOVER_CHECKLIST.md docs/GLOBAL_ADMIN_SETTINGS_SETUP.md
+          )
+          for file in "${FILES[@]}"; do
+            test -f "$file" || { echo "Missing allowlisted file: $file"; exit 1; }
+            mkdir -p "$DIST/$(dirname "$file")"
+            cp "$file" "$DIST/$file"
+          done
+          cp docs/BUYER_README.md "$DIST/README.md"
+          cd "$DIST"
+          npm ci --ignore-scripts
+          npm audit --audit-level=high
+          node --check qrnode-upgrade.js
+          for file in api/_adminAuth.js api/_adminRateLimit.js api/_redisFetch.js api/_sameOrigin.js api/admin/*.js; do node --check "$file"; done
+          test -s assets/tailwind.generated.css
+          test -s README.md
+          test -s docs/BUYER_INSTALLATION_GUIDE.md
+          test -s SBOM.cdx.json
+          test -s THIRD_PARTY_NOTICES.txt
+          test -s THIRD_PARTY_NPM_NOTICES.txt
+          test ! -e .env
+          test ! -e .git
+          rm -rf node_modules
+          cd "$RUNNER_TEMP"
+          zip -qr "$GITHUB_WORKSPACE/QR-Studio-Pro-Commercial-Edition.zip" qr-studio-pro-buyer
+          unzip -t "$GITHUB_WORKSPACE/QR-Studio-Pro-Commercial-Edition.zip"
+          python - <<'PY'
+          import zipfile
+          p='QR-Studio-Pro-Commercial-Edition.zip'
+          with zipfile.ZipFile(p) as z:
+              names=z.namelist()
+              forbidden=('.git/','node_modules/','.env','tailwind.config.cjs','styles/tailwind.input.css','api/_dynamicQrValidation.js','PRE_SALE_AUDIT.md','CODESTER_LISTING_DRAFT.md')
+              bad=[n for n in names if any(x in n for x in forbidden)]
+              required=['qr-studio-pro-buyer/README.md','qr-studio-pro-buyer/index.html','qr-studio-pro-buyer/en/index.html','qr-studio-pro-buyer/qrnode-upgrade.js','qr-studio-pro-buyer/api/admin/login.js','qr-studio-pro-buyer/docs/BUYER_INSTALLATION_GUIDE.md','qr-studio-pro-buyer/SBOM.cdx.json']
+              missing=[n for n in required if n not in names]
+              if bad or missing:
+                  raise SystemExit(f'Package validation failed. forbidden={bad}, missing={missing}')
+              print(f'PASS: buyer archive contains {len(names)} entries and no forbidden paths.')
+          PY
+          sha256sum "$GITHUB_WORKSPACE/QR-Studio-Pro-Commercial-Edition.zip"
+      - name: Upload clean-room tested Codester buyer package
+        uses: actions/upload-artifact@v4
+        with:
+          name: qr-studio-pro-codester-buyer-package
+          path: QR-Studio-Pro-Commercial-Edition.zip
+          if-no-files-found: error
+          retention-days: 14
+
   admin-auth-tests:
     runs-on: ubuntu-latest
     steps:

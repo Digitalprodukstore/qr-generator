@@ -2,10 +2,10 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.5.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:d6136215-3213-4ae2-bf73-05563a0a563e",
+  "serialNumber": "urn:uuid:ffb984e9-7eaf-4adf-9a5e-fcd8a99ad8d2",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-11-18T05:02:00.000Z",
+    "timestamp": "2026-11-18T05:20:36.989Z",
     "lifecycles": [{"phase": "build"}],
     "tools": [{"vendor": "npm", "name": "cli", "version": "10.8.2"}],
     "component": {
@@ -39,10 +39,7 @@
       {"type": "website", "url": "https://neon.com"},
       {"type": "issue-tracker", "url": "https://github.com/neondatabase/serverless/issues"}
     ],
-    "hashes": [{
-      "alg": "SHA-512",
-      "content": "3c8d898eec84144ee86434e457fb3a58fe0a11c782c278d01c295fba7872b2e2004edbdc55304b740e148074e7268ec2d2690af8e67a53b495d4d0e761ad0780"
-    }],
+    "hashes": [{"alg": "SHA-512", "content": "3c8d898eec84144ee86434e457fb3a58fe0a11c782c278d01c295fba7872b2e2004edbdc55304b740e148074e7268ec2d2690af8e67a53b495d4d0e761ad0780"}],
     "licenses": [{"license": {"id": "MIT"}}]
   }],
   "dependencies": [

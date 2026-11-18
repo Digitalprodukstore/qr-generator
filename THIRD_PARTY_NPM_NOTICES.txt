@@ -1,11 +1,14 @@
-QR STUDIO PRO — THIRD-PARTY NPM LICENCE NOTICES
-================================================
+QR Studio Pro — third-party package licence and NOTICE texts
+Generated from a clean npm ci installation and filtered to CycloneDX components. Review before redistribution.
+Unique SBOM packages inspected: 1
+Packages with licence/NOTICE files: 1
+SBOM packages with no matching text file: 0
 
-Generated from the successful clean npm ci / CycloneDX SBOM workflow on 18 November 2026.
-SBOM component: @neondatabase/serverless@1.2.1
-Declared licence: MIT
-Source: https://github.com/neondatabase/serverless
-
+==============================================================================
+@neondatabase/serverless@1.2.1
+Declared licence metadata: MIT
+------------------------------------------------------------------------------
+FILE: LICENSE
 MIT License
 
 Copyright (c) 2022 - 2025 Neon Inc.
@@ -27,3 +30,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+

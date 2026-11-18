@@ -142,3 +142,10 @@ The product may be offered as an AS-IS Static QR Edition with the above disclosu
 - Gitleaks full-history workflow run `44243423988` on exact experiment HEAD `9e1fe9fc60d6d9d01cd3a7f04029224cc7ed89bf`: SUCCESS.
 - The workflow checked out complete repository history/refs (`fetch-depth: 0`) and ran pinned Gitleaks with `--redact=100` and `--log-opts=--all`. The scan step completed successfully with no findings reported.
 - This result covers reachable commits/refs fetched by that workflow at the stated HEAD. It cannot cover unreachable Git objects, external forks, local clones, or credentials outside this repository. If any historical credentials were ever exposed elsewhere, revoke/rotate them independently.
+
+
+## 18 November 2026 — package and screenshot automation
+
+- Added Playwright screenshot capture for the Indonesian desktop generator, Premium Design Studio panel, mobile generator, and English interface. These are real screenshots captured from the browser test server, not generated mockups.
+- Added an explicit buyer ZIP allowlist and clean-room packaging step. The step copies buyer README to root, installs the exact locked dependency set in the extracted package, runs high/critical npm audit, checks shipped JS syntax, validates archive contents, excludes seller/internal files, and computes SHA-256 before artifact upload.
+- Package pipeline outcome must be checked on the final workflow run before claiming the ZIP is ready. The generated artifact still requires seller visual review, buyer-owned deployment acceptance, and confirmation of commercial rights.
