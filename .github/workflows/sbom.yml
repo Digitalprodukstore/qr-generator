@@ -1,0 +1,82 @@
+name: Generate CycloneDX SBOM
+
+on:
+  push:
+    branches:
+      - fix/qrnode-phase1-adoption-2026-11-02
+  pull_request:
+    branches:
+      - lock/qr-studio-pro-premium-v3-2026-10-15
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sbom-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  generate-sbom:
+    name: Generate and summarize complete npm dependency SBOM
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 20.20.2
+          package-manager-cache: false
+
+      - name: Install exact locked dependency tree
+        run: npm ci --ignore-scripts
+
+      - name: Generate CycloneDX SBOM
+        run: npm sbom --sbom-format=cyclonedx --sbom-type=application > qr-studio-pro.cdx.json
+
+      - name: Validate SBOM and summarize component licence metadata
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const bom = JSON.parse(fs.readFileSync('qr-studio-pro.cdx.json', 'utf8'));
+          if (bom.bomFormat !== 'CycloneDX' || !Array.isArray(bom.components)) {
+            throw new Error('Invalid or incomplete CycloneDX SBOM');
+          }
+          const components = bom.components;
+          const missing = components.filter((component) => !Array.isArray(component.licenses) || component.licenses.length === 0);
+          const counts = new Map();
+          for (const component of components) {
+            const ids = (component.licenses || []).flatMap((entry) => {
+              if (entry.license?.id) return [entry.license.id];
+              if (entry.license?.name) return [entry.license.name];
+              if (entry.expression) return [entry.expression];
+              return [];
+            });
+            for (const id of ids) counts.set(id, (counts.get(id) || 0) + 1);
+          }
+          console.log('SBOM format:', bom.bomFormat, 'spec:', bom.specVersion);
+          console.log('Component count:', components.length);
+          console.log('Components without declared licence metadata:', missing.length);
+          console.log('Licence metadata counts:');
+          for (const [id, count] of [...counts.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
+            console.log('-', id + ':', count);
+          }
+          if (missing.length) {
+            console.log('Components requiring licence review:');
+            for (const component of missing) console.log('-', component.name, component.version || '');
+          }
+          NODE
+
+      - name: Upload SBOM for manual legal review
+        uses: actions/upload-artifact@v7
+        with:
+          name: qr-studio-pro-cyclonedx-sbom
+          path: qr-studio-pro.cdx.json
+          if-no-files-found: error
+          retention-days: 14
