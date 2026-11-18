@@ -1,7 +1,7 @@
 # Security & Distribution Audit — QR Studio Pro
 
 Audit date: 18 November 2026  
-Reviewed branch HEAD: `4de369563396c0a756c012742e4e957ecc9a91ff` (18 November 2026)  
+Reviewed branch HEAD: `760cf971b7d4e147a76338fc4b86b1908f7b641f` (18 November 2026)  
 Scope: latest tree contains 60 tracked files. Earlier source-content pattern scans covered 56 tracked text/code/config/documentation files, plus a selected 35-file scan and a sample of 28 recent commit patches for common token/private-key patterns. The branch is 266 commits ahead of the locked baseline. The entire 266-commit delta and all branches/tags have not been scanned commit-by-commit. This remains a focused static review, not a complete Git-history secret scan or penetration test.
 
 ## Executive result
@@ -46,7 +46,9 @@ The current Vercel configuration includes nosniff, referrer policy, frame denial
 
 The latest completed QR Generator CI on commit `66284699e180f99089070ca4f19c58bb84542125` passed static checks, Admin auth tests, and QRNode static checks; its browser job failed at `npm audit --audit-level=high`. The dependency tree resolves `tinyglobby@0.2.17` to `picomatch@4.0.7` (dev/build dependency), and npm reported 10 high-severity findings in this transitive chain used by Tailwind CSS 3.4.17/build tooling. The follow-up documentation commit `4de369563396c0a756c012742e4e957ecc9a91ff` has its Phase 2 and Phase 3 workflows passing; the QR Generator workflow was still in progress at the time of this audit update. The log recommends `npm audit fix --force`, which would force a major Tailwind upgrade in this dependency graph. **Do not run `npm audit fix --force` or upgrade Tailwind to v4 without a separate compatibility review and full CSS/browser regression.**
 
-The surfaced advisory GHSA-fc5q-39xc-vjpf / CVE-2026-112366 concerns ReDoS in picomatch versions through 4.0.7. The GitHub Advisory Database currently lists no patched version; npm's registry currently lists 4.0.7 as latest. The issue is disputed by the upstream maintainer, but the published high-severity advisory remains active. In this repository picomatch is a transitive dependency of Tailwind/build tooling, not a direct application runtime dependency. This lowers exposure during normal browser-side static QR generation, but does not eliminate build-time risk. Keep the CI finding visible, do not feed untrusted glob patterns into build tooling, and re-evaluate when a confirmed upstream fix is published. Do not claim “zero vulnerabilities” for the current dependency tree. See the [GitHub advisory](https://github.com/advisories/GHSA-fc5q-39xc-vjpf) and [npm picomatch version history](https://www.npmjs.com/package/picomatch?activeTab=versions).
+The surfaced advisory GHSA-fc5q-39xc-vjpf / CVE-2026-112366 concerns a reported ReDoS condition in picomatch. The committed lockfile at reviewed HEAD resolves two development-only copies: `picomatch@2.3.2` and nested `tinyglobby/node_modules/picomatch@4.0.7`; `tinyglobby@0.2.17` is also marked development-only and is in the Tailwind/build-tool dependency graph. These are not direct application runtime dependencies, which lowers exposure during normal browser-side static QR generation but does not remove build-time or developer-tooling risk.
+
+The GitHub Advisory Database was updated on 17 November 2026 and, at the time of this review, shows affected versions as **Unknown** and patched versions as **Unknown**. A secondary vulnerability aggregator reports `4.0.8` as a possible fixed version, but this is not corroborated by the GitHub advisory or the lockfile evidence inspected here. Treat the fix status as **unconfirmed**; do not force an override to `4.0.8`, run `npm audit fix --force`, or upgrade Tailwind to v4 without confirming the upstream release, dependency compatibility, and full CSS/browser regression. Keep the CI audit finding visible and do not claim “zero vulnerabilities.” Re-check the advisory and registry metadata immediately before packaging. See the [GitHub advisory](https://github.com/advisories/GHSA-fc5q-39xc-vjpf), [OSV record](https://osv.dev/vulnerability/GHSA-fc5q-39xc-vjpf), and [secondary version/remediation report](https://www.dbu.gs/vulnerability/PT-2026-117472); the secondary report is not authoritative for declaring the issue fixed.
 
 ### Third-party licensing inventory
 
@@ -101,3 +103,11 @@ These are development-branch edits only. No Production domain, account, environm
 ## Limitations of this audit
 
 This review did not run a full Git-history secret scanner, a dependency SBOM/licence scanner, an independent penetration test, or a buyer-owned clean-room deployment. It must not be represented as certification or proof that no secret exists anywhere in the project history.
+
+## Follow-up review — 18 November 2026
+
+- Reviewed branch HEAD: `760cf971b7d4e147a76338fc4b86b1908f7b641f`; current tracked tree lists 60 files.
+- The tree filename review found no paths matching common `.env`, private-key, certificate, database-dump, or credential-file naming patterns. This was a filename-only check; a full content scan of all 60 files and a commit-by-commit historical secret scan have not been completed in this review.
+- The latest branch lockfile contains `picomatch@2.3.2` and `picomatch@4.0.7`, both marked `dev: true`; the latter is nested beneath `tinyglobby@0.2.17`.
+- The official GitHub advisory update dated 17 November lists affected and patched versions as Unknown. A secondary source mentions 4.0.8, but no override was applied because the fix status is not authoritatively confirmed.
+- PR #5 remains Draft/open, based on `lock/qr-studio-pro-premium-v3-2026-10-15`; no merge or Production change was made.
