@@ -3,10 +3,10 @@
 <html class="dark" lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>QR Studio Pro — Generator QR Code Gratis Online | BoothPro</title>
 <meta name="description" content="Buat QR code gratis untuk website, WhatsApp, dan teks. Sesuaikan warna dan logo, lalu unduh PNG tanpa biaya pembuatan atau unduhan."/>
 <meta name="robots" content="index,follow,max-image-preview:large"/>
-<link rel="canonical" href="https://qrnode.boothpro.my.id/"/>
-<link rel="alternate" hreflang="id-ID" href="https://qrnode.boothpro.my.id/"/>
-<link rel="alternate" hreflang="en" href="https://qrnode.boothpro.my.id/en/"/>
-<link rel="alternate" hreflang="x-default" href="https://qrnode.boothpro.my.id/"/>
+<link rel="canonical" href="https://example.com/"/>
+<link rel="alternate" hreflang="id-ID" href="https://example.com/"/>
+<link rel="alternate" hreflang="en" href="https://example.com/en/"/>
+<link rel="alternate" hreflang="x-default" href="https://example.com/"/>
 <meta name="theme-color" content="#FBFBF9"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="QR Studio Pro"/>
@@ -453,7 +453,7 @@ footer *{color:#e9e0d0!important}
 <label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant" id="inputPayloadLabel">Tautan URL / Website</label>
 <div class="relative flex items-center">
 <span class="material-symbols-outlined absolute left-3 text-outline-variant text-[20px]" id="inputPrefixIcon">public</span>
-<input class="w-full bg-surface-container-highest text-on-surface font-body-md text-body-md pl-10 pr-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary" id="payloadValue" oninput="renderLiveQR()" placeholder="https://..." type="text" value="https://boothpro.id/soft-files/preview?session=K908-LIVE"/>
+<input class="w-full bg-surface-container-highest text-on-surface font-body-md text-body-md pl-10 pr-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary" id="payloadValue" oninput="renderLiveQR()" placeholder="https://..." type="text" value="https://example.com/your-destination"/>
 </div>
 </div>
 <!-- WhatsApp Extra Fields -->
@@ -780,7 +780,7 @@ footer *{color:#e9e0d0!important}
 </div>
 <div class="flex flex-col gap-1">
 <label class="font-label-sm text-label-sm uppercase text-on-surface-variant">Tautan Call-to-Action (CTA)</label>
-<input class="bg-surface-container-highest text-on-surface font-body-md text-body-md px-3 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-tertiary" id="adminSponsorLink" oninput="updateAdminWatcher()" type="text" value="https://instagram.com/boothpro.id"/>
+<input class="bg-surface-container-highest text-on-surface font-body-md text-body-md px-3 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-tertiary" id="adminSponsorLink" oninput="updateAdminWatcher()" type="text" value=""/>
 </div>
 </div>
 <div class="flex flex-col gap-1">
@@ -863,7 +863,7 @@ footer *{color:#e9e0d0!important}
     pubId: '',
     slotId: '',
     sponsorName: 'BoothPro Studio & Coffee Lab',
-    sponsorLink: 'https://instagram.com/boothpro.id',
+    sponsorLink: '',
     sponsorTagline: 'Cetak Foto Kilat 4K & Nikmati Promo Kopi Spesial Hari Ini!'
   };
 
@@ -1018,7 +1018,7 @@ footer *{color:#e9e0d0!important}
       tabUrl.className = activeClass;
       inputLabel.innerText = "Tautan URL / Website";
       inputPrefix.innerText = "public";
-      payloadInput.value = "https://boothpro.id/soft-files/preview?session=K908-LIVE";
+      payloadInput.value = "https://example.com/your-destination";
     } else if (type === 'wa') {
       tabWa.className = activeClass;
       inputLabel.innerText = "Link Otomatis WhatsApp";
