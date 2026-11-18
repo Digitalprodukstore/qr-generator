@@ -1,6 +1,6 @@
 # QR Generator — Full Ownership Sale & Transfer Readiness
 
-Date: 2026-11-08
+Date: 2026-11-18
 Branch: `fix/qrnode-phase1-adoption-2026-11-02`
 Status: planning and safeguards only. No transfer endpoint or credential-change feature is live.
 
@@ -99,6 +99,6 @@ If a provider does not support transferring an account/project safely, migrate t
 
 - Owner has confirmed the intention to sell the website as a full-ownership product.
 - Single-primary-Admin model remains selected.
-- Neon Postgres is approved for Preview, but provisioning and database connection are still pending.
+- Owner reported a successful Admin database health check in Preview on 18 November 2026. This confirms the health probe only; database-backed Dynamic QR functionality is still incomplete and buyer-owned Neon provisioning remains part of handover.
 - No ownership-transfer API, credential rotation UI, data export/import tool, or handover automation has been implemented yet.
 - Current work is documentation/planning on the Preview feature branch only. Production remains untouched.
