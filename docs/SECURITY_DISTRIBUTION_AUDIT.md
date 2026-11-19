@@ -1,7 +1,7 @@
 # Security & Distribution Audit — QRnode
 
-Audit date: 18 November 2026  
-Reviewed branch HEAD: `760cf971b7d4e147a76338fc4b86b1908f7b641f` (18 November 2026)  
+Audit date: 19 November 2026  
+Reviewed branch HEAD: `cc7dcac753dc6007955dbf3c602230775c22d704` (19 November 2026)  
 Scope: latest tree contains 60 tracked files. Earlier source-content pattern scans covered 56 tracked text/code/config/documentation files, plus a selected 35-file scan and a sample of 28 recent commit patches for common token/private-key patterns. The branch is 266 commits ahead of the locked baseline. The entire 266-commit delta and all branches/tags have not been scanned commit-by-commit. This remains a focused static review, not a complete Git-history secret scan or penetration test.
 
 ## Executive result
@@ -203,3 +203,19 @@ Preview deployment: `https://qr-generator-ho2xuq7y1-risakil.vercel.app` — Verc
 - Buyer-facing README, Codester draft, installation guide, handover checklist, distribution manifest, and feature matrix were aligned to the QRnode product name in the latest documentation commits.
 - PR #5 remains Draft, open, and unmerged. Production domain `https://qrnode.boothpro.my.id/` remains locked and untouched.
 - The current Preview is a documentation/branding update and does not establish final browser QA or commercial release readiness.
+
+
+## Evidence refresh — 19 November 2026 (exact sale-branch HEAD)
+
+Reviewed HEAD: `cc7dcac753dc6007955dbf3c602230775c22d704`.
+
+- Vercel Preview deployment for this exact SHA is READY. This is deployment status only; anonymous access and buyer acceptance are not established.
+- QR Generator workflow #410 passed static checks, Admin auth tests, QRnode Phase 1 static checks, and the complete Chromium browser job. The browser job passed `npm audit --audit-level=high`, Tailwind compilation, independent QR decode checks, Premium Design Studio, and responsive viewports.
+- Full Git History Secret Scan #103 passed for fetched refs/history.
+- CycloneDX SBOM and package notice collection #114 passed.
+- Phase 2 #537 and Phase 3 #308 passed.
+- The current branch's `package-lock.json` still resolves `picomatch@4.0.7` under `tinyglobby@0.2.17`; the passing npm audit threshold on this run means the earlier high-severity audit failure was not reproduced. It does not establish that the upstream advisory is permanently resolved or that there are zero vulnerabilities. Re-run and inspect full audit output before release.
+- The earlier statement that a complete Git-history secret scan remained outstanding is superseded for fetched refs/history by run #103. This does not cover unfetched forks, unreachable objects, local clones, or external systems.
+- The earlier statement that the latest browser workflow was still running/blocked is superseded by the completed successful run #410.
+
+Remaining distribution blockers: authoritative `dlv@1.1.3` redistribution notice/copyright evidence, external CDN asset rights/attribution/privacy review, owner-approved application source licence, physical-device QR acceptance, buyer-owned clean-room deployment, and final allowlist ZIP inspection. PR #5 remains Draft/open/unmerged; Production remains locked and untouched.
