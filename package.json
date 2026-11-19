@@ -1,8 +1,8 @@
 {
-  "name": "qr-generator",
+  "name": "qrnode",
   "version": "1.0.0",
   "private": true,
-  "description": "QR Generator static application with Vercel serverless APIs",
+  "description": "QRnode static QR code generator with Vercel serverless Admin APIs",
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2"
   },
