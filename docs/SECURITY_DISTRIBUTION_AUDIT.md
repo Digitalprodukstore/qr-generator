@@ -230,3 +230,15 @@ The first research note above records the advisory database and package-registry
 - Vercel Preview deployment: READY at `https://qr-generator-nv4hmbooq-risakil.vercel.app`, source branch and SHA match this research branch and commit.
 
 Interpretation: the previously reported 10 High npm audit findings are **not reproducible** by the current locked project dependency tree and npm audit database in this CI run. This is not evidence that picomatch 4.0.7 was patched upstream, nor does it independently resolve the separate GitHub advisory's affected/patched-version metadata. Do not describe the package itself as fixed; retain the distinction between a clean current npm audit result and unresolved upstream advisory metadata. No dependency override, lockfile edit, audit suppression, or forced major upgrade was made.
+
+
+## Follow-up review — dlv@1.1.3 licence metadata corroboration (19 November 2026)
+
+- The npm registry page for the exact package version `dlv@1.1.3` explicitly declares **MIT** and links the package to `github.com/developit/dlv`. The upstream repository README also labels the package licence **MIT**. This independently corroborates the SPDX licence classification already recorded in the lockfile and CycloneDX metadata.
+- The registry lists the package collaborator as `developit`; the upstream README identifies the package repository, but the inspected upstream repository root does not provide a standalone `LICENSE` file. The evidence reviewed here does **not** establish a complete, authoritative copyright notice/year suitable for copying into a redistributed notice bundle.
+- Therefore, the earlier wording “MIT licence is unknown” is too broad: **the declared licence is corroborated as MIT; the exact copyright notice text remains unverified**. Do not fabricate a copyright line, year, or rights-holder statement. Keep the buyer-archive notice gate open until the exact published tarball/maintainer notice or written rights-holder clarification supplies the required notice text.
+- Sources reviewed: npm package metadata and README for `dlv@1.1.3`, plus the upstream `developit/dlv` repository README. The npm registry reports version 1.1.3 as the published package version and MIT as its declared licence. These sources confirm declared licence metadata, not legal advice or independent ownership clearance.
+
+### Release-gate clarification
+- [x] Corroborate `dlv@1.1.3` declared MIT licence against npm registry metadata and upstream README.
+- [ ] Verify the exact copyright/permission notice text to include in the buyer archive; do not invent missing notice details.
