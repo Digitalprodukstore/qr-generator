@@ -63,7 +63,7 @@ Explicit exclusions:
 
 ## Dependency advisory interpretation
 
-An earlier audit reported high-severity `picomatch` findings through the Tailwind build dependency chain. On the exact 19 November HEAD, the full browser workflow's `npm audit --audit-level=high` step passed without a lockfile change in the branding commit. Therefore, the earlier failure is not reproduced by the latest CI evidence. Do not claim the upstream advisory is permanently resolved or suppress future audit findings. Re-check the advisory database and the full audit output before creating the release archive. Do not use `npm audit fix --force`, guessed overrides, or a forced Tailwind major upgrade.
+The earlier `picomatch` audit failure is explained by the upstream GitHub advisory being withdrawn on 18 November 2026. The current lockfile still contains `picomatch@4.0.7` in development tooling; this was not upgraded. The exact 19 November CI audit threshold passed. Keep the lockfile unchanged unless a separate dependency review justifies a change, and re-check the official advisory before release. Do not suppress future audit findings or use `npm audit fix --force` / guessed overrides.
 
 ## Remaining release work — in order
 
@@ -81,3 +81,10 @@ An earlier audit reported high-severity `picomatch` findings through the Tailwin
 ## Sale decision
 
 **Not ready to submit to Codester yet.** CI is materially healthier and the current browser workflow is green, but unresolved third-party redistribution evidence, external runtime assets, application licence approval, physical-device QA, final ZIP verification, and buyer-owned installation remain release blockers.
+
+
+## Picomatch advisory status correction — 19 November 2026
+
+The GitHub Advisory Database entry `GHSA-fc5q-39xc-vjpf` / `CVE-2026-112366` is now marked **Withdrawn**, with the advisory page stating it was withdrawn on 18 November 2026. The withdrawal reason references the upstream maintainer discussion; this is not a patched package release. The current lockfile still resolves `picomatch@4.0.7` in development tooling, but the advisory is no longer an active GitHub-reviewed advisory. The latest CI `npm audit --audit-level=high` step also passes on the reviewed HEAD.
+
+Do not describe this as a code patch or claim that `picomatch@4.0.7` was upgraded. Keep the lockfile unchanged unless a separately reviewed dependency update is warranted. Re-check the official advisory before each release: https://github.com/advisories/GHSA-fc5q-39xc-vjpf
