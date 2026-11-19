@@ -109,3 +109,17 @@ The latest green browser CI does not complete real phone-camera acceptance, buye
 The GitHub Advisory Database entry `GHSA-fc5q-39xc-vjpf` / `CVE-2026-112366` is now marked **Withdrawn**, with the advisory page stating it was withdrawn on 18 November 2026. The withdrawal reason references the upstream maintainer discussion; this is not a patched package release. The current lockfile still resolves `picomatch@4.0.7` in development tooling, but the advisory is no longer an active GitHub-reviewed advisory. The latest CI `npm audit --audit-level=high` step also passes on the reviewed HEAD.
 
 Do not describe this as a code patch or claim that `picomatch@4.0.7` was upgraded. Keep the lockfile unchanged unless a separately reviewed dependency update is warranted. Re-check the official advisory before each release: https://github.com/advisories/GHSA-fc5q-39xc-vjpf
+
+
+## `dlv@1.1.3` licence evidence review — 19 November 2026
+
+Package lock evidence on the reviewed branch resolves `dlv@1.1.3` from the official npm registry tarball with integrity SHA-512 `+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==`, and declares `license: MIT`.
+
+Independent upstream evidence:
+- npm package metadata for `dlv@1.1.3` declares MIT and identifies repository `developit/dlv`.
+- Upstream repository `developit/dlv` `package.json` for version 1.1.3 declares `license: MIT` and author Jason Miller.
+- The upstream repository root currently has no separate `LICENSE` file. Therefore, the SPDX/package licence declaration is corroborated, but the canonical full MIT text and precise copyright notice for this published version are not established by the source repository's standalone licence file.
+
+Decision: classify this as **MIT declared / copyright-notice text still needs verification**, not as an unknown licence. Do not invent a copyright line or copy a notice from an unrelated third-party inventory. Obtain the published tarball's actual file listing and contents (or written upstream confirmation) before preparing the final buyer-facing `THIRD_PARTY_NOTICES.md`. Keep the final distribution gate open until the actual notice wording is confirmed.
+
+This review does not change application code or the lockfile.
