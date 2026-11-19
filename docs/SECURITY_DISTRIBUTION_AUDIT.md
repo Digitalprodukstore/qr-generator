@@ -219,3 +219,10 @@ Reviewed HEAD: `cc7dcac753dc6007955dbf3c602230775c22d704`.
 - The earlier statement that the latest browser workflow was still running/blocked is superseded by the completed successful run #410.
 
 Remaining distribution blockers: authoritative `dlv@1.1.3` redistribution notice/copyright evidence, external CDN asset rights/attribution/privacy review, owner-approved application source licence, physical-device QR acceptance, buyer-owned clean-room deployment, and final allowlist ZIP inspection. PR #5 remains Draft/open/unmerged; Production remains locked and untouched.
+
+
+## Picomatch advisory status correction — 19 November 2026
+
+The GitHub Advisory Database entry `GHSA-fc5q-39xc-vjpf` / `CVE-2026-112366` is now marked **Withdrawn**, with the advisory page stating it was withdrawn on 18 November 2026. The withdrawal reason references the upstream maintainer discussion; this is not a patched package release. The current lockfile still resolves `picomatch@4.0.7` in development tooling, but the advisory is no longer an active GitHub-reviewed advisory. The latest CI `npm audit --audit-level=high` step also passes on the reviewed HEAD.
+
+Do not describe this as a code patch or claim that `picomatch@4.0.7` was upgraded. Keep the lockfile unchanged unless a separately reviewed dependency update is warranted. Re-check the official advisory before each release: https://github.com/advisories/GHSA-fc5q-39xc-vjpf
