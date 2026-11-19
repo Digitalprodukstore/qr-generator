@@ -1,12 +1,13 @@
 # Codester Distribution Package Manifest — QRnode
 
-Status: preparation manifest only. Do not publish or deliver the archive until all release gates in `PRE_SALE_AUDIT.md` are closed.
+Status: preparation manifest only — NOT APPROVED FOR DISTRIBUTION. Reviewed 19 November 2026 at sale-branch HEAD `9ea88ceed2ea4c9d5addfd5873bbdf5e1b60b334`. Do not publish or deliver the archive until every release gate in `PRE_SALE_AUDIT.md` is closed.
 
 ## Package identity
 
 - Product: QRnode — Static QR Generator Commercial Edition
 - Sale model: non-exclusive licence through Codester; seller retains ownership of original application IP.
 - Source branch: `fix/qrnode-phase1-adoption-2026-11-02`
+- Current reviewed commit: `9ea88ceed2ea4c9d5addfd5873bbdf5e1b60b334` (documentation/audit update only; not a release build).
 - Package version/commit: set only after security, dependency, licence, and buyer-install QA gates pass.
 - Deployment: buyer-owned Vercel project; Preview only for seller QA. No seller production resources are transferred.
 
@@ -49,8 +50,8 @@ Before the release archive is created, verify that buyer-facing placeholders rem
 
 ## Packaging validation steps
 
-1. Resolve the high-severity transitive `picomatch` advisory or document an approved risk disposition and ensure the full browser workflow has an acceptable result.
-2. Complete full Git-history secret scan and current-tree scan; remediate historical exposed credentials by rotation/revocation if any are found. Never copy secret values into the report.
+1. Re-run and inspect the complete npm audit on the exact release candidate. The latest 19 November browser CI on the prior code HEAD passed `npm audit --audit-level=high`; do not describe this as zero vulnerabilities or permanent upstream advisory resolution. Reassess any currently reported `picomatch` advisory and document a risk disposition.
+2. Re-run full fetched-ref Git-history secret scan and current-tree scan on the exact release candidate; the 19 November Gitleaks workflow passed on the preceding code HEAD. Remediate historical exposed credentials by rotation/revocation if any are found. Never copy secret values into the report.
 3. Complete transitive SBOM and licence-notice review, including CDN-hosted QR encoder, Google Fonts, and cdnjs assets.
 4. Confirm seller rights for all original code, copy, graphics, logos, fonts, icons, and included assets.
 5. Finalize the non-exclusive application licence and Codester Regular/Extended scope; do not promise copyright transfer or rights beyond Codester terms.
