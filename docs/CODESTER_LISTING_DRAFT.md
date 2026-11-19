@@ -74,8 +74,8 @@ The download includes a buyer installation guide covering deployment, Admin cred
 - Buyer Installation Guide.
 - Buyer Handover Checklist.
 - AS-IS Feature Matrix.
-- Security & Distribution Audit.
-- Third-party Asset & Licence Inventory.
+- Third-party licence/NOTICE files required for included dependencies and bundled assets, once legally reviewed and cleared.
+- Buyer-facing privacy/legal notices and installation documentation.
 
 ## Requirements
 
@@ -94,8 +94,15 @@ The download includes a buyer installation guide covering deployment, Admin cred
 - Final price: [seller to set in Codester].
 - Demo URL: [insert buyer-accessible Preview/demo URL after final QA].
 - Screenshots: [prepare original screenshots from the approved release build].
-- Application source licence and third-party notices: [complete legal/licence review before upload].
+- Application source licence and third-party notices: [seller approval and complete legal/licence review required before upload].
 
 ## Claims intentionally not made
 
 Do not advertise Dynamic QR, editable QR destinations, scan analytics, campaign tracking, cloud-synced project history, active AdSense monetization, independent security certification, or guaranteed universal compatibility.
+
+
+## Seller QA status — 19 November 2026
+
+This listing remains a draft and is not submission-ready. The latest code HEAD tested by CI (`cc7dcac753dc6007955dbf3c602230775c22d704`) passed the Chromium QR/browser workflow, static checks, Admin auth tests, Phase 2/3 guards, Gitleaks scan and CycloneDX SBOM/notice collection. The branch subsequently received documentation-only audit updates; all CI must be rerun on the exact release candidate.
+
+Open submission blockers: authoritative `dlv@1.1.3` redistribution notice evidence; external QR encoder/font/icon rights, attribution and privacy review; seller-approved application source licence; physical-device QA; public demo access confirmation; final allowlist ZIP and checksum; buyer-owned clean-room deployment. Do not upload this listing or claim that the product is security-certified or licence-cleared until these items are closed.
