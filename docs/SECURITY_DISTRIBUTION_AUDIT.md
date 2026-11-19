@@ -226,3 +226,10 @@ Remaining distribution blockers: authoritative `dlv@1.1.3` redistribution notice
 The GitHub Advisory Database entry `GHSA-fc5q-39xc-vjpf` / `CVE-2026-112366` is now marked **Withdrawn**, with the advisory page stating it was withdrawn on 18 November 2026. The withdrawal reason references the upstream maintainer discussion; this is not a patched package release. The current lockfile still resolves `picomatch@4.0.7` in development tooling, but the advisory is no longer an active GitHub-reviewed advisory. The latest CI `npm audit --audit-level=high` step also passes on the reviewed HEAD.
 
 Do not describe this as a code patch or claim that `picomatch@4.0.7` was upgraded. Keep the lockfile unchanged unless a separately reviewed dependency update is warranted. Re-check the official advisory before each release: https://github.com/advisories/GHSA-fc5q-39xc-vjpf
+
+
+## Evidence correction — exact current package-metadata HEAD 7d5533b85265f3ac88eb5f0c0fd66672f4429c95
+
+The current sale-branch HEAD is `7d5533b85265f3ac88eb5f0c0fd66672f4429c95`, which includes only the QRnode npm package metadata rename plus documentation/audit updates after the earlier tested code HEAD `cc7dcac753dc6007955dbf3c602230775c22d704`. On the current HEAD, Secret Scan, Phase 2, Phase 3 and SBOM workflows have completed successfully. The QR Generator browser workflow run `44544713051` is still in progress: its locked install, high/critical npm audit, browser dependency install and Tailwind compilation steps have passed; Chromium setup, QR decode, design studio, responsive checks and workflow-generated CSS/lockfile commit have not yet completed. Do not report the full browser workflow as PASS until its final conclusion is success.
+
+`dlv@1.1.3` licence declaration is corroborated as MIT by npm package metadata and the upstream repository's version 1.1.3 `package.json`. However, the upstream repository has no standalone `LICENSE` file, so the exact copyright notice and full published MIT notice still require confirmation from the published tarball or upstream. Do not fabricate the copyright holder text.
