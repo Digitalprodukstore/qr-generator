@@ -242,3 +242,42 @@ Interpretation: the previously reported 10 High npm audit findings are **not rep
 ### Release-gate clarification
 - [x] Corroborate `dlv@1.1.3` declared MIT licence against npm registry metadata and upstream README.
 - [ ] Verify the exact copyright/permission notice text to include in the buyer archive; do not invent missing notice details.
+
+
+## External runtime asset review — source inspection and licence evidence (19 November 2026)
+
+Reviewed the sale/research branch source files `index.html` and `en/index.html`. This is a source-reference review; no browser network capture or legal opinion is implied.
+
+### Exact external references found
+
+Both language entry pages currently load:
+- Google Fonts CSS for **Geist** and **Inter** from `fonts.googleapis.com`, with font binaries expected from `fonts.gstatic.com`.
+- **Material Symbols Outlined** from Google Fonts. The HTML contains two separate stylesheet links for the same family with different axis/display parameters; this is redundant and may cause duplicate CSS/font requests or confusing cascade behavior.
+- **qrcode-generator 1.4.4** JavaScript from `cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js`. The script tag has no Subresource Integrity (`integrity`) or `crossorigin` attribute.
+
+### Licence evidence and distribution implications
+
+- **Geist**: the Google Fonts upstream family metadata identifies the Geist Project Authors and its OFL 1.1 licence; the family OFL notice begins “Copyright 2024 The Geist Project Authors”. OFL permits bundling and redistribution with software, subject to carrying the copyright notice and full OFL text and not selling the font by itself. Source: `https://github.com/google/fonts/blob/main/ofl/geist/OFL.txt`.
+- **Inter**: Google Fonts metadata identifies Inter as OFL; the family OFL notice begins “Copyright 2020 The Inter Project Authors”. The same OFL redistribution/notice conditions apply. Source: `https://github.com/google/fonts/blob/main/ofl/inter/OFL.txt`.
+- **Material Symbols**: Google's official developer guide identifies Apache License 2.0. Source: `https://developers.google.com/fonts/docs/material_symbols`. If icon font binaries or icon files are bundled, include the applicable Apache 2.0 licence and preserve copyright/NOTICE/attribution information as required by that licence. A remotely hosted stylesheet alone is not a redistribution of the font binary by this source archive.
+- **qrcode-generator 1.4.4**: upstream JavaScript source identifies “Copyright (c) 2009 Kazuhiko Arase” and MIT licence. Source: `https://github.com/kazuhikoarase/qrcode-generator/blob/master/js/dist/qrcode.mjs`. npm's version history confirms 1.4.4 is a published version; its current package page declares MIT. Source: `https://www.npmjs.com/package/qrcode-generator?activeTab=versions`. The exact CDN-served 1.4.4 file should still be downloaded/hash-checked against the upstream release before creating a buyer notice bundle; do not assume the current upstream branch file is byte-identical to the 1.4.4 CDN asset.
+
+### Runtime privacy and integrity observations
+
+- Because both entry pages reference Google Fonts and cdnjs at runtime, a buyer deployment will make third-party network requests when visitors load the pages. Those providers may receive normal request metadata such as IP address, user-agent, referrer (subject to browser/referrer policy), and requested resource. The buyer should disclose third-party asset providers in their privacy notice and review applicable provider terms and data-transfer requirements.
+- The QR encoder is executable JavaScript fetched from a third-party CDN at runtime. Without SRI, the browser does not pin the expected bytes. For a commercial source package, prefer a locally bundled, version-pinned copy with its exact MIT notice, or add a verified SRI hash and retain a documented CDN dependency. Any such change requires the full QR browser regression suite.
+- Consider self-hosting Geist, Inter, and Material Symbols only after collecting the exact font binaries, checking each family’s metadata/notice, including full licence text in the archive, and verifying the visual output. No fonts or icon binaries were copied into the repository during this review.
+
+### Product identity consistency finding
+
+The current `index.html` and `en/index.html` still contain legacy visible/schema branding such as “QR Studio Pro” and “QR_GENERATOR”, although buyer-facing documentation and the Codester draft have been renamed QRnode. This is a real release consistency defect, not a new feature. It must be corrected on the sale branch and checked in both languages before the final buyer ZIP; this research-only branch did not modify application HTML.
+
+### Gate status
+
+- [x] Identify the exact external asset URLs used by both generator pages.
+- [x] Corroborate upstream licence families for Geist, Inter, Material Symbols, and qrcode-generator.
+- [ ] Verify exact CDN qrcode-generator 1.4.4 bytes and preserve its MIT notice in the buyer package.
+- [ ] Decide whether runtime external requests remain or assets are self-hosted; update buyer privacy disclosure accordingly.
+- [ ] Remove duplicate Material Symbols stylesheet reference and add SRI or bundle a pinned local QR encoder; run complete browser regression if changed.
+- [ ] Align Indonesian and English HTML/schema/visible product identity to QRnode on the sale branch and verify both language routes.
+- [ ] Include exact Geist/Inter OFL notices and Material Symbols Apache notice only if font/icon binaries are redistributed in the archive.
