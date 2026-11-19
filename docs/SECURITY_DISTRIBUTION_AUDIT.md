@@ -213,3 +213,20 @@ Preview deployment: `https://qr-generator-ho2xuq7y1-risakil.vercel.app` — Verc
 - The inspected upstream picomatch pull request #194 is about parsing a leading `?` in an extglob body; it is not evidence of a fix for CVE-2026-112366.
 - Decision: do not add an npm override, fabricate a 4.0.8 lockfile resolution, suppress the audit, or force a Tailwind major upgrade. Keep the existing high-severity audit gate visible until an upstream patch/release or a separately validated dependency-path change is available.
 - Next validation must use a real published package version, a clean `npm ci`, `npm audit --audit-level=high`, the Tailwind CSS build and output checks, static checks, and the full Chromium QR/Design Studio test suite. No Codester-ready or zero-vulnerability claim is authorized by this research.
+
+
+## Correction — live CI audit and Preview verification (19 November 2026, 17:15 WIB)
+
+The first research note above records the advisory database and package-registry state observed during initial investigation. A subsequent clean CI run on this branch provides new, directly reproducible project evidence:
+
+- Commit: `63941bb7645a8cbfd8449f1e35f0546d418c0e85`.
+- Locked dependency tree still contains `picomatch@2.3.2` and nested `picomatch@4.0.7`; this research commit did not change `package.json` or `package-lock.json`.
+- `npm ci --ignore-scripts`: PASS; 74 packages audited; npm reported 0 vulnerabilities.
+- `npm audit --audit-level=high`: PASS; npm reported 0 vulnerabilities.
+- Browser-test dependency install: PASS; 123 packages audited; npm reported 0 vulnerabilities.
+- Tailwind CSS build and generated stylesheet checks: PASS.
+- Chromium QR decode, Premium Design Studio, and phone/tablet responsive checks: PASS.
+- Admin auth, QRnode static checks, Phase 2 checks, and Phase 3 schema/privacy guards: PASS.
+- Vercel Preview deployment: READY at `https://qr-generator-nv4hmbooq-risakil.vercel.app`, source branch and SHA match this research branch and commit.
+
+Interpretation: the previously reported 10 High npm audit findings are **not reproducible** by the current locked project dependency tree and npm audit database in this CI run. This is not evidence that picomatch 4.0.7 was patched upstream, nor does it independently resolve the separate GitHub advisory's affected/patched-version metadata. Do not describe the package itself as fixed; retain the distinction between a clean current npm audit result and unresolved upstream advisory metadata. No dependency override, lockfile edit, audit suppression, or forced major upgrade was made.
