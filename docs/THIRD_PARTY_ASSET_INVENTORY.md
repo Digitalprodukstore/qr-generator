@@ -1,6 +1,6 @@
-# QR Studio Pro — Third-Party Asset & Licence Inventory
+# QRnode — Third-Party Asset & Licence Inventory
 
-Audit date: 18 November 2026  
+Audit date: 19 November 2026  
 Scope: source-visible direct dependencies and runtime assets. This is a partial inventory, not a complete SBOM or legal opinion.
 
 ## Direct application dependency
@@ -83,3 +83,22 @@ The CycloneDX document contains declared licence identifiers and dependency meta
 - A possible experiment is to pin the Tailwind-compatible `sucrase@3.35.0` release: its published dependency metadata uses `glob@^10.3.10` rather than `tinyglobby`. This is only a candidate; no lockfile change or build test has been made.
 - This route changes the glob-matching dependency tree and may introduce a `minimatch` dependency. `minimatch` has a separate Moderate advisory `GHSA-g3hv-75wg-m249` / `CVE-2026-118764`; the upstream advisory identifies `10.2.6` as affected and `11.0.1` as patched. Exact resolved versions and compatibility must be checked before considering this route.
 - Decision: do not apply a Sucrase downgrade or npm override based only on dependency metadata. Any experiment must run on a separate branch and prove: clean `npm ci`, complete `npm audit` review, CSS output equivalence, all static checks, and the full Chromium/browser QR suite. Keep the current locked build tree until that evidence exists.
+
+
+## Evidence refresh — 19 November 2026
+
+The following CI evidence supersedes older statements in this document that the latest browser workflow was blocked at the high-severity npm audit gate:
+
+- Exact reviewed sale-branch HEAD: `cc7dcac753dc6007955dbf3c602230775c22d704`.
+- QR Generator workflow #410 / run `44542488658`: PASS. Its browser job passed `npm ci --ignore-scripts`, `npm audit --audit-level=high`, Tailwind CSS compilation, Chromium installation, independent QR decoding, Premium Design Studio checks, and responsive viewport checks.
+- CycloneDX SBOM workflow #114 / run `44542496312`: PASS, including package licence/NOTICE text collection.
+- Full Git History Secret Scan #103 / run `44542496294`: PASS for fetched refs/history.
+- Phase 2 #537 and Phase 3 #308: PASS.
+
+Interpretation: the previous high-severity audit failure was not reproduced on this exact HEAD. This is evidence that the current CI audit threshold passed, not proof of zero vulnerabilities or a declaration that every upstream advisory is permanently fixed. Re-run the full audit immediately before release and review its output.
+
+The successful notice-collection workflow does not close the known legal evidence gap: prior package-root review found no matching authoritative licence/NOTICE file for `dlv@1.1.3`, while secondary copyright attributions conflict. Keep that item blocked until authoritative evidence is obtained or the package is safely removed/replaced and the resulting SBOM/notices are regenerated.
+
+External runtime QR encoder, Google Fonts and Material Symbols remain outside the npm SBOM and still require separate rights, attribution, version and privacy review. The application's own source licence remains an owner-approval item; do not add a guessed root `LICENSE`.
+
+The latest green browser CI does not complete real phone-camera acceptance, buyer-owned clean-room deployment, final allowlist ZIP validation, or Codester submission approval.
