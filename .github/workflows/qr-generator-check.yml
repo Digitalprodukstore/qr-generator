@@ -43,7 +43,7 @@ jobs:
           assert(/<html[^>]*lang="en"/i.test(english), 'English page declares its language');
           assert(!/rel="canonical"/i.test(html) && !/rel="canonical"/i.test(english), 'canonical URLs are deferred until buyer domain setup');
           for (const [name, document] of [['Indonesian', html], ['English', english]]) {
-            assert(!/<link\\b[^>]*hreflang="(?:id-ID|en|x-default)"/i.test(document), name + ' page does not publish placeholder language URLs');
+            assert(!/<link\b[^>]*hreflang="(?:id-ID|en|x-default)"/i.test(document), name + ' page does not publish placeholder language URLs');
           }
           assert(robots.includes('Sitemap: https://your-domain.example/sitemap.xml'), 'robots.txt uses the reserved buyer-domain placeholder');
           assert(sitemap.includes('https://your-domain.example/') && sitemap.includes('https://your-domain.example/en/'), 'sitemap uses the reserved buyer-domain placeholder for both languages');
