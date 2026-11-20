@@ -47,7 +47,7 @@ Never reuse or request the seller's credentials, hosting resources, database acc
 
 ## Buyer launch checklist
 
-- Replace the `example.com` SEO/canonical/sitemap placeholders with the buyer's final HTTPS domain.
+- Configure the buyer-owned HTTPS domain first, then add matching absolute canonical and `hreflang` URLs to both `index.html` and `en/index.html`. The source intentionally ships without canonical/hreflang tags so it cannot accidentally claim `example.com` or the seller's domain.
 - Review and replace legal, privacy, terms, disclaimer, contact, and business details with accurate buyer information.
 - Verify all 18 QR types, PNG/SVG downloads, mobile and desktop layouts, Admin login/logout, session behavior, rate limiting, and cross-browser settings persistence.
 - Review all third-party dependency, font, icon, QR encoder, and asset licences before redistribution or public launch.
