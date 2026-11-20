@@ -2,23 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://example.com/</loc>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://example.com/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://example.com/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://example.com/"/>
+    <loc>https://your-domain.example/</loc>
+    <xhtml:link rel="alternate" hreflang="id-ID" href="https://your-domain.example/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://your-domain.example/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://your-domain.example/"/>
   </url>
   <url>
-    <loc>https://example.com/en/</loc>
-    <xhtml:link rel="alternate" hreflang="id-ID" href="https://example.com/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://example.com/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://example.com/"/>
+    <loc>https://your-domain.example/en/</loc>
+    <xhtml:link rel="alternate" hreflang="id-ID" href="https://your-domain.example/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://your-domain.example/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://your-domain.example/"/>
   </url>
-  <url><loc>https://example.com/about.html</loc></url>
-  <url><loc>https://example.com/contact.html</loc></url>
-  <url><loc>https://example.com/privacy.html</loc></url>
-  <url><loc>https://example.com/terms.html</loc></url>
-  <url><loc>https://example.com/disclaimer.html</loc></url>
-  <url><loc>https://example.com/faq.html</loc></url>
-  <url><loc>https://example.com/tutorial.html</loc></url>
-  <url><loc>https://example.com/use-cases.html</loc></url>
+  <url><loc>https://your-domain.example/about.html</loc></url>
+  <url><loc>https://your-domain.example/contact.html</loc></url>
+  <url><loc>https://your-domain.example/privacy.html</loc></url>
+  <url><loc>https://your-domain.example/terms.html</loc></url>
+  <url><loc>https://your-domain.example/disclaimer.html</loc></url>
+  <url><loc>https://your-domain.example/faq.html</loc></url>
+  <url><loc>https://your-domain.example/tutorial.html</loc></url>
+  <url><loc>https://your-domain.example/use-cases.html</loc></url>
 </urlset>
