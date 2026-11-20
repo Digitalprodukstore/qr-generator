@@ -53,9 +53,9 @@ Never reuse or request the seller's credentials, hosting resources, database acc
 - Review all third-party dependency, font, icon, QR encoder, and asset licences before redistribution or public launch.
 - Keep the first deployment in Preview. The buyer alone decides whether and when to configure their Production environment and domain.
 
-## Third-party components and licence
+## Application licence and third-party components
 
-Third-party dependencies and external services remain subject to their own licences and terms. Preserve all required notices supplied with the release package. The application's own licence is the separate written licence granted for this purchase; no copyright assignment, exclusivity, or rights beyond the applicable Codester licence are implied.
+The seller-approved licence model is non-exclusive. Read the [QRnode Application Licence Notice](../APPLICATION-LICENSE.md); the purchaser's selected Codester Regular or Extended licence and current Codester marketplace terms govern permitted use. The notice does not transfer copyright or grant rights beyond the applicable Codester licence. Third-party dependencies and external services remain subject to their own licences and terms. Preserve all required notices supplied with the release package.
 
 ## Support and updates
 
