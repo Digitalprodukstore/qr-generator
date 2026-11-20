@@ -43,7 +43,7 @@ Exclude from the buyer ZIP unless a documented technical reason requires otherwi
 ## Mandatory substitutions and buyer setup
 
 Before the release archive is created, verify that buyer-facing placeholders remain intentional:
-- Replace `https://example.com` with a neutral documented placeholder or keep it with a clear buyer replacement instruction; do not let it be mistaken for the buyer's real domain.
+- The generator's example destination `https://example.com/your-destination` is sample QR payload text only. Canonical and hreflang tags are intentionally omitted until the buyer configures their own HTTPS domain; set both language pages to the buyer's domain before public launch.
 - Replace `support@example.com`, `Your Business`, `Your Sponsor Name`, and all other contact/legal/business placeholders during buyer installation.
 - Buyers create their own Admin credentials, session secret, Upstash Redis, optional Neon database, Vercel project, and domain.
 - No seller account, domain, secret, or hosted database is included.
