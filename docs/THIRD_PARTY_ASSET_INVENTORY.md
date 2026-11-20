@@ -123,3 +123,16 @@ Independent upstream evidence:
 Decision: classify this as **MIT declared / copyright-notice text still needs verification**, not as an unknown licence. Do not invent a copyright line or copy a notice from an unrelated third-party inventory. Obtain the published tarball's actual file listing and contents (or written upstream confirmation) before preparing the final buyer-facing `THIRD_PARTY_NOTICES.md`. Keep the final distribution gate open until the actual notice wording is confirmed.
 
 This review does not change application code or the lockfile.
+
+## Sale-readiness evidence refresh — 20 November 2026
+
+Exact reviewed branch HEAD before this documentation refresh: `3f300310daa6bb2625f31d2fde038d6b94ba6917`.
+
+- The QR Generator checks run `44687196049` completed successfully. The parallel Phase 2 runs `44687196598` and `44687201345`, Phase 3 run `44687201432`, Full Git History Secret Scan run `44687201374`, and CycloneDX SBOM run `44687196043` also completed successfully. Duplicate workflow runs are recorded as separate runs, not separate code changes.
+- The Vercel Preview for that exact commit is READY at `https://qr-generator-cvhz3h1cq-risakil.vercel.app`. Direct HTTP checks returned 200 for `/`, `/en/`, `/robots.txt`, `/sitemap.xml`, `/assets/tailwind.generated.css`, and `/qrnode-upgrade.js`. This is deployment/HTTP evidence, not a substitute for hands-on camera and download testing on a physical phone.
+- The official npm package page for `dlv@1.1.3` labels the package MIT and links the upstream `developit/dlv` repository. The page's displayed MIT section uses the generic placeholder `Copyright (c) <year> <copyright holders>`; it does not establish a usable copyright holder/year notice for this exact release. Keep the notice-text gate open; do not fill in the placeholder or infer a rights holder.
+- The GitHub Advisory Database entry `GHSA-fc5q-39xc-vjpf` / `CVE-2026-112366` is marked **Withdrawn** (withdrawal dated 18 November 2026). Do not continue describing it as an active GitHub-reviewed High advisory. This is an advisory-status correction, not a package upgrade or code patch. Re-check the advisory before release.
+- The deployed HTML still requests Google Fonts (Geist, Inter, Material Symbols) and the pinned cdnjs QR encoder at runtime. It also contains two Material Symbols stylesheet requests with different axis declarations; keep both documented until their equivalence and actual rendering impact are tested. These remote assets are not covered by the npm SBOM and send ordinary request metadata to their respective providers.
+- No buyer ZIP was generated. Remaining gates: authoritative `dlv` notice evidence, exact runtime asset/version and notice review, application source licence approval by the owner, physical-device acceptance, buyer-owned clean-room install/deploy, and final package allowlist/secret scan.
+
+The above CI and Preview evidence is tied to the exact pre-documentation commit stated above. The documentation-only commit created by this refresh will trigger new CI; do not assume those new runs have passed until checked.
