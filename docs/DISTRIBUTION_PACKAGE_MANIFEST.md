@@ -1,11 +1,12 @@
 # Codester Distribution Package Manifest — QRnode
 
-Status: preparation manifest only — NOT APPROVED FOR DISTRIBUTION. Reviewed 19 November 2026 at sale-branch HEAD `9ea88ceed2ea4c9d5addfd5873bbdf5e1b60b334`. Do not publish or deliver the archive until every release gate in `PRE_SALE_AUDIT.md` is closed.
+Status: preparation manifest only — NOT APPROVED FOR DISTRIBUTION. Seller approved the non-exclusive application-licence model on 20 November 2026; the notice is recorded in `APPLICATION-LICENSE.md`. This does not close third-party rights, Codester listing, or QA gates. Do not publish or deliver the archive until every release gate in `PRE_SALE_AUDIT.md` is closed.
 
 ## Package identity
 
 - Product: QRnode — Static QR Generator Commercial Edition
-- Sale model: non-exclusive licence through Codester; seller retains ownership of original application IP.
+- Sale model: non-exclusive application-use licence through Codester; seller retains rights in original application IP to the extent owned or lawfully licensable. Buyer rights are governed by the purchased Codester Regular/Extended licence and marketplace terms.
+- Seller-approved licence notice: `APPLICATION-LICENSE.md` (not an open-source licence and not a substitute for Codester terms).
 - Source branch: `fix/qrnode-phase1-adoption-2026-11-02`
 - Current reviewed commit: `9ea88ceed2ea4c9d5addfd5873bbdf5e1b60b334` (documentation/audit update only; not a release build).
 - Package version/commit: set only after security, dependency, licence, and buyer-install QA gates pass.
@@ -22,6 +23,7 @@ Include application files required for the buyer to build and deploy the current
 - `assets/tailwind.generated.css`.
 - `styles/tailwind.input.css`, `tailwind.config.cjs`.
 - `package.json`, `package-lock.json`.
+- `APPLICATION-LICENSE.md`.
 - `vercel.json`, `.gitignore`.
 - Buyer-facing documentation: use `docs/BUYER_README.md` as the root `README.md` in the ZIP, plus `docs/AS_IS_FEATURE_MATRIX.md`, `docs/BUYER_INSTALLATION_GUIDE.md`, `docs/BUYER_HANDOVER_CHECKLIST.md`, and `docs/GLOBAL_ADMIN_SETTINGS_SETUP.md`. Include third-party licence notices only after the complete SBOM and redistribution review establishes the exact required files.
 
@@ -54,7 +56,7 @@ Before the release archive is created, verify that buyer-facing placeholders rem
 2. Re-run full fetched-ref Git-history secret scan and current-tree scan on the exact release candidate; the 19 November Gitleaks workflow passed on the preceding code HEAD. Remediate historical exposed credentials by rotation/revocation if any are found. Never copy secret values into the report.
 3. Complete transitive SBOM and licence-notice review, including CDN-hosted QR encoder, Google Fonts, and cdnjs assets.
 4. Confirm seller rights for all original code, copy, graphics, logos, fonts, icons, and included assets.
-5. Finalize the non-exclusive application licence and Codester Regular/Extended scope; do not promise copyright transfer or rights beyond Codester terms.
+5. Include `APPLICATION-LICENSE.md` in the candidate archive and verify its wording against the live Codester Regular/Extended terms and final listing. The seller approved the non-exclusive model, but the exact buyer grant is still controlled by the Codester licence purchased; do not promise copyright transfer or rights beyond Codester terms.
 6. Reconcile the buyer ZIP allowlist against all HTML script/style/navigation references; in particular, retain `qrnode-upgrade.js`, which is required by both generator pages. Include only the five Admin API endpoints and shared helpers listed above; do not ship the unused Dynamic QR validation helper or unapplied migration. Copy `docs/BUYER_README.md` to the archive root as `README.md`; do not include the repository's seller-working README.
 7. Confirm every link in the buyer-edition README resolves to a file included in the archive; do not ship seller-only audit, PR, pricing, or roadmap working documents.
 8. Build the ZIP from an explicit allowlist, not by zipping the repository root.
@@ -67,4 +69,4 @@ Before the release archive is created, verify that buyer-facing placeholders rem
 
 - This manifest is not the final ZIP and does not certify that every listed file is legally distributable.
 - Dynamic QR, redirect resolver, campaign analytics, cloud-synced projects, and active AdSense are not included.
-- Do not add the root `LICENSE` until the seller-approved application licence and third-party notice requirements are confirmed.
+- Do not add a conventional root `LICENSE` that could imply an open-source grant. Use `APPLICATION-LICENSE.md` for the seller-approved proprietary/non-exclusive model. Third-party notice requirements remain open pending final licence verification.
