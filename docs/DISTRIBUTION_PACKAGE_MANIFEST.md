@@ -8,7 +8,7 @@ Status: preparation manifest only — NOT APPROVED FOR DISTRIBUTION. Seller appr
 - Sale model: non-exclusive application-use licence through Codester; seller retains rights in original application IP to the extent owned or lawfully licensable. Buyer rights are governed by the purchased Codester Regular/Extended licence and marketplace terms.
 - Seller-approved licence notice: `APPLICATION-LICENSE.md` (not an open-source licence and not a substitute for Codester terms).
 - Source branch: `fix/qrnode-phase1-adoption-2026-11-02`
-- Current reviewed commit: `9ea88ceed2ea4c9d5addfd5873bbdf5e1b60b334` (documentation/audit update only; not a release build).
+- Licence/documentation review starting commit: `5d8e1bdd71b22348bc2f4668cb5758c25282fb5f`. The current branch tip is the latest documentation commit; this is not a release build.
 - Package version/commit: set only after security, dependency, licence, and buyer-install QA gates pass.
 - Deployment: buyer-owned Vercel project; Preview only for seller QA. No seller production resources are transferred.
 
