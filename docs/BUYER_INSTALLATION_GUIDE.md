@@ -90,7 +90,7 @@ A custom domain is optional. The buyer can keep the Vercel-provided deployment d
 
 DNS records can vary by domain and Vercel configuration. Use the records shown in the buyer's own Vercel dashboard; do not copy DNS values from the seller's domain.
 
-The generator itself does not require a domain-specific code change to create static QR codes. The supplied source uses `https://example.com` placeholders in canonical/hreflang metadata, `sitemap.xml`, and `robots.txt`. Buyers must replace those placeholders with their own final HTTPS domain before a public Production release. Also review sample payloads, sponsor links, social links, contact details, and legal/business disclosures.
+The generator itself does not require a domain-specific code change to create static QR codes. The supplied source intentionally omits canonical and hreflang link tags until the buyer configures their own HTTPS domain. Before a public Production release, add matching canonical and hreflang tags to both `index.html` and `en/index.html`, and replace `https://your-domain.example` in the included `sitemap.xml` and `robots.txt` with the buyer's final HTTPS domain. Also review sample payloads, sponsor links, social links, contact details, and legal/business disclosures.
 
 ## 6. Preview acceptance checklist
 
