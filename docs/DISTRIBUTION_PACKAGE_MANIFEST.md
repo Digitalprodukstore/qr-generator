@@ -17,6 +17,7 @@ Status: preparation manifest only — NOT APPROVED FOR DISTRIBUTION. Seller appr
 Include application files required for the buyer to build and deploy the current AS-IS product:
 
 - `index.html`, `en/index.html`, and public content pages: `about.html`, `contact.html`, `disclaimer.html`, `faq.html`, `privacy.html`, `terms.html`, `tutorial.html`, `use-cases.html`.
+- `robots.txt` and `sitemap.xml` (buyer must replace the `https://your-domain.example` sitemap placeholder with the buyer's own HTTPS domain before public launch).
 - `admin-settings.js`.
 - `qrnode-upgrade.js` (required: both Indonesian and English generator pages load this script for the 18 QR categories, payload validation, Design Studio, and export features).
 - `api/_adminAuth.js`, `api/_adminRateLimit.js`, `api/_redisFetch.js`, `api/_sameOrigin.js`, and `api/admin/{database-health,login,logout,session,settings}.js` (the server-side Admin features required by this edition).
@@ -45,7 +46,7 @@ Exclude from the buyer ZIP unless a documented technical reason requires otherwi
 ## Mandatory substitutions and buyer setup
 
 Before the release archive is created, verify that buyer-facing placeholders remain intentional:
-- The generator's example destination `https://example.com/your-destination` is sample QR payload text only. Canonical and hreflang tags are intentionally omitted until the buyer configures their own HTTPS domain; set both language pages to the buyer's domain before public launch. Replace `https://your-domain.example` in `robots.txt` and `sitemap.xml` at the same time.
+- The generator's example destination `https://example.com/your-destination` is sample QR payload text only. Canonical and hreflang tags are intentionally omitted in the source until the buyer configures their own HTTPS domain; add matching tags to both language pages before public launch. Replace `https://your-domain.example` in the included `robots.txt` and `sitemap.xml` at the same time.
 - Replace `support@example.com`, `Your Business`, `Your Sponsor Name`, and all other contact/legal/business placeholders during buyer installation.
 - Buyers create their own Admin credentials, session secret, Upstash Redis, optional Neon database, Vercel project, and domain.
 - No seller account, domain, secret, or hosted database is included.
