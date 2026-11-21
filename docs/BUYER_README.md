@@ -55,7 +55,7 @@ Never reuse or request the seller's credentials, hosting resources, database acc
 
 ## Application licence and third-party components
 
-The seller-approved licence model is non-exclusive. Read the [QRnode Application Licence Notice](../APPLICATION-LICENSE.md); the purchaser's selected Codester Regular or Extended licence and current Codester marketplace terms govern permitted use. The notice does not transfer copyright or grant rights beyond the applicable Codester licence. Third-party dependencies and external services remain subject to their own licences and terms. Preserve all required notices supplied with the release package.
+The seller-approved licence model is non-exclusive. Read the [QRnode Application Licence Notice](APPLICATION-LICENSE.md); the purchaser's selected Codester Regular or Extended licence and current Codester marketplace terms govern permitted use. The notice does not transfer copyright or grant rights beyond the applicable Codester licence. Third-party dependencies and external services remain subject to their own licences and terms. Preserve all required notices supplied with the release package.
 
 ## Support and updates
 
