@@ -115,3 +115,17 @@ Source: https://www.codester.com/info/licenses (checked 21 November 2026). Listi
 Latest reviewed branch tip at this audit: `68a98e494a12fa0fcd7bc363e0f88deed262f737`. PR #5 remains open, Draft, and unmerged. All nine workflow runs associated with the latest documentation/licence commits have completed successfully, including QR Generator checks, Phase 2, Phase 3, Full Git History Secret Scan and CycloneDX SBOM. These CI results do not close the manual physical-device, third-party notice, clean-room deployment or final archive gates.
 
 The final ZIP remains NOT BUILT and Codester submission remains NOT READY.
+
+
+## Current branch and release-gate refresh — 21 November 2026 (supersedes earlier HEAD references)
+
+- Exact branch HEAD: `9d278d2213b09a5a2a66d2c726ac6159feb89108` (buyer installation guide domain instructions corrected).
+- PR #5 remains **open / Draft / unmerged**, targeting `lock/qr-studio-pro-premium-v3-2026-10-15`.
+- All nine GitHub Actions runs associated with this exact SHA completed successfully: QR Generator checks; Phase 2 checks; Phase 3 schema guard; Full Git History Secret Scan; and CycloneDX SBOM, including duplicate push/PR-triggered runs. This is exact-SHA CI evidence, not proof of zero vulnerabilities or complete legal clearance.
+- The latest browser workflow is green on this SHA; nevertheless, hands-on physical phone-camera scans, buyer-owned clean-room install/deployment, and final archive validation remain outstanding.
+- The candidate distribution manifest still says **NOT APPROVED FOR DISTRIBUTION**. No buyer ZIP has been built.
+- The seller-approved non-exclusive application-use licence notice is present as `APPLICATION-LICENSE.md`. Codester's current official licence page was checked 21 November 2026: Regular covers one project and does not permit source-file distribution; Extended covers multiple projects and permits source files only as part of a larger project; neither permits resale as-is; Codester states the author retains ownership. Listing copy must remain within those boundaries. Source: https://www.codester.com/info/licenses.
+- Remaining release blockers: authoritative `dlv@1.1.3` copyright/notice evidence; exact third-party runtime asset and privacy review (Google Fonts, Material Symbols, cdnjs QR encoder); physical-device acceptance; buyer-owned clean install/deployment; explicit-allowlist ZIP creation, archive inspection and secret scan; and final Codester listing/demo review.
+- Production remains locked and untouched at `https://qrnode.boothpro.my.id/`. No merge, production deployment, production configuration change, database migration, or feature addition is authorized.
+
+This section supersedes older branch-HEAD, CI-pending, and owner-licence-approval-pending statements in earlier dated audit entries. Those entries are retained as historical evidence for their respective commits.
