@@ -1,0 +1,27 @@
+name: QR Studio Pro Phase 3 schema guard
+
+on:
+  push:
+    branches: ["fix/**", "audit/**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  schema-static-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate Phase 3 migration safety and privacy constraints
+        run: node scripts/check-phase3-schema.js
+      - name: Validate Dynamic QR input and slug helpers
+        run: node scripts/check-phase3-validation.js
+      - name: Validate same-origin and CSRF guard
+        run: node scripts/check-same-origin.js
+      - name: Validate Admin-only read-only Neon health endpoint
+        run: node scripts/check-database-health.js

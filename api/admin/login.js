@@ -62,6 +62,10 @@ module.exports = async function handler(req, res) {
 
   if (!valid) return sendJson(res, 401, { authenticated: false, error: 'Email, kata sandi, atau PIN tidak sesuai.' });
 
-  issueSessionCookie(res);
-  return sendJson(res, 200, { authenticated: true });
+  try {
+    await issueSessionCookie(res);
+    return sendJson(res, 200, { authenticated: true });
+  } catch {
+    return sendJson(res, 503, { authenticated: false, error: 'Penyimpanan sesi Admin tidak tersedia. Login belum dapat dilakukan.' });
+  }
 };

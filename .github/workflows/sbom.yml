@@ -1,0 +1,156 @@
+name: Generate CycloneDX SBOM
+
+on:
+  push:
+    branches:
+      - fix/qrnode-phase1-adoption-2026-11-02
+  pull_request:
+    branches:
+      - lock/qr-studio-pro-premium-v3-2026-10-15
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sbom-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  generate-sbom:
+    name: Generate and summarize complete npm dependency SBOM
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 20.20.2
+          package-manager-cache: false
+
+      - name: Install exact locked dependency tree
+        run: npm ci --ignore-scripts
+
+      - name: Generate CycloneDX SBOM
+        run: npm sbom --sbom-format=cyclonedx --sbom-type=application > qr-studio-pro.cdx.json
+
+      - name: Validate SBOM and summarize component licence metadata
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const bom = JSON.parse(fs.readFileSync('qr-studio-pro.cdx.json', 'utf8'));
+          if (bom.bomFormat !== 'CycloneDX' || !Array.isArray(bom.components)) {
+            throw new Error('Invalid or incomplete CycloneDX SBOM');
+          }
+          const components = bom.components;
+          const missing = components.filter((component) => !Array.isArray(component.licenses) || component.licenses.length === 0);
+          const counts = new Map();
+          for (const component of components) {
+            const ids = (component.licenses || []).flatMap((entry) => {
+              if (entry.license?.id) return [entry.license.id];
+              if (entry.license?.name) return [entry.license.name];
+              if (entry.expression) return [entry.expression];
+              return [];
+            });
+            for (const id of ids) counts.set(id, (counts.get(id) || 0) + 1);
+          }
+          console.log('SBOM format:', bom.bomFormat, 'spec:', bom.specVersion);
+          console.log('Component count:', components.length);
+          console.log('Components without declared licence metadata:', missing.length);
+          console.log('Licence metadata counts:');
+          for (const [id, count] of [...counts.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
+            console.log('-', id + ':', count);
+          }
+          if (missing.length) {
+            console.log('Components requiring licence review:');
+            for (const component of missing) console.log('-', component.name, component.version || '');
+          }
+          NODE
+
+      - name: Collect package licence and NOTICE texts
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import json
+          import re
+
+          with open("qr-studio-pro.cdx.json", encoding="utf-8") as source:
+              bom = json.load(source)
+          sbom_keys = {(item.get("name"), item.get("version")) for item in bom.get("components", [])}
+          root = Path("node_modules")
+          pattern = re.compile(r"^(license|licence|copying|notice)([-_.].*)?$", re.IGNORECASE)
+          packages = []
+          missing = []
+          seen = set()
+          for package_json in sorted(root.rglob("package.json")):
+              try:
+                  metadata = json.loads(package_json.read_text(encoding="utf-8"))
+              except Exception:
+                  continue
+              name = metadata.get("name")
+              version = metadata.get("version")
+              key = (name, version)
+              if not name or not version or key not in sbom_keys or key in seen:
+                  continue
+              seen.add(key)
+              package_dir = package_json.parent
+              candidates = []
+              for item in package_dir.iterdir():
+                  if item.is_file() and pattern.match(item.name):
+                      candidates.append(item)
+              licenses_dir = package_dir / "licenses"
+              if licenses_dir.is_dir():
+                  candidates.extend(item for item in licenses_dir.iterdir() if item.is_file())
+              candidates = sorted(set(candidates))
+              declared = metadata.get("license", "NOT DECLARED")
+              if not candidates:
+                  missing.append((name, version, declared, package_dir))
+              packages.append((name, version, declared, candidates, package_dir))
+
+          with open("THIRD_PARTY_NOTICES.txt", "w", encoding="utf-8") as output:
+              output.write("QR Studio Pro — third-party package licence and NOTICE texts\n")
+              output.write("Generated from a clean npm ci installation and filtered to CycloneDX components. Review before redistribution.\n")
+              output.write(f"Unique SBOM packages inspected: {len(packages)}\n")
+              output.write(f"Packages with licence/NOTICE files: {len(packages) - len(missing)}\n")
+              output.write(f"SBOM packages with no matching text file: {len(missing)}\n\n")
+              for name, version, declared, candidates, package_dir in packages:
+                  output.write("=" * 78 + "\n")
+                  output.write(f"{name}@{version}\nDeclared licence metadata: {declared}\n")
+                  if not candidates:
+                      output.write("NO LICENSE/NOTICE FILE FOUND IN PACKAGE ROOT OR licenses/\n\n")
+                      continue
+                  for license_file in candidates:
+                      output.write("-" * 78 + "\n")
+                      output.write(f"FILE: {license_file.name}\n")
+                      try:
+                          text = license_file.read_text(encoding="utf-8", errors="replace")
+                      except Exception as error:
+                          text = f"[Unable to read text: {error}]"
+                      output.write(text[:200000])
+                      if len(text) > 200000:
+                          output.write("\n[TRUNCATED AFTER 200 KB]\n")
+                      output.write("\n\n")
+
+          print("Unique SBOM packages inspected:", len(packages))
+          print("Packages with licence/NOTICE files:", len(packages) - len(missing))
+          print("SBOM packages missing matching text file:", len(missing))
+          for name, version, declared, package_dir in missing:
+              print(f"MISSING: {name}@{version} — {declared} — {package_dir}")
+          PY
+
+      - name: Upload SBOM for manual legal review
+        uses: actions/upload-artifact@v7
+        with:
+          name: qr-studio-pro-sbom-and-licence-notices
+          path: |
+            qr-studio-pro.cdx.json
+            THIRD_PARTY_NOTICES.txt
+          if-no-files-found: error
+          retention-days: 14
