@@ -136,3 +136,36 @@ Exact reviewed branch HEAD before this documentation refresh: `3f300310daa6bb262
 - No buyer ZIP was generated. Remaining gates: authoritative `dlv` notice evidence, exact runtime asset/version and notice review, application source licence approval by the owner, physical-device acceptance, buyer-owned clean-room install/deploy, and final package allowlist/secret scan.
 
 The above CI and Preview evidence is tied to the exact pre-documentation commit stated above. The documentation-only commit created by this refresh will trigger new CI; do not assume those new runs have passed until checked.
+
+## Status correction and evidence refresh — 21 November 2026
+
+This section supersedes conflicting historical statements above where noted. Earlier dated findings are retained as an audit trail, not as the current disposition.
+
+### Application licence approval
+- The owner approved the non-exclusive application-use licence model on 20 November 2026.
+- `APPLICATION-LICENSE.md` records that approval and the application licence notice is included in the candidate package manifest.
+- Therefore the older statement above that the application's own source licence is still awaiting owner approval is obsolete. This approval does not itself prove ownership of every third-party asset or close the remaining distribution gates.
+
+### dlv@1.1.3 notice status
+- npm's published package metadata for `dlv@1.1.3` declares MIT and identifies the upstream repository as `developit/dlv`.
+- A fresh inspection of the upstream repository root on 21 November 2026 found `README.md`, `index.js`, `package.json`, and tests, but no standalone `LICENSE` or `NOTICE` file. The npm package metadata and repository README establish the MIT declaration, but do not provide an authoritative copyright-holder/year notice text.
+- Do not invent a copyright line. Keep the redistribution notice gate open unless an authoritative notice is obtained or the dependency is safely removed/replaced and the resulting dependency tree, SBOM, and tests are re-audited.
+
+### Picomatch advisory status
+- GitHub Advisory `GHSA-fc5q-39xc-vjpf` / `CVE-2026-112366` was withdrawn on 18 November 2026. It must not be described as a currently active High GitHub-reviewed advisory.
+- The locked `picomatch@4.0.7` has not been upgraded or patched as part of this work. The withdrawal is an advisory-status change, not a code remediation.
+- Keep the exact-lockfile `npm audit` check in the release gate and review any newly reported advisories at release time. Do not claim zero vulnerabilities.
+
+### Runtime font and icon assets
+- The current HTML requests Geist and Inter from Google Fonts, and Material Symbols Outlined through two separate Google Fonts stylesheet URLs with different axis parameter sets. These two icon stylesheet requests remain distinct until visual/rendering equivalence is tested; do not silently collapse them.
+- Google Fonts documentation describes the font metadata and licensing framework; the exact font files and copyright notices returned by the live CSS endpoints are not pinned in this repository. Material Symbols are documented by Google as Apache-2.0.
+- The app currently loads these assets remotely. Before self-hosting or placing font/icon binaries in a buyer archive, pin the exact returned files and include the matching upstream copyright and licence texts. Continue to disclose third-party network requests in the buyer privacy review.
+
+### Current CI evidence — exact branch HEAD 21 November 2026
+- Branch `fix/qrnode-phase1-adoption-2026-11-02` HEAD: `3254610b2586529f0a80f902292fd30e6aaa652f`.
+- All nine workflow runs associated with this exact SHA completed successfully: QR Generator checks, Phase 2, Phase 3 schema guard, Full Git History Secret Scan, and CycloneDX SBOM (including duplicate event-triggered runs).
+- PR #5 remains open, Draft, and unmerged. This evidence does not replace mobile-camera acceptance, buyer-owned clean install/deployment, final archive scan, or third-party notice closure.
+- No buyer ZIP has been approved or built.
+
+### Release decision
+QRnode remains **NOT CLEARED FOR DISTRIBUTION**. Outstanding gates include the `dlv@1.1.3` copyright/notice evidence, exact third-party font/icon and CDN privacy/version review, physical phone-camera acceptance, buyer-owned clean install/deployment, and final allowlist/archive/secret scan. The owner application-licence approval is no longer outstanding.
