@@ -169,3 +169,16 @@ This section supersedes conflicting historical statements above where noted. Ear
 
 ### Release decision
 QRnode remains **NOT CLEARED FOR DISTRIBUTION**. Outstanding gates include the `dlv@1.1.3` copyright/notice evidence, exact third-party font/icon and CDN privacy/version review, physical phone-camera acceptance, buyer-owned clean install/deployment, and final allowlist/archive/secret scan. The owner application-licence approval is no longer outstanding.
+
+
+## Current branch evidence and licence disposition — 21 November 2026
+
+This current-state addendum supersedes earlier branch-HEAD and owner-approval-pending statements above; dated findings remain as historical audit evidence.
+
+- Exact sale-branch HEAD checked: `9d278d2213b09a5a2a66d2c726ac6159feb89108`.
+- All nine GitHub Actions runs for this exact SHA completed successfully: QR Generator checks, Phase 2, Phase 3 schema guard, Full Git History Secret Scan and CycloneDX SBOM (including duplicate event-triggered runs).
+- The seller approved the non-exclusive application-use licence model on 20 November 2026. `APPLICATION-LICENSE.md` is present and included in the candidate manifest. This closes owner approval for the application licence model only; it does not close third-party asset rights or notices.
+- Current Codester licence terms checked 21 November 2026: Regular is one project and does not permit source-file distribution; Extended is multiple projects and permits source-file distribution only as part of a larger project; neither licence permits resale as-is; Codester says the author retains ownership. Listing and handover language must not promise copyright transfer or rights outside the buyer's purchased licence. Source: https://www.codester.com/info/licenses.
+- `dlv@1.1.3` remains MIT-declared by npm/upstream metadata, but no authoritative standalone upstream copyright/NOTICE text has been located. Do not invent a copyright line; retain this as a distribution blocker unless authoritative evidence is obtained or the dependency is safely removed/replaced and the full dependency tree, SBOM and tests are re-audited.
+- Geist and Inter are still requested remotely from Google Fonts; Material Symbols is requested through two separate stylesheet URLs with different axes; `qrcode-generator@1.4.4` is requested from cdnjs. These runtime assets are outside the npm SBOM, are not pinned as local binary assets in this repository, and require final exact-version/licence/notice/privacy review. Do not self-host or bundle without verifying exact files and required notices.
+- No buyer ZIP has been built or approved. Physical phone-camera acceptance, buyer-owned clean install/deployment, archive allowlist inspection and archive secret scan remain open. Production remains untouched.
