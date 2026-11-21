@@ -55,7 +55,7 @@ Explicit exclusions:
 | Phase 2 / Phase 3 static guards | PASS (CI) | Runs #537 and #308. |
 | Preview deployment | READY | Matching SHA; public anonymous access has not been independently confirmed. |
 | Third-party runtime assets | PARTIAL / RELEASE BLOCKER | QR encoder, Google Fonts and Material Symbols remain external CDN assets outside npm SBOM; complete rights, notice, version and privacy review required. |
-| Application's own source licence | OWNER APPROVAL REQUIRED | No root `LICENSE` has been approved. Do not invent legal terms or add an unapproved licence. |
+| Application's own source licence | OWNER APPROVAL RECEIVED — NOTICE ADDED | Seller approved the non-exclusive model on 20 Nov 2026. `APPLICATION-LICENSE.md` records it; no open-source root `LICENSE` is added. Confirm listing copy and buyer rights against Codester's current Regular/Extended terms. |
 | Final buyer ZIP | NOT BUILT | Build from explicit allowlist only after release gates close; scan archive and verify clean extraction/install. |
 | Buyer-owned clean-room deployment | NOT TESTED | Requires buyer-owned Vercel and Upstash resources and acceptance. |
 | Codester submission | NOT READY | Listing and screenshots are drafts; licence, package, demo access and final QA still need approval. |
@@ -69,7 +69,7 @@ The earlier `picomatch` audit failure is explained by the upstream GitHub adviso
 
 1. Resolve the authoritative redistribution notice/copyright evidence for `dlv@1.1.3`, or safely remove/replace the package on an isolated branch and rerun the full CI/SBOM checks.
 2. Complete the QR encoder, Google Fonts and Material Symbols external asset licence/attribution/privacy review. Decide whether any assets should be self-hosted; do not bundle them without verified rights and notices.
-3. Obtain owner approval for the application's own non-exclusive commercial source licence and written Codester Regular/Extended scope. No copyright assignment or exclusivity is implied.
+3. Seller approval for the non-exclusive application-licence model is received and recorded in `APPLICATION-LICENSE.md`. Before submission, confirm listing copy and handover wording against Codester's current Regular/Extended terms; no copyright assignment or exclusivity is implied.
 4. Re-run full CI and inspect the complete npm audit/SBOM outputs against the exact release candidate.
 5. Complete real phone-camera scans and physical-device export/share checks.
 6. Complete Admin logout, session expiry, rate-limit and fail-closed acceptance on an isolated buyer-like Preview. Never request or expose credentials.
@@ -99,3 +99,19 @@ On this HEAD, Secret Scan, Phase 2, Phase 3 and CycloneDX SBOM workflows have co
 `dlv@1.1.3` is declared MIT by npm metadata and the upstream version 1.1.3 `package.json`, but upstream has no standalone `LICENSE` file. Verify the actual published tarball's notice/copyright wording before preparing buyer-facing notices; do not invent attribution.
 
 The earlier green browser workflow evidence on code HEAD `cc7dcac753dc6007955dbf3c602230775c22d704` remains valid for that exact commit only. It must not be represented as the completed result for current HEAD.
+
+
+## Licence approval and current branch evidence — 21 November 2026
+
+The seller approved the non-exclusive application-licence model on 20 November 2026. The repository now contains `APPLICATION-LICENSE.md`, and the buyer README and distribution manifest link/include it. This closes the owner-approval question for the licence model, but it does not close third-party asset rights or legal review of every bundled component.
+
+Codester's current official licence page states:
+- Regular: one project; personal/commercial use; no resale of the item as-is or as part of a project; no distribution of source files.
+- Extended: multiple projects; personal/commercial use; source files may be distributed or sublicensed only as part of a larger project; neither licence permits resale of the item as-is.
+- Codester states the seller retains ownership of the item.
+
+Source: https://www.codester.com/info/licenses (checked 21 November 2026). Listing copy must not imply that buyers receive copyright ownership, can resell QRnode as-is, or can distribute its source outside the selected licence scope.
+
+Latest reviewed branch tip at this audit: `68a98e494a12fa0fcd7bc363e0f88deed262f737`. PR #5 remains open, Draft, and unmerged. All nine workflow runs associated with the latest documentation/licence commits have completed successfully, including QR Generator checks, Phase 2, Phase 3, Full Git History Secret Scan and CycloneDX SBOM. These CI results do not close the manual physical-device, third-party notice, clean-room deployment or final archive gates.
+
+The final ZIP remains NOT BUILT and Codester submission remains NOT READY.
