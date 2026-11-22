@@ -94,7 +94,7 @@ The download includes a buyer installation guide covering deployment, Admin cred
 - Final price: [seller to set in Codester].
 - Demo URL: [insert buyer-accessible Preview/demo URL after final QA].
 - Screenshots: [prepare original screenshots from the approved release build].
-- Application source licence and third-party notices: [seller approval and complete legal/licence review required before upload].
+- Application source licence: seller-approved non-exclusive model is recorded in `APPLICATION-LICENSE.md`; third-party notices and asset redistribution rights remain subject to final review before upload.
 
 ## Claims intentionally not made
 
@@ -106,3 +106,11 @@ Do not advertise Dynamic QR, editable QR destinations, scan analytics, campaign 
 This listing remains a draft and is not submission-ready. The latest code HEAD tested by CI (`cc7dcac753dc6007955dbf3c602230775c22d704`) passed the Chromium QR/browser workflow, static checks, Admin auth tests, Phase 2/3 guards, Gitleaks scan and CycloneDX SBOM/notice collection. The branch subsequently received documentation-only audit updates; all CI must be rerun on the exact release candidate.
 
 Open submission blockers: authoritative `dlv@1.1.3` redistribution notice evidence; external QR encoder/font/icon rights, attribution and privacy review; seller-approved application source licence; physical-device QA; public demo access confirmation; final allowlist ZIP and checksum; buyer-owned clean-room deployment. Do not upload this listing or claim that the product is security-certified or licence-cleared until these items are closed.
+
+
+## Current QA and licence status — 22 November 2026
+
+- Latest verified development branch commit before this documentation refresh: `8467ef7de47280c231bf37dc250cb0b319dcecc9`; all nine CI workflow runs for that exact SHA completed successfully.
+- Seller approval for the non-exclusive application-licence model has been received and recorded. It is no longer an outstanding owner-approval gate.
+- The current sale branch is being updated with buyer-facing privacy disclosures to match the actual runtime: Google Fonts and the cdnjs QR encoder are remote assets; Tailwind CSS is compiled and served locally.
+- Submission remains blocked by the unresolved authoritative `dlv@1.1.3` copyright/NOTICE wording, final third-party asset/licence/privacy review, physical phone-camera QA, buyer-owned clean install/deployment, final ZIP allowlist/archive/secret validation, and final demo/screenshots. Do not publish this draft or claim distribution clearance.
