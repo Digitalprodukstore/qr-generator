@@ -1,4 +1,4 @@
-# QR Studio Pro — Global Admin Settings Setup
+# QRnode — Global Admin Settings Setup
 
 This release adds a server-backed settings endpoint for the Admin Dashboard.
 
