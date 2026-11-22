@@ -66,6 +66,17 @@ Before the release archive is created, verify that buyer-facing placeholders rem
 11. Complete the buyer acceptance checklist on desktop and mobile, including Admin login, session logout, rate limiting, settings persistence, PNG/SVG export, and all 18 QR types.
 12. Record final package commit SHA, archive checksum, tested Node/npm versions, and test results.
 
+
+## Current release evidence — 22 November 2026
+
+- Exact development branch HEAD at this update: `8467ef7de47280c231bf37dc250cb0b319dcecc9`.
+- All nine workflow runs associated with this exact SHA completed successfully: QR Generator checks, Phase 2, Phase 3 schema guard, Full Git History Secret Scan, and CycloneDX SBOM (including separate push and pull-request events).
+- PR #5 remains open, Draft, and unmerged. Production domain `qrnode.boothpro.my.id` remains locked and untouched.
+- The owner-approved non-exclusive application licence notice is included as `APPLICATION-LICENSE.md`. This does not clear third-party licence/notice obligations.
+- No buyer ZIP has been built. The manifest remains a candidate allowlist, not distribution approval.
+- Remaining blockers: authoritative `dlv@1.1.3` copyright/notice wording; final exact asset/licence/privacy review for Google Fonts, Material Symbols and cdnjs QR encoder; physical-device camera/export QA; buyer-owned clean install and Preview deployment; archive allowlist verification and secret scan; and final Codester listing/demo approval.
+- The buyer privacy page was corrected on this branch to reflect current runtime assets: Google Fonts and cdnjs QR encoder are remote; Tailwind CSS is served from the locally compiled stylesheet, not Tailwind CDN. Buyers must still review and adapt the notice to their actual deployment and applicable legal requirements.
+
 ## Important limitations
 
 - This manifest is not the final ZIP and does not certify that every listed file is legally distributable.
