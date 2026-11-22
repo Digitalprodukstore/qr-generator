@@ -9,7 +9,7 @@ Use this checklist for a **non-exclusive source-code licence sale**. The seller 
 - [ ] Included repository and branch are stated.
 - [ ] Dynamic QR, resolver, persistent analytics and database-backed campaign management are explicitly excluded unless separately completed and accepted.
 - [ ] Neon database and any existing data are explicitly included or excluded.
-- [ ] Production domain `qrnode.boothpro.my.id` is explicitly included or excluded.
+- [x] Seller Production domain `qrnode.boothpro.my.id` is excluded from the sale and must remain under the seller's control; it is not part of the source-code package.
 - [ ] Vercel project/team, Upstash database, Neon resources, email/support accounts and other vendor accounts are each explicitly listed as included, excluded, or buyer-recreated.
 - [ ] Support period, bug-fix obligations, update obligations, warranties, liability limits and acceptance window are written down.
 - [ ] The exact Codester licence tier (Regular or Extended) is identified and the buyer is directed to the applicable Codester licence terms.
