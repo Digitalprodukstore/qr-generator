@@ -114,3 +114,18 @@ Open submission blockers: authoritative `dlv@1.1.3` redistribution notice eviden
 - Seller approval for the non-exclusive application-licence model has been received and recorded. It is no longer an outstanding owner-approval gate.
 - The current sale branch is being updated with buyer-facing privacy disclosures to match the actual runtime: Google Fonts and the cdnjs QR encoder are remote assets; Tailwind CSS is compiled and served locally.
 - Submission remains blocked by the unresolved authoritative `dlv@1.1.3` copyright/NOTICE wording, final third-party asset/licence/privacy review, physical phone-camera QA, buyer-owned clean install/deployment, final ZIP allowlist/archive/secret validation, and final demo/screenshots. Do not publish this draft or claim distribution clearance.
+
+
+## Seller review update — 24 November 2026
+
+Current release-candidate evidence supersedes the earlier dated status snapshots above:
+- Development branch commit: `a41a29d7f599c568dea76385c6ea677753caaf09`.
+- All nine GitHub Actions workflows on that exact SHA passed.
+- Vercel Preview: https://qr-generator-6tkp2f9hk-risakil.vercel.app (READY; not independently certified route-by-route or as anonymous buyer access).
+- Seller approval for the non-exclusive application-use licence is received and recorded in `APPLICATION-LICENSE.md`.
+
+**Still not ready for submission.** The exact third-party runtime asset review is recorded in `docs/THIRD_PARTY_RUNTIME_ASSET_REVIEW.md`. The `dlv@1.1.3` package declares MIT in npm/upstream metadata, but upstream tag 1.1.3 has no standalone LICENSE file or explicit copyright-year/holder statement. Do not use unverified third-party copyright attribution. Google Fonts and cdnjs QR encoder are remote runtime requests, not bundled files in the current source allowlist; privacy disclosures must remain accurate.
+
+Outstanding acceptance items: physical phone-camera tests; buyer-owned clean-room installation/deployment; final explicit-allowlist ZIP, archive secret scan, extraction/install/build verification and checksum; final screenshots/demo review; and seller support/update/pricing decisions. No Dynamic QR or other excluded functionality should be claimed.
+
+Do not publish this listing, upload a source ZIP, or claim legal/security certification until all release gates are closed.
