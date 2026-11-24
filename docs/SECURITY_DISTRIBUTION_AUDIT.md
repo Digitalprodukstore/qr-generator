@@ -233,3 +233,19 @@ Do not describe this as a code patch or claim that `picomatch@4.0.7` was upgrade
 The current sale-branch HEAD is `7d5533b85265f3ac88eb5f0c0fd66672f4429c95`, which includes only the QRnode npm package metadata rename plus documentation/audit updates after the earlier tested code HEAD `cc7dcac753dc6007955dbf3c602230775c22d704`. On the current HEAD, Secret Scan, Phase 2, Phase 3 and SBOM workflows have completed successfully. The QR Generator browser workflow run `44544713051` is still in progress: its locked install, high/critical npm audit, browser dependency install and Tailwind compilation steps have passed; Chromium setup, QR decode, design studio, responsive checks and workflow-generated CSS/lockfile commit have not yet completed. Do not report the full browser workflow as PASS until its final conclusion is success.
 
 `dlv@1.1.3` licence declaration is corroborated as MIT by npm package metadata and the upstream repository's version 1.1.3 `package.json`. However, the upstream repository has no standalone `LICENSE` file, so the exact copyright notice and full published MIT notice still require confirmation from the published tarball or upstream. Do not fabricate the copyright holder text.
+
+
+## Current branch and distribution evidence refresh — 24 November 2026
+
+This dated addendum supersedes older branch/HEAD and test-status snapshots above; historical findings remain preserved for their original reviewed commits.
+
+- Current branch HEAD at start of this refresh: `a41a29d7f599c568dea76385c6ea677753caaf09`.
+- All nine GitHub Actions workflow runs for this exact SHA completed successfully, including QR Generator checks, Phase 2, Phase 3, Full Git History Secret Scan (push and pull_request), and CycloneDX SBOM (push and pull_request).
+- The browser workflow passed its `npm audit --audit-level=high` gate, QR decoding, Premium Design Studio, and responsive phone/tablet viewport tests. These are CI browser tests, not physical-device camera acceptance.
+- Vercel Preview deployment `dpl_7qNWg7q4cKFgvzEF2YPevojFvsFL` is READY and points to the exact branch and SHA. This does not establish route-by-route HTTP verification, anonymous access, or Production readiness.
+- The seller-approved non-exclusive application licence is present in `APPLICATION-LICENSE.md`; owner approval is no longer an open gate.
+- The exact current third-party asset findings and source references are recorded in `docs/THIRD_PARTY_RUNTIME_ASSET_REVIEW.md`. In particular, do not insert the unverified secondary attribution “Copyright (c) 2019 Chase West and other contributors” for `dlv@1.1.3`: upstream tag `1.1.3` package metadata declares MIT and author Jason Miller but has no standalone LICENSE file or explicit copyright-holder/year line.
+- The QR encoder is a remote cdnjs runtime asset; Geist, Inter and Material Symbols are remote Google Fonts assets. They are not currently local bundled font/encoder files in the source allowlist. Privacy disclosures must reflect these network requests.
+- Full source ZIP and buyer-owned clean-room deployment remain NOT DONE. No final distribution clearance is implied by green CI.
+
+Production remains locked and untouched. No merge, Production deployment/promotion, database migration, new feature, or archive creation is authorized by this audit refresh.
