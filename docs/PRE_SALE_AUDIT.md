@@ -129,3 +129,35 @@ The final ZIP remains NOT BUILT and Codester submission remains NOT READY.
 - Production remains locked and untouched at `https://qrnode.boothpro.my.id/`. No merge, production deployment, production configuration change, database migration, or feature addition is authorized.
 
 This section supersedes older branch-HEAD, CI-pending, and owner-licence-approval-pending statements in earlier dated audit entries. Those entries are retained as historical evidence for their respective commits.
+
+
+## Release evidence refresh — 24 November 2026 (current branch snapshot)
+
+This addendum supersedes older HEAD, Preview URL and CI status snapshots above; earlier entries remain historical records for their stated commits.
+
+- Exact development branch HEAD remains `a41a29d7f599c568dea76385c6ea677753caaf09`.
+- PR #5 remains **open / Draft / unmerged** and targets `lock/qr-studio-pro-premium-v3-2026-10-15`.
+- All nine GitHub Actions runs attached to the exact HEAD completed successfully: QR Generator checks; Phase 2 checks; Phase 3 schema guard; Full Git History Secret Scan (push and pull_request); and CycloneDX SBOM (push and pull_request).
+- The QR Generator workflow includes locked install, `npm audit --audit-level=high`, Tailwind CSS build, Chromium QR decoding, Premium Design Studio and responsive phone/tablet viewport checks. These are CI browser checks, not physical phone-camera acceptance.
+- Vercel Preview deployment `dpl_7qNWg7q4cKFgvzEF2YPevojFvsFL` is `READY`, sourced from the exact branch and SHA above. Build logs recorded 73 packages installed and a completed build. This does not independently prove every route's HTTP status or anonymous access.
+- The seller-approved non-exclusive application licence is present and no longer awaits owner approval.
+- The candidate package ZIP has **not** been built. Codester submission remains **NOT READY**.
+
+### Current legal/asset evidence refinement
+
+- The published upstream `developit/dlv` tag `1.1.3` package metadata declares `MIT` and lists Jason Miller as package author. The upstream tag tree contains no standalone `LICENSE` file and no explicit copyright-year/holder statement. A secondary generated notice seen elsewhere attributes the package to Chase West and other contributors, but that attribution is not corroborated by the upstream tagged source and must not be copied as fact. Do not invent a copyright notice. Record the unresolved notice provenance as a release blocker until upstream rights-holder evidence is obtained or a separately reviewed dependency-removal/replacement is completed.
+- The QR encoder is loaded at runtime from cdnjs as `qrcode-generator@1.4.4`, not included as a local bundled source file in the current application tree. cdnjs identifies the version as MIT; the upstream project LICENSE states Copyright (c) 2009 Kazuhiko Arase. Preserve this distinction between an external runtime request and a redistributed/bundled copy.
+- Geist is served remotely through Google Fonts; the upstream Geist project states SIL Open Font License 1.1. Inter is also requested remotely through Google Fonts. The actual font binaries are not in the current source allowlist, so do not claim they are bundled.
+- Material Symbols are requested remotely through Google Fonts. Google's official developer guide states Apache License 2.0. The HTML currently contains two separate Material Symbols stylesheet requests with different axis declarations; keep them as distinct requests until an equivalence/rendering test justifies consolidation.
+- Because these font and QR assets are runtime network dependencies, the buyer-facing privacy disclosure must continue to identify the third-party requests. A remote URL reference is not the same as packaging the font/library files in the source ZIP.
+
+### Remaining release gates
+
+1. Resolve `dlv@1.1.3` notice provenance without inventing a copyright statement.
+2. Complete exact font/API request and privacy review; keep external assets identified as external unless redistribution rights and notices for exact files are established.
+3. Obtain user-run physical-device camera scan and PNG/SVG export acceptance.
+4. Perform buyer-owned clean-room install and Preview deployment with buyer-created accounts/credentials.
+5. Refresh the explicit allowlist, create and inspect the archive, scan for secrets, extract it cleanly, run the documented install/build, and record checksum.
+6. Finalize screenshots, demo access and seller support/update/pricing fields before Codester submission.
+
+Production remains locked and untouched. No merge, Production deployment/promotion, database migration, feature addition, or ZIP creation is authorized by this audit update.
