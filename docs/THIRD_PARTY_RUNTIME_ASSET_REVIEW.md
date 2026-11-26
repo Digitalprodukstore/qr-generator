@@ -61,3 +61,41 @@ The current application references the QR encoder and fonts remotely. The QRnode
 ## Release decision
 
 **Not cleared for Codester distribution.** The non-exclusive application licence has seller approval, but the unresolved `dlv@1.1.3` notice provenance, exact external font response review, physical-device acceptance, buyer-owned clean-room deployment and final archive verification remain open.
+
+## 7. Exact dependency metadata and upstream tag-tree recheck — 26 November 2026
+
+The current branch lockfile at commit `b8413e21fc7bba446a0d9d3a0150ddb7c24c625c` contains 74 package entries (excluding the lockfile root). Every entry has a licence identifier in lockfile metadata: 64 MIT, 7 ISC, 2 Apache-2.0, and 1 BSD-3-Clause. This is useful inventory evidence, but a licence identifier in a lockfile is not a substitute for the corresponding full licence text, copyright attribution, or a legal review of redistribution obligations.
+
+The dependency path is also confirmed: `dlv@1.1.3` is a transitive **development/build dependency** of `tailwindcss@3.4.17`; it is not listed as a direct application dependency. Both packages are marked `dev: true` in the lockfile. This narrows its operational scope to the CSS build toolchain, but does not by itself remove the obligation to review it if the buyer source package includes the build dependency and lockfile.
+
+The upstream Git tag tree for `developit/dlv` tag `1.1.3` was queried directly through GitHub's Git Trees API on 26 November 2026. The complete, non-truncated tree contains only `.gitignore`, `.travis.yml`, `README.md`, `index.js`, `package.json`, and `test.js`; it has no standalone `LICENSE` file. The tagged `package.json` confirms:
+- `author`: Jason Miller <jason@developit.ca>
+- `repository`: developit/dlv
+- `license`: MIT
+
+The author field identifies the package author but is not an explicit copyright notice or copyright-year statement. The npm registry page also identifies version 1.1.3 as MIT. No authoritative standalone copyright-holder/year notice has been located in the upstream tag evidence reviewed here. Do not fabricate one.
+
+## 8. Runtime URL and privacy disclosure cross-check — 26 November 2026
+
+Both `index.html` and `en/index.html` currently reference:
+- Google Fonts CSS API for Geist and Inter.
+- Two separate Google Fonts CSS requests for Material Symbols Outlined.
+- Google Fonts resource host `fonts.gstatic.com`.
+- cdnjs-hosted `qrcode-generator@1.4.4`.
+
+The Indonesian `privacy.html` section “Penyedia pihak ketiga” discloses Google Fonts (Geist, Inter, Material Symbols), cdnjs qrcode-generator 1.4.4, locally compiled Tailwind CSS, Vercel hosting, Upstash Redis, and optional Neon database-health connectivity. This matches the main third-party services visible in the current HTML. The page still contains buyer-replacement identity/contact placeholders; those are a separate launch-readiness task and must not be represented as completed seller contact details.
+
+No third-party runtime asset was bundled or self-hosted as part of this review. The two Material Symbols requests were intentionally left separate because their variable-axis declarations differ.
+
+## Updated release decision — 26 November 2026
+
+**Still not cleared for Codester distribution.** The exact current SHA has green CI (9/9 workflows), and the lockfile metadata inventory is complete at the identifier level. However, the following gates remain open:
+1. Authoritative copyright/NOTICE wording for `dlv@1.1.3`, or a separately reviewed dependency removal/replacement.
+2. Final third-party asset attribution and redistribution review; remote font and QR encoder requests remain external.
+3. Consistent public-facing QRnode product branding versus remaining QR Studio Pro labels.
+4. Buyer-facing legal/contact placeholders must be clearly disclosed and replaced by the buyer before their public launch.
+5. Physical-device phone-camera QA and export/share acceptance.
+6. Buyer-owned clean-room install/deployment.
+7. Final allowlist ZIP creation, archive/secret scan, clean extraction/build, and checksum.
+
+No ZIP is authorized by this audit update. PR #5 remains Draft/open/unmerged. Production remains locked and untouched.
