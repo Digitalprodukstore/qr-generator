@@ -27,11 +27,15 @@ Configure variables for both **Preview** and **Production** as appropriate, then
 The former demo credentials were embedded in the old client-side HTML and therefore must be considered exposed. Replace them with new values before deploying this change. Git history may retain old source snapshots; rotating the credentials is essential.
 
 
-## Optional shared login rate limiting (recommended before production)
+## Required shared session store and login rate limiting
 
-To enable a shared per-IP login attempt limit across Vercel serverless instances, create an Upstash Redis database and configure these environment variables in Vercel Preview first:
+Upstash Redis is a **required dependency** for Admin authentication, session validation/revocation, global settings persistence, and login rate limiting. Configure these environment variables in Vercel **Preview** before attempting live Admin acceptance:
 
 - `UPSTASH_REDIS_REST_URL`: the database REST URL.
 - `UPSTASH_REDIS_REST_TOKEN`: the database REST token.
 
-Keep both values secret. When both are configured, login is limited to 10 attempts per IP per 10-minute window. The counter is stored in Redis, not in process memory. If only one variable is present or Redis returns an error, login fails closed with HTTP 503 rather than silently bypassing the configured protection. If neither variable is configured, rate limiting is inactive; therefore do not consider login rate-limited until the backend has been configured and tested on Preview. Do not configure Production or change the production domain as part of this audit without explicit approval.
+Keep both values secret. Login is limited to 10 attempts per Vercel-reported client IP per 10-minute window. The counter and active session records are stored in Redis, not in process memory. If either variable is missing, the backend is incomplete, or Redis returns an error, Admin login fails closed with HTTP 503; there is no unprotected fallback mode. Global settings reads/writes and session validation also fail closed when Redis is unavailable.
+
+The rate limiter uses Vercel's normalized `x-real-ip` header and falls back to `x-forwarded-for`. Vercel documents these as equivalent client-IP headers and states it overwrites `X-Forwarded-For` to prevent IP spoofing. If this application is later placed behind another proxy, reassess the trusted-proxy chain before relying on IP-based rate limiting.
+
+Do not configure Production, rotate Production credentials, or change the production domain as part of this audit without explicit approval. After Preview variables are configured, perform live Admin login, session refresh, logout/revocation, and global settings persistence checks on Preview.
